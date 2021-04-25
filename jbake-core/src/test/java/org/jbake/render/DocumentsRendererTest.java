@@ -1,6 +1,7 @@
 package org.jbake.render;
 
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Crawler.Attributes;
 import org.jbake.app.DocumentList;
 import org.jbake.app.Renderer;
@@ -48,7 +49,7 @@ public class DocumentsRendererTest {
 
         documentsRenderer = new DocumentsRenderer();
 
-        db = mock(ContentStore.class);
+        db = mock(ContentStoreOrientDb.class);
         renderer = mock(Renderer.class);
         configuration = mock(JBakeConfiguration.class);
         emptyDocumentList = new DocumentList();

@@ -7,6 +7,7 @@ import groovy.text.markup.MarkupTemplateEngine;
 import groovy.text.markup.TemplateConfiguration;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 
 import java.io.File;
@@ -29,7 +30,7 @@ public class GroovyMarkupTemplateEngine extends AbstractTemplateEngine {
      * @deprecated Use {@link #GroovyMarkupTemplateEngine(JBakeConfiguration, ContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStore}
+     * @param db the {@link ContentStoreOrientDb}
      * @param destination the destination path
      * @param templatesPath the templates path
      */

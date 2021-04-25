@@ -3,6 +3,7 @@ package org.jbake.template;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.lang.LocaleUtils;
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Crawler.Attributes;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.thymeleaf.TemplateEngine;
@@ -44,7 +45,7 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
      * @deprecated Use {@link #ThymeleafTemplateEngine(JBakeConfiguration, ContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStore}
+     * @param db the {@link ContentStoreOrientDb}
      * @param destination the destination path
      * @param templatesPath the templates path
      */

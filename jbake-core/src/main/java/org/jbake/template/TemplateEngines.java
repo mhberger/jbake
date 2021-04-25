@@ -1,6 +1,7 @@
 package org.jbake.template;
 
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +76,7 @@ public class TemplateEngines {
         try {
             @SuppressWarnings("unchecked")
             Class<? extends AbstractTemplateEngine> engineClass = (Class<? extends AbstractTemplateEngine>) Class.forName(engineClassName, false, TemplateEngines.class.getClassLoader());
-            Constructor<? extends AbstractTemplateEngine> ctor = engineClass.getConstructor(JBakeConfiguration.class, ContentStore.class);
+            Constructor<? extends AbstractTemplateEngine> ctor = engineClass.getConstructor(JBakeConfiguration.class, ContentStoreOrientDb.class);
             return ctor.newInstance(config, db);
         } catch (Throwable e) {
             // not all engines might be necessary, therefore only emit class loading issue with level warn

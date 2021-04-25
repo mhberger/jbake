@@ -11,13 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.nio.Buffer;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -182,7 +179,7 @@ public class OvenTest {
         configuration.setContentFolder(content);
         configuration.setAssetFolder(assets);
 
-        contentStore = spy(new ContentStore("memory", "documents" + System.currentTimeMillis()));
+        contentStore = spy(new ContentStoreOrientDb("memory", "documents" + System.currentTimeMillis()));
 
         Crawler crawler = mock(Crawler.class);
         Renderer renderer = mock(Renderer.class);

@@ -10,6 +10,7 @@ import groovy.text.XmlTemplateEngine;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.codehaus.groovy.runtime.MethodClosure;
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.xml.sax.SAXException;
 
@@ -38,7 +39,7 @@ public class GroovyTemplateEngine extends AbstractTemplateEngine {
      * @deprecated Use {@link #GroovyTemplateEngine(JBakeConfiguration, ContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStore}
+     * @param db the {@link ContentStoreOrientDb}
      * @param destination the destination path
      * @param templatesPath the templates path
      */

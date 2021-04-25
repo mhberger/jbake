@@ -1,6 +1,7 @@
 package org.jbake.render;
 
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -25,7 +26,7 @@ public class SitemapRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderSiteMap()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStore contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -40,7 +41,7 @@ public class SitemapRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderSiteMap()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStore contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -55,7 +56,7 @@ public class SitemapRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderSiteMap()).thenReturn(true);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStore contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
 
@@ -72,7 +73,7 @@ public class SitemapRendererTest {
         when(configuration.getRenderSiteMap()).thenReturn(true);
         when(configuration.getSiteMapFileName()).thenReturn("mocksitemap.html");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStore contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -88,7 +89,7 @@ public class SitemapRendererTest {
         when(configuration.getRenderSiteMap()).thenReturn(true);
         when(configuration.getSiteMapFileName()).thenReturn("mocksitemap.html");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStore contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         doThrow(new Exception()).when(mockRenderer).renderSitemap(anyString());
