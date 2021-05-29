@@ -1,11 +1,74 @@
-package org.jbake.db;
+package org.jbake.db
 
 import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 
+import org.sqlite.SQLiteDataSource
+import groovy.sql.Sql
+
 import java.util.Set;
 
 public class ContentStoreSqlite implements ContentStore {
+
+    Sql db
+
+    ContentStoreSqlite() {
+        this.db = new Sql(new org.sqlite.SQLiteDataSource(url: "jdbc:sqlite:mhb_sample_sqlite.db"))
+    }
+
+    void createTables() {
+        createDocumentsTable()
+        createSignaturesTable()
+    }
+
+    void createDocumentsTable() {
+
+        db.execute("drop table if exists documents");
+
+        String sql = """
+            CREATE TABLE documents (
+              id                      BIGINT                      NOT NULL,
+              uri                     VARCHAR(255)                NOT NULL,
+              name                    VARCHAR(255)                NOT NULL,
+              status                  VARCHAR(25)                 NOT NULL,
+              type                    VARHCAR(50)                 NOT NULL,
+              source_uri              TEXT                        NOT NULL,
+              document_date           TIMESTAMP WITH TIME ZONE    NOT NULL,
+              sha1                    VARHCAR(40)                 NOT NULL,
+              rendered                BOOLEAN                     NOT NULL,
+              cached                  BOOLEAN                     NOT NULL,
+              tags                    TEXT,
+              body                    TEXT                        NOT NULL,
+              created_timestamp       TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              last_updated_timestamp  TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              version                 BIGINT                      NOT NULL DEFAULT (0),
+
+              CONSTRAINT documents_pk PRIMARY KEY ( id )
+            );
+            """.stripIndent()
+
+        db.execute(sql);
+    }
+
+    void createSignaturesTable() {
+
+        db.execute("drop table if exists signatures");
+
+        String sql = """
+            CREATE TABLE signatures (
+              key                     VARCHAR(25)                 NOT NULL,
+              sha1                    VARHCAR(40)                 NOT NULL,
+              created_timestamp       TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              last_updated_timestamp  TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              version                 BIGINT                      NOT NULL DEFAULT (0),
+
+              CONSTRAINT signatures_pk PRIMARY KEY ( key )
+            );
+           """.stripIndent()
+
+        db.execute(sql);
+    }
+
     @Override
     public long getStart() {
         return 0;
