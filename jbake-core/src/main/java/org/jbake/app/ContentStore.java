@@ -34,6 +34,8 @@ public interface ContentStore {
 
     DocumentList<DocumentModel> getPublishedPosts();
 
+    DocumentList<DocumentModel> getPublishedPosts(boolean applyPaging);
+
     DocumentList<DocumentModel> getPublishedPostsByTag(String tag);
 
     DocumentList<DocumentModel> getPublishedDocumentsByTag(String tag);

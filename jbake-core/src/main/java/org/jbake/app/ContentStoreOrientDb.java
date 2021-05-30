@@ -192,6 +192,7 @@ public class ContentStoreOrientDb implements ContentStore {
         return getPublishedContent("post");
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedPosts(boolean applyPaging) {
         return getPublishedContent("post", applyPaging);
     }
