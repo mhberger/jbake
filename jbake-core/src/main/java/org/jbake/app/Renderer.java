@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Files;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,7 +36,7 @@ public class Renderer {
     private final Logger logger = LoggerFactory.getLogger(Renderer.class);
     private final JBakeConfiguration config;
     private final DelegatingTemplateEngine renderingEngine;
-    private final ContentStore db;
+    private final ContentStoreOrientDb db;
 
     /**
      * @param db            The database holding the content
@@ -48,7 +47,7 @@ public class Renderer {
      * Creates a new instance of Renderer with supplied references to folders.
      */
     @Deprecated
-    public Renderer(ContentStore db, File destination, File templatesPath, CompositeConfiguration config) {
+    public Renderer(ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config) {
         this(db, new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), config));
         DefaultJBakeConfiguration configuration = ((DefaultJBakeConfiguration) this.config);
         configuration.setDestinationFolder(destination);
@@ -67,7 +66,7 @@ public class Renderer {
      * Creates a new instance of Renderer with supplied references to folders and the instance of DelegatingTemplateEngine to use.
      */
     @Deprecated
-    public Renderer(ContentStore db, File destination, File templatesPath, CompositeConfiguration config, DelegatingTemplateEngine renderingEngine) {
+    public Renderer(ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config, DelegatingTemplateEngine renderingEngine) {
         this(db, new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), config), renderingEngine);
         DefaultJBakeConfiguration configuration = ((DefaultJBakeConfiguration) this.config);
         configuration.setDestinationFolder(destination);
@@ -80,7 +79,7 @@ public class Renderer {
      * @param db     The database holding the content
      * @param config Project configuration
      */
-    public Renderer(ContentStore db, JBakeConfiguration config) {
+    public Renderer(ContentStoreOrientDb db, JBakeConfiguration config) {
         this.config = config;
         this.renderingEngine = new DelegatingTemplateEngine(db, config);
         this.db = db;
@@ -93,7 +92,7 @@ public class Renderer {
      * @param config          The application specific configuration
      * @param renderingEngine The instance of DelegatingTemplateEngine to use
      */
-    public Renderer(ContentStore db, JBakeConfiguration config, DelegatingTemplateEngine renderingEngine) {
+    public Renderer(ContentStoreOrientDb db, JBakeConfiguration config, DelegatingTemplateEngine renderingEngine) {
         this.config = config;
         this.renderingEngine = renderingEngine;
         this.db = db;

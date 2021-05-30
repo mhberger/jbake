@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -20,7 +20,7 @@ public class Error404RendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderError404()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -35,7 +35,7 @@ public class Error404RendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderError404()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -50,7 +50,7 @@ public class Error404RendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderError404()).thenReturn(true);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -67,7 +67,7 @@ public class Error404RendererTest {
         when(configuration.getRenderError404()).thenReturn(true);
         when(configuration.getError404FileName()).thenReturn(error404file);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -84,7 +84,7 @@ public class Error404RendererTest {
         when(configuration.getRenderError404()).thenReturn(true);
         when(configuration.getError404FileName()).thenReturn(error404file);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         doThrow(new Exception()).when(mockRenderer).renderError404(anyString());

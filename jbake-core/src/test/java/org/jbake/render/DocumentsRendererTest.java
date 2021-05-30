@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.DocumentList;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -9,10 +9,8 @@ import org.jbake.model.DocumentTypes;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.RenderingException;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.rules.ExpectedException;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.MockitoAnnotations;
@@ -32,7 +30,7 @@ import static org.mockito.Mockito.when;
 public class DocumentsRendererTest {
 
     public DocumentsRenderer documentsRenderer;
-    private ContentStore db;
+    private ContentStoreOrientDb db;
     private Renderer renderer;
     private JBakeConfiguration configuration;
     private DocumentList<DocumentModel> emptyTemplateModelList;
@@ -47,7 +45,7 @@ public class DocumentsRendererTest {
 
         documentsRenderer = new DocumentsRenderer();
 
-        db = mock(ContentStore.class);
+        db = mock(ContentStoreOrientDb.class);
         renderer = mock(Renderer.class);
         configuration = mock(JBakeConfiguration.class);
         emptyTemplateModelList = new DocumentList<>();

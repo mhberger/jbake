@@ -15,7 +15,7 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
 import org.apache.commons.configuration2.CompositeConfiguration;
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.model.TemplateModel;
@@ -37,12 +37,12 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     private Configuration templateCfg;
 
     @Deprecated
-    public FreemarkerTemplateEngine(final CompositeConfiguration config, final ContentStore db, final File destination, final File templatesPath) {
+    public FreemarkerTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
         super(config, db, destination, templatesPath);
         createTemplateConfiguration();
     }
 
-    public FreemarkerTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
+    public FreemarkerTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);
         createTemplateConfiguration();
     }
@@ -74,10 +74,10 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
     public static class LazyLoadingModel implements TemplateHashModel {
         private final ObjectWrapper wrapper;
         private final SimpleHash eagerModel;
-        private final ContentStore db;
+        private final ContentStoreOrientDb db;
         private final JBakeConfiguration config;
 
-        public LazyLoadingModel(ObjectWrapper wrapper, TemplateModel eagerModel, final ContentStore db, JBakeConfiguration config) {
+        public LazyLoadingModel(ObjectWrapper wrapper, TemplateModel eagerModel, final ContentStoreOrientDb db, JBakeConfiguration config) {
             this.eagerModel = new SimpleHash(eagerModel, wrapper);
             this.db = db;
             this.wrapper = wrapper;

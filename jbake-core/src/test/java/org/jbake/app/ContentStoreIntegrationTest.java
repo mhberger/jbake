@@ -18,7 +18,7 @@ public abstract class ContentStoreIntegrationTest {
 
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
-    protected static ContentStore db;
+    protected static ContentStoreOrientDb db;
     protected static DefaultJBakeConfiguration config;
     protected static StorageType storageType = StorageType.MEMORY;
     protected static File sourceFolder;

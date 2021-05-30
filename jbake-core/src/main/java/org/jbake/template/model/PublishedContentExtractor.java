@@ -1,6 +1,6 @@
 package org.jbake.template.model;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
@@ -11,7 +11,7 @@ import java.util.Map;
 public class PublishedContentExtractor implements ModelExtractor<DocumentList> {
 
     @Override
-    public DocumentList get(ContentStore db, Map model, String key) {
+    public DocumentList get(ContentStoreOrientDb db, Map model, String key) {
         DocumentList<DocumentModel> publishedContent = new DocumentList<>();
         String[] documentTypes = DocumentTypes.getDocumentTypes();
         for (String docType : documentTypes) {

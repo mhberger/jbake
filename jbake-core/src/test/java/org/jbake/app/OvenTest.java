@@ -14,12 +14,10 @@ import org.junit.jupiter.api.io.TempDir;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +36,7 @@ public class OvenTest {
 
     private DefaultJBakeConfiguration configuration;
     private File sourceFolder;
-    private ContentStore contentStore;
+    private ContentStoreOrientDb contentStore;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -186,7 +184,7 @@ public class OvenTest {
         configuration.setContentFolder(content);
         configuration.setAssetFolder(assets);
 
-        contentStore = spy(new ContentStore("memory", "documents" + System.currentTimeMillis()));
+        contentStore = spy(new ContentStoreOrientDb("memory", "documents" + System.currentTimeMillis()));
 
         Crawler crawler = mock(Crawler.class);
         Renderer renderer = mock(Renderer.class);

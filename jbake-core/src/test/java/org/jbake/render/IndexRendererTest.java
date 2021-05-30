@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -25,7 +25,7 @@ public class IndexRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderIndex()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -40,7 +40,7 @@ public class IndexRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderIndex()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -55,7 +55,7 @@ public class IndexRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderIndex()).thenReturn(true);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
 
@@ -73,7 +73,7 @@ public class IndexRendererTest {
         when(configuration.getRenderIndex()).thenReturn(true);
         when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         doThrow(new Exception()).when(mockRenderer).renderIndex(anyString());
@@ -95,7 +95,7 @@ public class IndexRendererTest {
         when(configuration.getRenderIndex()).thenReturn(true);
         when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -113,7 +113,7 @@ public class IndexRendererTest {
         when(configuration.getPaginateIndex()).thenReturn(true);
         when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);

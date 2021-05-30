@@ -1,30 +1,29 @@
 package org.jbake.app;
 
 import com.orientechnologies.orient.core.db.record.OTrackedList;
-import com.orientechnologies.orient.core.record.OElement;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.model.DocumentModel;
 
 public class DBUtil {
-    private static ContentStore contentStore;
+    private static ContentStoreOrientDb contentStore;
 
     @Deprecated
     public static ContentStore createDataStore(final String type, String name) {
         if (contentStore == null) {
-            contentStore = new ContentStore(type, name);
+            contentStore = new ContentStoreOrientDb(type, name);
         }
         return contentStore;
     }
 
     @Deprecated
-    public static void updateSchema(final ContentStore db) {
+    public static void updateSchema(final ContentStoreOrientDb db) {
         db.updateSchema();
     }
 
-    public static ContentStore createDataStore(JBakeConfiguration configuration) {
+    public static ContentStoreOrientDb createDataStore(JBakeConfiguration configuration) {
         if (contentStore == null) {
-            contentStore = new ContentStore(configuration.getDatabaseStore(), configuration.getDatabasePath());
+            contentStore = new ContentStoreOrientDb(configuration.getDatabaseStore(), configuration.getDatabasePath());
         }
 
         return contentStore;

@@ -3,6 +3,7 @@ package org.jbake.template;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.lang.LocaleUtils;
 import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.model.DocumentModel;
@@ -45,18 +46,18 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
      * @deprecated Use {@link #ThymeleafTemplateEngine(JBakeConfiguration, ContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStore}
+     * @param db the {@link ContentStoreOrientDb}
      * @param destination the destination path
      * @param templatesPath the templates path
      */
     @Deprecated
-    public ThymeleafTemplateEngine(final CompositeConfiguration config, final ContentStore db, final File destination, final File templatesPath) {
+    public ThymeleafTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
         super(config, db, destination, templatesPath);
         this.context = new Context();
         initializeTemplateEngine();
     }
 
-    public ThymeleafTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
+    public ThymeleafTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);
         this.context = new Context();
         initializeTemplateEngine();
@@ -112,11 +113,11 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
      */
     private class ContextVariable extends LazyContextVariable {
 
-        private final ContentStore db;
+        private final ContentStoreOrientDb db;
         private final String key;
         private final TemplateModel model;
 
-        public ContextVariable(ContentStore db, String key, TemplateModel model) {
+        public ContextVariable(ContentStoreOrientDb db, String key, TemplateModel model) {
             this.db = db;
             this.key = key;
             this.model = model;

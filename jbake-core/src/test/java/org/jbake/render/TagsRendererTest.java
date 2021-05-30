@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -29,7 +29,7 @@ public class TagsRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderTags()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -44,7 +44,7 @@ public class TagsRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderTags()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -60,7 +60,7 @@ public class TagsRendererTest {
         when(configuration.getRenderTags()).thenReturn(true);
         when(configuration.getTagPathName()).thenReturn("mocktagpath");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         Set<String> tags = new HashSet<String>(Arrays.asList("tag1", "tags2"));
@@ -80,7 +80,7 @@ public class TagsRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderTags()).thenReturn(true);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         Set<String> tags = new HashSet<String>(Arrays.asList("tag1", "tags2"));
@@ -100,7 +100,7 @@ public class TagsRendererTest {
         when(configuration.getRenderTags()).thenReturn(true);
         when(configuration.getTagPathName()).thenReturn("mocktagpath/tag");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         doThrow(new Exception()).when(mockRenderer).renderTags(anyString());

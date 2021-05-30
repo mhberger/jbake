@@ -2,7 +2,7 @@ package org.jbake.template;
 
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.configuration2.Configuration;
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.template.model.TemplateModel;
@@ -31,17 +31,17 @@ public abstract class AbstractTemplateEngine {
 
     protected static ModelExtractors extractors = ModelExtractors.getInstance();
     protected final JBakeConfiguration config;
-    protected final ContentStore db;
+    protected final ContentStoreOrientDb db;
 
     /**
-     * @deprecated use {@link AbstractTemplateEngine(JBakeConfiguration,ContentStore)} instead
+     * @deprecated use {@link AbstractTemplateEngine(JBakeConfiguration, ContentStoreOrientDb )} instead
      */
     @Deprecated
-    protected AbstractTemplateEngine(final Configuration config, final ContentStore db, final File destination, final File templatesPath) {
+    protected AbstractTemplateEngine(final Configuration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
         this(new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), destination, (CompositeConfiguration) config), db);
     }
 
-    protected AbstractTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
+    protected AbstractTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         this.config = config;
         this.db = db;
     }

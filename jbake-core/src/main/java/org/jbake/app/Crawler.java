@@ -1,6 +1,5 @@
 package org.jbake.app;
 
-import com.orientechnologies.orient.core.record.impl.ODocument;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.io.FilenameUtils;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -19,7 +18,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 
 /**
  * Crawls a file system looking for content.
@@ -29,7 +27,7 @@ import java.util.Map;
 public class Crawler {
 
     private static final Logger logger = LoggerFactory.getLogger(Crawler.class);
-    private final ContentStore db;
+    private final ContentStoreOrientDb db;
     private final JBakeConfiguration config;
     private final Parser parser;
 
@@ -42,7 +40,7 @@ public class Crawler {
      * Creates new instance of Crawler.
      */
     @Deprecated
-    public Crawler(ContentStore db, File source, CompositeConfiguration config) {
+    public Crawler(ContentStoreOrientDb db, File source, CompositeConfiguration config) {
         this.db = db;
         this.config = new JBakeConfigurationFactory().createDefaultJbakeConfiguration(source, config);
         this.parser = new Parser(this.config);
@@ -54,7 +52,7 @@ public class Crawler {
      * @param db     Database instance for content
      * @param config Project configuration
      */
-    public Crawler(ContentStore db, JBakeConfiguration config) {
+    public Crawler(ContentStoreOrientDb db, JBakeConfiguration config) {
         this.db = db;
         this.config = config;
         this.parser = new Parser(config);

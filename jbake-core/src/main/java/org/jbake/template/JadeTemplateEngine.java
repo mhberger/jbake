@@ -12,7 +12,7 @@ import de.neuland.jade4j.template.JadeTemplate;
 import de.neuland.jade4j.template.TemplateLoader;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.lang.StringEscapeUtils;
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 
@@ -38,11 +38,11 @@ public class JadeTemplateEngine extends AbstractTemplateEngine {
     private final JadeConfiguration jadeConfiguration = new JadeConfiguration();
 
     @Deprecated
-    public JadeTemplateEngine(final CompositeConfiguration config, final ContentStore db, final File destination, final File templatesPath) {
+    public JadeTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
         super(config, db, destination, templatesPath);
     }
 
-    public JadeTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
+    public JadeTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);
 
         TemplateLoader loader = new FileTemplateLoader(config.getTemplateFolder().getPath() + File.separatorChar, config.getTemplateEncoding());

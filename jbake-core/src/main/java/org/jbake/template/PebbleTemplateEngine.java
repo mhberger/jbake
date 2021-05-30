@@ -6,13 +6,12 @@ import com.mitchellbosecke.pebble.extension.escaper.EscaperExtension;
 import com.mitchellbosecke.pebble.loader.FileLoader;
 import com.mitchellbosecke.pebble.loader.Loader;
 import com.mitchellbosecke.pebble.template.PebbleTemplate;
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.Map;
 
 /**
  * Renders pages using the <a href="https://pebbletemplates.io/">Pebble</a> template engine.
@@ -22,7 +21,7 @@ import java.util.Map;
 public class PebbleTemplateEngine extends AbstractTemplateEngine {
     private PebbleEngine engine;
 
-    public PebbleTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
+    public PebbleTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);
         initializeTemplateEngine();
     }

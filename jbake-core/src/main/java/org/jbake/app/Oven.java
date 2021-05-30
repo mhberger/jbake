@@ -147,7 +147,7 @@ public class Oven {
      */
     public void bake() {
 
-        ContentStore contentStore = utensils.getContentStore();
+        ContentStoreOrientDb contentStore = utensils.getContentStore();
         JBakeConfiguration config = utensils.getConfiguration();
         Crawler crawler = utensils.getCrawler();
         Asset asset = utensils.getAsset();
@@ -219,7 +219,7 @@ public class Oven {
     private void renderContent() {
         JBakeConfiguration config = utensils.getConfiguration();
         Renderer renderer = utensils.getRenderer();
-        ContentStore contentStore = utensils.getContentStore();
+        ContentStoreOrientDb contentStore = utensils.getContentStore();
 
         for (RenderingTool tool : ServiceLoader.load(RenderingTool.class)) {
             try {

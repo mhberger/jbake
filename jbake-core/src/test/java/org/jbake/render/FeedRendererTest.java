@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -25,7 +25,7 @@ public class FeedRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderFeed()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
         int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
@@ -40,7 +40,7 @@ public class FeedRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderFeed()).thenReturn(false);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -55,7 +55,7 @@ public class FeedRendererTest {
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
         when(configuration.getRenderFeed()).thenReturn(true);
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
 
         Renderer mockRenderer = mock(Renderer.class);
 
@@ -71,7 +71,7 @@ public class FeedRendererTest {
         when(configuration.getRenderFeed()).thenReturn(true);
         when(configuration.getFeedFileName()).thenReturn("mockfeedfile.xml");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         renderer.render(mockRenderer, contentStore, configuration);
@@ -87,7 +87,7 @@ public class FeedRendererTest {
         when(configuration.getRenderFeed()).thenReturn(true);
         when(configuration.getFeedFileName()).thenReturn("mockfeedfile.xml");
 
-        ContentStore contentStore = mock(ContentStore.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
         Renderer mockRenderer = mock(Renderer.class);
 
         doThrow(new Exception()).when(mockRenderer).renderFeed(anyString());

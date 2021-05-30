@@ -1,6 +1,6 @@
 package org.jbake.util;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.DocumentList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,10 +12,10 @@ public class DataFileUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DataFileUtil.class);
 
-    private ContentStore db;
+    private ContentStoreOrientDb db;
     private String defaultDocType;
 
-    public DataFileUtil(ContentStore db, String defaultDocType) {
+    public DataFileUtil(ContentStoreOrientDb db, String defaultDocType) {
         this.db = db;
         this.defaultDocType = defaultDocType;
     }

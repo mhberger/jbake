@@ -7,7 +7,7 @@ import org.jbake.app.configuration.JBakeConfiguration;
  */
 public class Utensils {
     private JBakeConfiguration configuration;
-    private ContentStore contentStore;
+    private ContentStoreOrientDb contentStore;
     private Crawler crawler;
     private Renderer renderer;
     private Asset asset;
@@ -20,11 +20,11 @@ public class Utensils {
         this.configuration = configuration;
     }
 
-    public ContentStore getContentStore() {
+    public ContentStoreOrientDb getContentStore() {
         return contentStore;
     }
 
-    public void setContentStore(ContentStore contentStore) {
+    public void setContentStore(ContentStoreOrientDb contentStore) {
         this.contentStore = contentStore;
     }
 

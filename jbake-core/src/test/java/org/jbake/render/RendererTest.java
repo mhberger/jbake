@@ -1,7 +1,7 @@
 package org.jbake.render;
 
 import org.jbake.TestUtils;
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
@@ -17,7 +17,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
-import java.net.URL;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -30,7 +29,7 @@ public class RendererTest {
     private File outputPath;
 
     @Mock
-    private ContentStore db;
+    private ContentStoreOrientDb db;
 
     @Mock
     private DelegatingTemplateEngine renderingEngine;

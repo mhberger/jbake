@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.ContentStoreOrientDb;
 
 import java.util.Map;
 
@@ -11,6 +11,6 @@ import java.util.Map;
  */
 public interface ModelExtractor<T> {
 
-    T get(ContentStore db, Map model, String key);
+    T get(ContentStoreOrientDb db, Map model, String key);
 
 }

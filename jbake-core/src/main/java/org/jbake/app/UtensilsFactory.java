@@ -20,7 +20,7 @@ public class UtensilsFactory {
 
         Utensils utensils = new Utensils();
         utensils.setConfiguration(config);
-        ContentStore contentStore = DBUtil.createDataStore(config);
+        ContentStoreOrientDb contentStore = DBUtil.createDataStore(config);
         utensils.setContentStore(contentStore);
         utensils.setCrawler(new Crawler(contentStore, config));
         utensils.setRenderer(new Renderer(contentStore, config));
