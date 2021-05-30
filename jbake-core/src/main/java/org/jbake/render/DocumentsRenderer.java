@@ -1,6 +1,7 @@
 package org.jbake.render;
 
 import org.apache.commons.configuration2.CompositeConfiguration;
+import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.DocumentList;
 import org.jbake.app.Renderer;
@@ -16,7 +17,7 @@ import java.util.List;
 public class DocumentsRenderer implements RenderingTool {
 
     @Override
-    public int render(Renderer renderer, ContentStoreOrientDb db, JBakeConfiguration config) throws RenderingException {
+    public int render(Renderer renderer, ContentStore db, JBakeConfiguration config) throws RenderingException {
         int renderedCount = 0;
         final List<String> errors = new LinkedList<>();
 
