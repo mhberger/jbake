@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStoreOrientDb;
+import org.jbake.app.ContentStore;
 import org.jbake.model.DocumentTypeUtils;
 import org.jbake.template.model.PublishedCustomExtractor;
 import org.jbake.template.model.TypedDocumentsExtractor;
@@ -121,10 +121,19 @@ public class ModelExtractors {
         }
     }
 
-    public <Type> Type extractAndTransform(ContentStoreOrientDb db, String key, Map map, TemplateEngineAdapter<Type> adapter) throws NoModelExtractorException {
+    public <Type> Type extractAndTransform(ContentStore db, String key, Map map, TemplateEngineAdapter.NoopAdapter adapter) throws NoModelExtractorException {
         if (extractors.containsKey(key)) {
             Object extractedValue = extractors.get(key).get(db, map, key);
-            return adapter.adapt(key, extractedValue);
+            return (Type) adapter.adapt(key, extractedValue);
+        } else {
+            throw new NoModelExtractorException("no model extractor for key \"" + key + "\"");
+        }
+    }
+
+    public <Type> Type extractAndTransform(ContentStore db, String key, Map map, TemplateEngineAdapter<Type> adapter) throws NoModelExtractorException {
+        if (extractors.containsKey(key)) {
+            Object extractedValue = extractors.get(key).get(db, map, key);
+            return (Type) adapter.adapt(key, extractedValue);
         } else {
             throw new NoModelExtractorException("no model extractor for key \"" + key + "\"");
         }

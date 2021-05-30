@@ -3,6 +3,7 @@ package org.jbake.template;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.configuration2.Configuration;
 import org.jbake.app.ContentStoreOrientDb;
+import org.jbake.app.ContentStore;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.template.model.TemplateModel;
@@ -31,7 +32,7 @@ public abstract class AbstractTemplateEngine {
 
     protected static ModelExtractors extractors = ModelExtractors.getInstance();
     protected final JBakeConfiguration config;
-    protected final ContentStoreOrientDb db;
+    protected final ContentStore db;
 
     /**
      * @deprecated use {@link AbstractTemplateEngine(JBakeConfiguration, ContentStoreOrientDb )} instead
@@ -41,7 +42,7 @@ public abstract class AbstractTemplateEngine {
         this(new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), destination, (CompositeConfiguration) config), db);
     }
 
-    protected AbstractTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
+    protected AbstractTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
         this.config = config;
         this.db = db;
     }

@@ -113,11 +113,11 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
      */
     private class ContextVariable extends LazyContextVariable {
 
-        private final ContentStoreOrientDb db;
+        private final ContentStore db;
         private final String key;
         private final TemplateModel model;
 
-        public ContextVariable(ContentStoreOrientDb db, String key, TemplateModel model) {
+        public ContextVariable(ContentStore db, String key, TemplateModel model) {
             this.db = db;
             this.key = key;
             this.model = model;
