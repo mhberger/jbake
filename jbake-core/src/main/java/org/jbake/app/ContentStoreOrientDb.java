@@ -167,13 +167,13 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     @Override
     public long getDocumentCount(String docType) {
         activateOnCurrentThread();
-        String statement = String.format(STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE, docType);
+        String statement = String.format(ContentStore.STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE, docType);
         return (long) query(statement).get(0).get("count");
     }
 
     @Override
     public long getPublishedCount(String docType) {
-        String statement = String.format(STATEMENT_GET_PUBLISHED_COUNT, docType);
+        String statement = String.format(ContentStore.STATEMENT_GET_PUBLISHED_COUNT, docType);
         return (long) query(statement).get(0).get("count");
     }
 
@@ -184,7 +184,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
 
     @Override
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
-        return query(STATEMENT_GET_DOCUMENT_STATUS_BY_DOCTYPE_AND_URI, uri);
+        return query(ContentStore.STATEMENT_GET_DOCUMENT_STATUS_BY_DOCTYPE_AND_URI, uri);
     }
 
     @Override
@@ -198,7 +198,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedPostsByTag(String tag) {
-        return query(STATEMENT_GET_PUBLISHED_POSTS_BY_TAG, tag);
+        return query(ContentStore.STATEMENT_GET_PUBLISHED_POSTS_BY_TAG, tag);
     }
 
     @Override
@@ -206,7 +206,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
         final DocumentList<DocumentModel> documents = new DocumentList<>();
 
         for (final String docType : DocumentTypes.getDocumentTypes()) {
-            String statement = String.format(STATEMENT_GET_PUBLISHED_POST_BY_TYPE_AND_TAG, docType);
+            String statement = String.format(ContentStore.STATEMENT_GET_PUBLISHED_POST_BY_TYPE_AND_TAG, docType);
             DocumentList<DocumentModel> documentsByTag = query(statement, tag);
             documents.addAll(documentsByTag);
         }
@@ -225,7 +225,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
-        String query = String.format(STATEMENT_GET_PUBLISHED_CONTENT_BY_DOCTYPE, docType);
+        String query = String.format(ContentStore.STATEMENT_GET_PUBLISHED_CONTENT_BY_DOCTYPE, docType);
         if (applyPaging && hasStartAndLimitBoundary()) {
             query += " SKIP " + start + " LIMIT " + limit;
         }
@@ -239,7 +239,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
 
     @Override
     public DocumentList<DocumentModel> getAllContent(String docType, boolean applyPaging) {
-        String query = String.format(STATEMENT_GET_ALL_CONTENT_BY_DOCTYPE, docType);
+        String query = String.format(ContentStore.STATEMENT_GET_ALL_CONTENT_BY_DOCTYPE, docType);
         if (applyPaging && hasStartAndLimitBoundary()) {
             query += " SKIP " + start + " LIMIT " + limit;
         }
@@ -252,41 +252,41 @@ public class ContentStoreOrientDb extends AbstractContentStore {
 
     @Override
     public DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
-        return query(STATEMENT_GET_TAGS_FROM_PUBLISHED_POSTS);
+        return query(ContentStore.STATEMENT_GET_TAGS_FROM_PUBLISHED_POSTS);
     }
 
     private DocumentList<DocumentModel> getSignaturesForTemplates() {
-        return query(STATEMENT_GET_SIGNATURE_FOR_TEMPLATES);
+        return query(ContentStore.STATEMENT_GET_SIGNATURE_FOR_TEMPLATES);
     }
 
     @Override
     public DocumentList<DocumentModel> getUnrenderedContent() {
-        return query(STATEMENT_GET_UNDRENDERED_CONTENT);
+        return query(ContentStore.STATEMENT_GET_UNDRENDERED_CONTENT);
     }
 
     @Override
     public void deleteContent(String uri) {
-        executeCommand(STATEMENT_DELETE_DOCTYPE_BY_SOURCEURI, uri);
+        executeCommand(ContentStore.STATEMENT_DELETE_DOCTYPE_BY_SOURCEURI, uri);
     }
 
     @Override
     public void markContentAsRendered(DocumentModel document) {
-        String statement = String.format(STATEMENT_MARK_CONTENT_AS_RENDERD, document.getType(), document.getSourceuri());
+        String statement = String.format(ContentStore.STATEMENT_MARK_CONTENT_AS_RENDERD, document.getType(), document.getSourceuri());
         executeCommand(statement);
     }
 
     private void updateSignatures(String currentTemplatesSignature) {
-        executeCommand(STATEMENT_UPDATE_TEMPLATE_SIGNATURE, currentTemplatesSignature);
+        executeCommand(ContentStore.STATEMENT_UPDATE_TEMPLATE_SIGNATURE, currentTemplatesSignature);
     }
 
     @Override
     public void deleteAllByDocType(String docType) {
-        String statement = String.format(STATEMENT_DELETE_ALL, docType);
+        String statement = String.format(ContentStore.STATEMENT_DELETE_ALL, docType);
         executeCommand(statement);
     }
 
     private void insertTemplatesSignature(String currentTemplatesSignature) {
-        executeCommand(STATEMENT_INSERT_TEMPLATES_SIGNATURE, currentTemplatesSignature);
+        executeCommand(ContentStore.STATEMENT_INSERT_TEMPLATES_SIGNATURE, currentTemplatesSignature);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     public Set<String> getAllTags() {
         Set<String> result = new HashSet<>();
         for (String docType : DocumentTypes.getDocumentTypes()) {
-            String statement = String.format(STATEMENT_GET_TAGS_BY_DOCTYPE, docType);
+            String statement = String.format(ContentStore.STATEMENT_GET_TAGS_BY_DOCTYPE, docType);
             DocumentList<DocumentModel> docs = query(statement);
             for (DocumentModel document : docs) {
                 String[] tags = document.getTags();
