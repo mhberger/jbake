@@ -105,6 +105,7 @@ public class ContentStoreOrientDb extends ContentStore {
         this.limit = -1;
     }
 
+    @Override
     public final void updateSchema() {
 
         OSchema schema = db.getMetadata().getSchema();
@@ -163,25 +164,30 @@ public class ContentStoreOrientDb extends ContentStore {
         }
     }
 
+    @Override
     public long getDocumentCount(String docType) {
         activateOnCurrentThread();
         String statement = String.format(STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE, docType);
         return (long) query(statement).get(0).get("count");
     }
 
+    @Override
     public long getPublishedCount(String docType) {
         String statement = String.format(STATEMENT_GET_PUBLISHED_COUNT, docType);
         return (long) query(statement).get(0).get("count");
     }
 
+    @Override
     public DocumentList<DocumentModel> getDocumentByUri(String uri) {
         return query("select * from Documents where sourceuri=?", uri);
     }
 
+    @Override
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
         return query(STATEMENT_GET_DOCUMENT_STATUS_BY_DOCTYPE_AND_URI, uri);
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedPosts() {
         return getPublishedContent("post");
     }
@@ -190,10 +196,12 @@ public class ContentStoreOrientDb extends ContentStore {
         return getPublishedContent("post", applyPaging);
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedPostsByTag(String tag) {
         return query(STATEMENT_GET_PUBLISHED_POSTS_BY_TAG, tag);
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedDocumentsByTag(String tag) {
         final DocumentList<DocumentModel> documents = new DocumentList<>();
 
@@ -205,15 +213,18 @@ public class ContentStoreOrientDb extends ContentStore {
         return documents;
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedPages() {
         return getPublishedContent("page");
     }
 
+    @Override
     public DocumentList<DocumentModel> getPublishedContent(String docType) {
         return getPublishedContent(docType, false);
     }
 
-    private DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
+    @Override
+    protected DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
         String query = String.format(STATEMENT_GET_PUBLISHED_CONTENT_BY_DOCTYPE, docType);
         if (applyPaging && hasStartAndLimitBoundary()) {
             query += " SKIP " + start + " LIMIT " + limit;
@@ -221,10 +232,12 @@ public class ContentStoreOrientDb extends ContentStore {
         return query(query);
     }
 
+    @Override
     public DocumentList<DocumentModel> getAllContent(String docType) {
         return getAllContent(docType, false);
     }
 
+    @Override
     public DocumentList<DocumentModel> getAllContent(String docType, boolean applyPaging) {
         String query = String.format(STATEMENT_GET_ALL_CONTENT_BY_DOCTYPE, docType);
         if (applyPaging && hasStartAndLimitBoundary()) {
@@ -237,7 +250,8 @@ public class ContentStoreOrientDb extends ContentStore {
         return (start >= 0) && (limit > -1);
     }
 
-    private DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
+    @Override
+    protected DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
         return query(STATEMENT_GET_TAGS_FROM_PUBLISHED_POSTS);
     }
 
@@ -245,14 +259,17 @@ public class ContentStoreOrientDb extends ContentStore {
         return query(STATEMENT_GET_SIGNATURE_FOR_TEMPLATES);
     }
 
+    @Override
     public DocumentList<DocumentModel> getUnrenderedContent() {
         return query(STATEMENT_GET_UNDRENDERED_CONTENT);
     }
 
+    @Override
     public void deleteContent(String uri) {
         executeCommand(STATEMENT_DELETE_DOCTYPE_BY_SOURCEURI, uri);
     }
 
+    @Override
     public void markContentAsRendered(DocumentModel document) {
         String statement = String.format(STATEMENT_MARK_CONTENT_AS_RENDERD, document.getType(), document.getSourceuri());
         executeCommand(statement);
@@ -262,6 +279,7 @@ public class ContentStoreOrientDb extends ContentStore {
         executeCommand(STATEMENT_UPDATE_TEMPLATE_SIGNATURE, currentTemplatesSignature);
     }
 
+    @Override
     public void deleteAllByDocType(String docType) {
         String statement = String.format(STATEMENT_DELETE_ALL, docType);
         executeCommand(statement);
@@ -271,23 +289,27 @@ public class ContentStoreOrientDb extends ContentStore {
         executeCommand(STATEMENT_INSERT_TEMPLATES_SIGNATURE, currentTemplatesSignature);
     }
 
-    private DocumentList<DocumentModel> query(String sql) {
+    @Override
+    protected DocumentList<DocumentModel> query(String sql) {
         activateOnCurrentThread();
         OResultSet results = db.query(sql);
         return DocumentList.wrap(results);
     }
 
-    private DocumentList<DocumentModel> query(String sql, Object... args) {
+    @Override
+    protected DocumentList<DocumentModel> query(String sql, Object... args) {
         activateOnCurrentThread();
         OResultSet results = db.command(sql, args);
         return DocumentList.wrap(results);
     }
 
-    private void executeCommand(String query, Object... args) {
+    @Override
+    protected void executeCommand(String query, Object... args) {
         activateOnCurrentThread();
         db.command(query, args);
     }
 
+    @Override
     public Set<String> getTags() {
         DocumentList<DocumentModel> docs = this.getAllTagsFromPublishedPosts();
         Set<String> result = new HashSet<>();
@@ -298,6 +320,7 @@ public class ContentStoreOrientDb extends ContentStore {
         return result;
     }
 
+    @Override
     public Set<String> getAllTags() {
         Set<String> result = new HashSet<>();
         for (String docType : DocumentTypes.getDocumentTypes()) {
@@ -374,7 +397,8 @@ public class ContentStoreOrientDb extends ContentStore {
         return templateSignatureChanged;
     }
 
-    private void deleteAllDocumentTypes() {
+    @Override
+    protected void deleteAllDocumentTypes() {
         for (String docType : DocumentTypes.getDocumentTypes()) {
             try {
                 this.deleteAllByDocType(docType);
@@ -388,6 +412,7 @@ public class ContentStoreOrientDb extends ContentStore {
         return db.isActiveOnCurrentThread();
     }
 
+    @Override
     public void addDocument(DocumentModel document) {
         ODocument doc = new ODocument(Schema.DOCUMENTS);
         doc.fromMap(document);
