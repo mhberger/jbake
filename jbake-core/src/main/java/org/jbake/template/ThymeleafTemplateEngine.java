@@ -2,7 +2,7 @@ package org.jbake.template;
 
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.lang.LocaleUtils;
-import org.jbake.app.AbstractContentStore;
+import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -43,7 +43,7 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
     private FileTemplateResolver templateResolver;
 
     /**
-     * @deprecated Use {@link #ThymeleafTemplateEngine(JBakeConfiguration, AbstractContentStore)} instead
+     * @deprecated Use {@link #ThymeleafTemplateEngine(JBakeConfiguration, ContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
      * @param db the {@link ContentStoreOrientDb}

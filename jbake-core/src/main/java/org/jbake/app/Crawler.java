@@ -35,7 +35,7 @@ public class Crawler {
      * @param db     Database instance for content
      * @param source Base directory where content directory is located
      * @param config Project configuration
-     * @deprecated Use {@link #Crawler(AbstractContentStore, JBakeConfiguration)} instead.
+     * @deprecated Use {@link #Crawler(ContentStore, JBakeConfiguration)} instead.
      * <p>
      * Creates new instance of Crawler.
      */

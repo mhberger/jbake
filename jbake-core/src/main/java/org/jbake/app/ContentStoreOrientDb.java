@@ -224,7 +224,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     }
 
     @Override
-    protected DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
+    public DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
         String query = String.format(STATEMENT_GET_PUBLISHED_CONTENT_BY_DOCTYPE, docType);
         if (applyPaging && hasStartAndLimitBoundary()) {
             query += " SKIP " + start + " LIMIT " + limit;
@@ -251,7 +251,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     }
 
     @Override
-    protected DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
+    public DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
         return query(STATEMENT_GET_TAGS_FROM_PUBLISHED_POSTS);
     }
 
@@ -290,21 +290,21 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     }
 
     @Override
-    protected DocumentList<DocumentModel> query(String sql) {
+    public DocumentList<DocumentModel> query(String sql) {
         activateOnCurrentThread();
         OResultSet results = db.query(sql);
         return DocumentList.wrap(results);
     }
 
     @Override
-    protected DocumentList<DocumentModel> query(String sql, Object... args) {
+    public DocumentList<DocumentModel> query(String sql, Object... args) {
         activateOnCurrentThread();
         OResultSet results = db.command(sql, args);
         return DocumentList.wrap(results);
     }
 
     @Override
-    protected void executeCommand(String query, Object... args) {
+    public void executeCommand(String query, Object... args) {
         activateOnCurrentThread();
         db.command(query, args);
     }
@@ -398,7 +398,7 @@ public class ContentStoreOrientDb extends AbstractContentStore {
     }
 
     @Override
-    protected void deleteAllDocumentTypes() {
+    public void deleteAllDocumentTypes() {
         for (String docType : DocumentTypes.getDocumentTypes()) {
             try {
                 this.deleteAllByDocType(docType);

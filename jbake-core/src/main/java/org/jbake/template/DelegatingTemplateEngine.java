@@ -1,7 +1,7 @@
 package org.jbake.template;
 
 import org.apache.commons.configuration2.CompositeConfiguration;
-import org.jbake.app.AbstractContentStore;
+import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.FileUtil;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -24,7 +24,7 @@ public class DelegatingTemplateEngine extends AbstractTemplateEngine {
     private final TemplateEngines renderers;
 
     /**
-     * @deprecated Use {@link #DelegatingTemplateEngine(AbstractContentStore, JBakeConfiguration)} instead.
+     * @deprecated Use {@link #DelegatingTemplateEngine(ContentStore, JBakeConfiguration)} instead.
      *
      * @param config the {@link CompositeConfiguration} of jbake
      * @param db the {@link ContentStoreOrientDb}

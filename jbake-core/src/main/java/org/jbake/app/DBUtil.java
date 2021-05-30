@@ -9,7 +9,7 @@ public class DBUtil {
     private static ContentStoreOrientDb contentStore;
 
     @Deprecated
-    public static AbstractContentStore createDataStore(final String type, String name) {
+    public static ContentStore createDataStore(final String type, String name) {
         if (contentStore == null) {
             contentStore = new ContentStoreOrientDb(type, name);
         }

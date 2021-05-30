@@ -4,7 +4,7 @@ import org.jbake.model.DocumentModel;
 
 import java.util.Set;
 
-public abstract class AbstractContentStore {
+public abstract class AbstractContentStore implements ContentStore {
     protected static final String STATEMENT_GET_PUBLISHED_POST_BY_TYPE_AND_TAG = "select * from Documents where status='published' and type='%s' and ? in tags order by date desc";
     protected static final String STATEMENT_GET_DOCUMENT_STATUS_BY_DOCTYPE_AND_URI = "select sha1,rendered from Documents where sourceuri=?";
     protected static final String STATEMENT_GET_PUBLISHED_COUNT = "select count(*) as count from Documents where status='published' and type='%s'";
@@ -22,53 +22,4 @@ public abstract class AbstractContentStore {
     protected static final String STATEMENT_UPDATE_TEMPLATE_SIGNATURE = "update Signatures set sha1=? where key='templates'";
     protected static final String STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE = "select count(*) as count from Documents where type='%s'";
 
-    public abstract void updateSchema();
-
-    public abstract long getDocumentCount(String docType);
-
-    public abstract long getPublishedCount(String docType);
-
-    public abstract DocumentList<DocumentModel> getDocumentByUri(String uri);
-
-    public abstract DocumentList<DocumentModel> getDocumentStatus(String uri);
-
-    public abstract DocumentList<DocumentModel> getPublishedPosts();
-
-    public abstract DocumentList<DocumentModel> getPublishedPostsByTag(String tag);
-
-    public abstract DocumentList<DocumentModel> getPublishedDocumentsByTag(String tag);
-
-    public abstract DocumentList<DocumentModel> getPublishedPages();
-
-    public abstract DocumentList<DocumentModel> getPublishedContent(String docType);
-
-    protected abstract DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging);
-
-    public abstract DocumentList<DocumentModel> getAllContent(String docType);
-
-    public abstract DocumentList<DocumentModel> getAllContent(String docType, boolean applyPaging);
-
-    protected abstract DocumentList<DocumentModel> getAllTagsFromPublishedPosts();
-
-    public abstract DocumentList<DocumentModel> getUnrenderedContent();
-
-    public abstract void deleteContent(String uri);
-
-    public abstract void markContentAsRendered(DocumentModel document);
-
-    public abstract void deleteAllByDocType(String docType);
-
-    protected abstract DocumentList<DocumentModel> query(String sql);
-
-    protected abstract DocumentList<DocumentModel> query(String sql, Object... args);
-
-    protected abstract void executeCommand(String query, Object... args);
-
-    public abstract Set<String> getTags();
-
-    public abstract Set<String> getAllTags();
-
-    protected abstract void deleteAllDocumentTypes();
-
-    public abstract void addDocument(DocumentModel document);
 }
