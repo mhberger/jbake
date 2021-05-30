@@ -48,7 +48,7 @@ import java.util.Set;
 /**
  * @author jdlee
  */
-public class ContentStoreOrientDb extends AbstractContentStore {
+public class ContentStoreOrientDb implements ContentStore {
 
     private final Logger logger = LoggerFactory.getLogger(ContentStoreOrientDb.class);
     private final String type;
