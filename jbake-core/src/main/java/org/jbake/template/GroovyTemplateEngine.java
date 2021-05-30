@@ -8,7 +8,7 @@ import groovy.text.TemplateEngine;
 import groovy.text.XmlTemplateEngine;
 import org.apache.commons.configuration2.CompositeConfiguration;
 import org.codehaus.groovy.runtime.MethodClosure;
-import org.jbake.app.ContentStore;
+import org.jbake.app.AbstractContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
@@ -36,7 +36,7 @@ public class GroovyTemplateEngine extends AbstractTemplateEngine {
     private final Map<String, Template> cachedTemplates = new HashMap<>();
 
     /**
-     * @deprecated Use {@link #GroovyTemplateEngine(JBakeConfiguration, ContentStore)} instead
+     * @deprecated Use {@link #GroovyTemplateEngine(JBakeConfiguration, AbstractContentStore)} instead
      *
      * @param config the {@link CompositeConfiguration} of jbake
      * @param db the {@link ContentStoreOrientDb}

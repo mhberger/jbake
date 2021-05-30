@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStore;
+import org.jbake.app.AbstractContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.slf4j.Logger;
@@ -47,7 +47,7 @@ public class TemplateEngines {
         return Collections.unmodifiableSet(engines.keySet());
     }
 
-    public TemplateEngines(final JBakeConfiguration config, final ContentStore db) {
+    public TemplateEngines(final JBakeConfiguration config, final AbstractContentStore db) {
         engines = new HashMap<>();
         loadEngines(config, db);
     }
@@ -72,7 +72,7 @@ public class TemplateEngines {
      * @param db database instance
      * @param engineClassName engine class, used both as a hint to find it and to create the engine itself.  @return null if the engine is not available, an instance of the engine otherwise
      */
-    private static AbstractTemplateEngine tryLoadEngine(final JBakeConfiguration config, final ContentStore db, String engineClassName) {
+    private static AbstractTemplateEngine tryLoadEngine(final JBakeConfiguration config, final AbstractContentStore db, String engineClassName) {
         try {
             @SuppressWarnings("unchecked")
             Class<? extends AbstractTemplateEngine> engineClass = (Class<? extends AbstractTemplateEngine>) Class.forName(engineClassName, false, TemplateEngines.class.getClassLoader());
@@ -89,7 +89,7 @@ public class TemplateEngines {
      * This method is used internally to load markup engines. Markup engines are found using descriptor files on
      * classpath, so adding an engine is as easy as adding a jar on classpath with the descriptor file included.
      */
-    private void loadEngines(final JBakeConfiguration config, final ContentStore db) {
+    private void loadEngines(final JBakeConfiguration config, final AbstractContentStore db) {
         try {
             ClassLoader cl = TemplateEngines.class.getClassLoader();
             Enumeration<URL> resources = cl.getResources("META-INF/org.jbake.parser.TemplateEngines.properties");
@@ -108,7 +108,7 @@ public class TemplateEngines {
         }
     }
 
-    private void registerEngine(final JBakeConfiguration config, final ContentStore db, String className, String... extensions) {
+    private void registerEngine(final JBakeConfiguration config, final AbstractContentStore db, String className, String... extensions) {
         AbstractTemplateEngine engine = tryLoadEngine(config, db, className);
         if (engine != null) {
             for (String extension : extensions) {

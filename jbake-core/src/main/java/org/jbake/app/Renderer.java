@@ -43,7 +43,7 @@ public class Renderer {
      * @param destination   The destination folder
      * @param templatesPath The templates folder
      * @param config        Project configuration
-     * @deprecated Use {@link #Renderer(ContentStore, JBakeConfiguration)} instead.
+     * @deprecated Use {@link #Renderer(AbstractContentStore, JBakeConfiguration)} instead.
      * Creates a new instance of Renderer with supplied references to folders.
      */
     @Deprecated
@@ -62,7 +62,7 @@ public class Renderer {
      * @param templatesPath   The templates folder
      * @param config          Project configuration
      * @param renderingEngine The instance of DelegatingTemplateEngine to use
-     * @deprecated Use {@link #Renderer(ContentStore, JBakeConfiguration, DelegatingTemplateEngine)} instead.
+     * @deprecated Use {@link #Renderer(AbstractContentStore, JBakeConfiguration, DelegatingTemplateEngine)} instead.
      * Creates a new instance of Renderer with supplied references to folders and the instance of DelegatingTemplateEngine to use.
      */
     @Deprecated

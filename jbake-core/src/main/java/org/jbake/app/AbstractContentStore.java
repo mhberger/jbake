@@ -4,7 +4,7 @@ import org.jbake.model.DocumentModel;
 
 import java.util.Set;
 
-public abstract class ContentStore {
+public abstract class AbstractContentStore {
     protected static final String STATEMENT_GET_PUBLISHED_POST_BY_TYPE_AND_TAG = "select * from Documents where status='published' and type='%s' and ? in tags order by date desc";
     protected static final String STATEMENT_GET_DOCUMENT_STATUS_BY_DOCTYPE_AND_URI = "select sha1,rendered from Documents where sourceuri=?";
     protected static final String STATEMENT_GET_PUBLISHED_COUNT = "select count(*) as count from Documents where status='published' and type='%s'";
