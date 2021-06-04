@@ -14,7 +14,6 @@ import freemarker.template.TemplateDateModel;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -22,7 +21,6 @@ import org.jbake.model.ModelAttributes;
 import org.jbake.template.model.TemplateModel;
 import org.jbake.util.DataFileUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Collection;
@@ -36,12 +34,6 @@ import java.util.Date;
 public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 
     private Configuration templateCfg;
-
-    @Deprecated
-    public FreemarkerTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
-        super(config, db, destination, templatesPath);
-        createTemplateConfiguration();
-    }
 
     public FreemarkerTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);

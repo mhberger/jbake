@@ -1,6 +1,5 @@
 package org.jbake.template;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.lang.LocaleUtils;
 import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
@@ -41,21 +40,6 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
     private TemplateEngine templateEngine;
     private final Context context;
     private FileTemplateResolver templateResolver;
-
-    /**
-     * @deprecated Use {@link #ThymeleafTemplateEngine(JBakeConfiguration, ContentStore)} instead
-     *
-     * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStoreOrientDb}
-     * @param destination the destination path
-     * @param templatesPath the templates path
-     */
-    @Deprecated
-    public ThymeleafTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
-        super(config, db, destination, templatesPath);
-        this.context = new Context();
-        initializeTemplateEngine();
-    }
 
     public ThymeleafTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);

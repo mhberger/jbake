@@ -1,7 +1,5 @@
 package org.jbake.template;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
-import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.FileUtil;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -22,20 +20,6 @@ public class DelegatingTemplateEngine extends AbstractTemplateEngine {
     private static final Logger LOGGER = LoggerFactory.getLogger(DelegatingTemplateEngine.class);
 
     private final TemplateEngines renderers;
-
-    /**
-     * @deprecated Use {@link #DelegatingTemplateEngine(ContentStore, JBakeConfiguration)} instead.
-     *
-     * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStoreOrientDb}
-     * @param destination the destination path
-     * @param templatesPath the templates path
-     */
-    @Deprecated
-    public DelegatingTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
-        super(config, db, destination, templatesPath);
-        this.renderers = new TemplateEngines(this.config, db);
-    }
 
     public DelegatingTemplateEngine(final ContentStoreOrientDb db, final JBakeConfiguration config) {
         super(config, db);

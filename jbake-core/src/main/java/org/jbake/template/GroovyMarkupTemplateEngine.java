@@ -4,13 +4,10 @@ import groovy.lang.Writable;
 import groovy.text.Template;
 import groovy.text.markup.MarkupTemplateEngine;
 import groovy.text.markup.TemplateConfiguration;
-import org.apache.commons.configuration2.CompositeConfiguration;
-import org.jbake.app.ContentStore;
 import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 
-import java.io.File;
 import java.io.Writer;
 import java.util.Map;
 
@@ -24,21 +21,6 @@ import java.util.Map;
 public class GroovyMarkupTemplateEngine extends AbstractTemplateEngine {
     private TemplateConfiguration templateConfiguration;
     private MarkupTemplateEngine templateEngine;
-
-    /**
-     * @deprecated Use {@link #GroovyMarkupTemplateEngine(JBakeConfiguration, ContentStore)} instead
-     *
-     * @param config the {@link CompositeConfiguration} of jbake
-     * @param db the {@link ContentStoreOrientDb}
-     * @param destination the destination path
-     * @param templatesPath the templates path
-     */
-    @Deprecated
-    public GroovyMarkupTemplateEngine(final CompositeConfiguration config, final ContentStoreOrientDb db, final File destination, final File templatesPath) {
-        super(config, db, destination, templatesPath);
-        setupTemplateConfiguration();
-        initializeTemplateEngine();
-    }
 
     public GroovyMarkupTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
         super(config, db);
