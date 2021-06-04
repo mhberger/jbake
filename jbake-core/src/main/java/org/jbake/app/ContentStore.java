@@ -22,6 +22,16 @@ public interface ContentStore {
     String STATEMENT_UPDATE_TEMPLATE_SIGNATURE = "update Signatures set sha1=? where key='templates'";
     String STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE = "select count(*) as count from Documents where type='%s'";
 
+    long getStart();
+
+    void setStart(int start);
+
+    long getLimit();
+
+    void setLimit(int limit);
+
+    void resetPagination();
+
     void updateSchema();
 
     long getDocumentCount(String docType);

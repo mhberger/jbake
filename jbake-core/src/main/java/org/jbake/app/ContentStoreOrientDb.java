@@ -84,22 +84,27 @@ public class ContentStoreOrientDb implements ContentStore {
         updateSchema();
     }
 
+    @Override
     public long getStart() {
         return start;
     }
 
+    @Override
     public void setStart(int start) {
         this.start = start;
     }
 
+    @Override
     public long getLimit() {
         return limit;
     }
 
+    @Override
     public void setLimit(int limit) {
         this.limit = limit;
     }
 
+    @Override
     public void resetPagination() {
         this.start = -1;
         this.limit = -1;
