@@ -2,7 +2,6 @@ package org.jbake.template;
 
 import org.apache.commons.lang.LocaleUtils;
 import org.jbake.app.ContentStore;
-import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.model.DocumentModel;
@@ -41,7 +40,7 @@ public class ThymeleafTemplateEngine extends AbstractTemplateEngine {
     private final Context context;
     private FileTemplateResolver templateResolver;
 
-    public ThymeleafTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
+    public ThymeleafTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
         super(config, db);
         this.context = new Context();
         initializeTemplateEngine();

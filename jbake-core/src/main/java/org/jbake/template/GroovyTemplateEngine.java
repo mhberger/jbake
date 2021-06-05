@@ -7,18 +7,13 @@ import groovy.text.Template;
 import groovy.text.TemplateEngine;
 import groovy.text.XmlTemplateEngine;
 import org.codehaus.groovy.runtime.MethodClosure;
-import org.jbake.app.ContentStoreOrientDb;
+import org.jbake.app.ContentStore;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Writer;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +28,7 @@ public class GroovyTemplateEngine extends AbstractTemplateEngine {
 
     private final Map<String, Template> cachedTemplates = new HashMap<>();
 
-    public GroovyTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
+    public GroovyTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
         super(config, db);
     }
 

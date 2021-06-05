@@ -15,7 +15,6 @@ import freemarker.template.TemplateException;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
 import org.jbake.app.ContentStore;
-import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.model.TemplateModel;
@@ -35,7 +34,7 @@ public class FreemarkerTemplateEngine extends AbstractTemplateEngine {
 
     private Configuration templateCfg;
 
-    public FreemarkerTemplateEngine(final JBakeConfiguration config, final ContentStoreOrientDb db) {
+    public FreemarkerTemplateEngine(final JBakeConfiguration config, final ContentStore db) {
         super(config, db);
         createTemplateConfiguration();
     }
