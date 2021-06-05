@@ -1,6 +1,8 @@
-package org.jbake.app;
+package org.jbake.db;
 
 import org.jbake.FakeDocumentBuilder;
+import org.jbake.app.DocumentList;
+import org.jbake.db.ContentStoreIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.jbake.model.ModelAttributes.Status;

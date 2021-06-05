@@ -3,13 +3,12 @@ package org.jbake.app;
 import org.apache.commons.io.FilenameUtils;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
+import org.jbake.db.ContentStoreIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.ModelAttributes;
 import org.jbake.model.DocumentTypes;
 import org.jbake.util.DataFileUtil;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Map;

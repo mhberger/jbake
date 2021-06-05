@@ -24,12 +24,12 @@
 package org.jbake.app;
 
 import org.jbake.FakeDocumentBuilder;
+import org.jbake.db.ContentStoreIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.BeforeClass;
 
 import java.util.Calendar;
 import java.util.Locale;

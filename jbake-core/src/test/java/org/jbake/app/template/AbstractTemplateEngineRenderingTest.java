@@ -24,7 +24,7 @@
 package org.jbake.app.template;
 
 import org.apache.commons.io.FileUtils;
-import org.jbake.app.ContentStoreIntegrationTest;
+import org.jbake.db.ContentStoreIntegrationTest;
 import org.jbake.app.Crawler;
 import org.jbake.app.Parser;
 import org.jbake.app.Renderer;
@@ -35,8 +35,6 @@ import org.jbake.template.ModelExtractorsDocumentTypeListener;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.File;
