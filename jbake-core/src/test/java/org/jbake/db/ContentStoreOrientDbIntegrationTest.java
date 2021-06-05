@@ -16,7 +16,7 @@ import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 
-public abstract class ContentStoreIntegrationTest {
+public abstract class ContentStoreOrientDbIntegrationTest {
 
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();

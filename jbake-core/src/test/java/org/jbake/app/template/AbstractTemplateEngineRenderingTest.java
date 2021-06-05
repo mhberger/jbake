@@ -24,7 +24,7 @@
 package org.jbake.app.template;
 
 import org.apache.commons.io.FileUtils;
-import org.jbake.db.ContentStoreIntegrationTest;
+import org.jbake.db.ContentStoreOrientDbIntegrationTest;
 import org.jbake.app.Crawler;
 import org.jbake.app.Parser;
 import org.jbake.app.Renderer;
@@ -46,7 +46,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author jdlee
  */
-public abstract class AbstractTemplateEngineRenderingTest extends ContentStoreIntegrationTest {
+public abstract class AbstractTemplateEngineRenderingTest extends ContentStoreOrientDbIntegrationTest {
 
     protected final String templateDir;
     protected final String templateExtension;

@@ -3,7 +3,7 @@ package org.jbake.app;
 import org.apache.commons.io.FilenameUtils;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.jbake.db.ContentStoreIntegrationTest;
+import org.jbake.db.ContentStoreOrientDbIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.ModelAttributes;
 import org.jbake.model.DocumentTypes;
@@ -16,7 +16,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 
-public class CrawlerTest extends ContentStoreIntegrationTest {
+public class CrawlerTest extends ContentStoreOrientDbIntegrationTest {
 
     @Test
     public void crawl() {

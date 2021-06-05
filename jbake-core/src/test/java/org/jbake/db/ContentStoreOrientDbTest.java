@@ -2,7 +2,6 @@ package org.jbake.db;
 
 import org.jbake.FakeDocumentBuilder;
 import org.jbake.app.DocumentList;
-import org.jbake.db.ContentStoreIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.jbake.model.ModelAttributes.Status;
@@ -15,7 +14,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
-public class ContentStoreTest extends ContentStoreIntegrationTest {
+public class ContentStoreOrientDbTest extends ContentStoreOrientDbIntegrationTest {
 
     public static final String DOC_TYPE_POST = "post";
 

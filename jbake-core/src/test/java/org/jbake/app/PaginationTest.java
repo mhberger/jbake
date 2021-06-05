@@ -24,7 +24,7 @@
 package org.jbake.app;
 
 import org.jbake.FakeDocumentBuilder;
-import org.jbake.db.ContentStoreIntegrationTest;
+import org.jbake.db.ContentStoreOrientDbIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.junit.Assert;
@@ -39,7 +39,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * @author jdlee
  */
-public class PaginationTest extends ContentStoreIntegrationTest {
+public class PaginationTest extends ContentStoreOrientDbIntegrationTest {
 
     @Before
     public void setUpOwn() {
