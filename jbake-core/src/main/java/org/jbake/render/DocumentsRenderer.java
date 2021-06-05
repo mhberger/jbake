@@ -1,8 +1,6 @@
 package org.jbake.render;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.jbake.app.ContentStore;
-import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.DocumentList;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.JBakeConfiguration;
@@ -10,7 +8,6 @@ import org.jbake.model.DocumentModel;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.RenderingException;
 
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,8 +112,4 @@ public class DocumentsRenderer implements RenderingTool {
         return navDocument;
     }
 
-    @Override
-    public int render(Renderer renderer, ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config) throws RenderingException {
-        return render(renderer, db, null);
-    }
 }

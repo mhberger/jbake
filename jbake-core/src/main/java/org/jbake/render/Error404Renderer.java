@@ -1,13 +1,8 @@
 package org.jbake.render;
 
-import java.io.File;
-
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.jbake.app.ContentStore;
-import org.jbake.app.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.JBakeConfiguration;
-import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.template.RenderingException;
 
 
@@ -27,9 +22,4 @@ public class Error404Renderer implements RenderingTool {
         }
     }
 
-    @Override
-    public int render(Renderer renderer, ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config) throws RenderingException {
-        JBakeConfiguration configuration = new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), config);
-        return render(renderer, db, configuration);
-    }
 }

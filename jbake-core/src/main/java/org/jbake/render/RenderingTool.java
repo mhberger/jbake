@@ -14,8 +14,4 @@ public interface RenderingTool {
 
     int render(Renderer renderer, ContentStore db, JBakeConfiguration config) throws RenderingException;
 
-    @Deprecated
-    //TODO: remove at 3.0.0
-    int render(Renderer renderer, ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config) throws RenderingException;
-
 }
