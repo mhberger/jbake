@@ -1,9 +1,6 @@
 package org.jbake.app;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
-import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
-import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.DelegatingTemplateEngine;
@@ -38,40 +35,7 @@ public class Renderer {
     private final DelegatingTemplateEngine renderingEngine;
     private final ContentStore db;
 
-    /**
-     * @param db            The database holding the content
-     * @param destination   The destination folder
-     * @param templatesPath The templates folder
-     * @param config        Project configuration
-     * @deprecated Use {@link #Renderer(ContentStore, JBakeConfiguration)} instead.
-     * Creates a new instance of Renderer with supplied references to folders.
-     */
-    @Deprecated
-    public Renderer(ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config) {
-        this(db, new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), config));
-        DefaultJBakeConfiguration configuration = ((DefaultJBakeConfiguration) this.config);
-        configuration.setDestinationFolder(destination);
-        configuration.setTemplateFolder(templatesPath);
-    }
-
     // TOqDO: should all content be made available to all templates via this class??
-
-    /**
-     * @param db              The database holding the content
-     * @param destination     The destination folder
-     * @param templatesPath   The templates folder
-     * @param config          Project configuration
-     * @param renderingEngine The instance of DelegatingTemplateEngine to use
-     * @deprecated Use {@link #Renderer(ContentStore, JBakeConfiguration, DelegatingTemplateEngine)} instead.
-     * Creates a new instance of Renderer with supplied references to folders and the instance of DelegatingTemplateEngine to use.
-     */
-    @Deprecated
-    public Renderer(ContentStoreOrientDb db, File destination, File templatesPath, CompositeConfiguration config, DelegatingTemplateEngine renderingEngine) {
-        this(db, new JBakeConfigurationFactory().createDefaultJbakeConfiguration(templatesPath.getParentFile(), config), renderingEngine);
-        DefaultJBakeConfiguration configuration = ((DefaultJBakeConfiguration) this.config);
-        configuration.setDestinationFolder(destination);
-        configuration.setTemplateFolder(templatesPath);
-    }
 
     /**
      * Creates a new instance of Renderer with supplied references to folders.

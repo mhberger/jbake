@@ -1,9 +1,7 @@
 package org.jbake.app;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.io.FilenameUtils;
 import org.jbake.app.configuration.JBakeConfiguration;
-import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentStatus;
 import org.jbake.model.DocumentTypes;
@@ -30,21 +28,6 @@ public class Crawler {
     private final ContentStore db;
     private final JBakeConfiguration config;
     private final Parser parser;
-
-    /**
-     * @param db     Database instance for content
-     * @param source Base directory where content directory is located
-     * @param config Project configuration
-     * @deprecated Use {@link #Crawler(ContentStore, JBakeConfiguration)} instead.
-     * <p>
-     * Creates new instance of Crawler.
-     */
-    @Deprecated
-    public Crawler(ContentStoreOrientDb db, File source, CompositeConfiguration config) {
-        this.db = db;
-        this.config = new JBakeConfigurationFactory().createDefaultJbakeConfiguration(source, config);
-        this.parser = new Parser(this.config);
-    }
 
     /**
      * Creates new instance of Crawler.
