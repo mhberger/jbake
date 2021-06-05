@@ -27,7 +27,7 @@ import java.util.Date;
 public class Crawler {
 
     private static final Logger logger = LoggerFactory.getLogger(Crawler.class);
-    private final ContentStoreOrientDb db;
+    private final ContentStore db;
     private final JBakeConfiguration config;
     private final Parser parser;
 
@@ -48,11 +48,10 @@ public class Crawler {
 
     /**
      * Creates new instance of Crawler.
-     *
-     * @param db     Database instance for content
+     *  @param db     Database instance for content
      * @param config Project configuration
      */
-    public Crawler(ContentStoreOrientDb db, JBakeConfiguration config) {
+    public Crawler(ContentStore db, JBakeConfiguration config) {
         this.db = db;
         this.config = config;
         this.parser = new Parser(config);

@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStoreOrientDb;
+import org.jbake.app.ContentStore;
 import org.jbake.app.FileUtil;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
@@ -21,7 +21,7 @@ public class DelegatingTemplateEngine extends AbstractTemplateEngine {
 
     private final TemplateEngines renderers;
 
-    public DelegatingTemplateEngine(final ContentStoreOrientDb db, final JBakeConfiguration config) {
+    public DelegatingTemplateEngine(final ContentStore db, final JBakeConfiguration config) {
         super(config, db);
         this.renderers = new TemplateEngines(config, db);
     }

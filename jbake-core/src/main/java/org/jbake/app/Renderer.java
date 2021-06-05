@@ -36,7 +36,7 @@ public class Renderer {
     private final Logger logger = LoggerFactory.getLogger(Renderer.class);
     private final JBakeConfiguration config;
     private final DelegatingTemplateEngine renderingEngine;
-    private final ContentStoreOrientDb db;
+    private final ContentStore db;
 
     /**
      * @param db            The database holding the content
@@ -75,11 +75,10 @@ public class Renderer {
 
     /**
      * Creates a new instance of Renderer with supplied references to folders.
-     *
-     * @param db     The database holding the content
+     *  @param db     The database holding the content
      * @param config Project configuration
      */
-    public Renderer(ContentStoreOrientDb db, JBakeConfiguration config) {
+    public Renderer(ContentStore db, JBakeConfiguration config) {
         this.config = config;
         this.renderingEngine = new DelegatingTemplateEngine(db, config);
         this.db = db;
@@ -87,12 +86,11 @@ public class Renderer {
 
     /**
      * Creates a new instance of Renderer with supplied references to folders and the instance of DelegatingTemplateEngine to use.
-     *
-     * @param db              The database holding the content
+     *  @param db              The database holding the content
      * @param config          The application specific configuration
      * @param renderingEngine The instance of DelegatingTemplateEngine to use
      */
-    public Renderer(ContentStoreOrientDb db, JBakeConfiguration config, DelegatingTemplateEngine renderingEngine) {
+    public Renderer(ContentStore db, JBakeConfiguration config, DelegatingTemplateEngine renderingEngine) {
         this.config = config;
         this.renderingEngine = renderingEngine;
         this.db = db;
