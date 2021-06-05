@@ -1,5 +1,6 @@
-package org.jbake.app;
+package org.jbake.db;
 
+import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 
 import java.util.Set;

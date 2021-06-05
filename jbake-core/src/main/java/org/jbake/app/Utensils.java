@@ -1,6 +1,7 @@
 package org.jbake.app;
 
 import org.jbake.app.configuration.JBakeConfiguration;
+import org.jbake.db.ContentStoreOrientDb;
 
 /**
  * A helper class to wrap all the utensils that are needed to bake.

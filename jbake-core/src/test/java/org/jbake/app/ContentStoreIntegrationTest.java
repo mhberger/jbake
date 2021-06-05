@@ -4,6 +4,7 @@ import org.apache.commons.vfs2.util.Os;
 import org.jbake.TestUtils;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
+import org.jbake.db.ContentStoreOrientDb;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package org.jbake.util;
 
-import org.jbake.app.ContentStore;
+import org.jbake.db.ContentStore;
 import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 import org.slf4j.Logger;

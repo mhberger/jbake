@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStore;
+import org.jbake.db.ContentStore;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 

@@ -7,7 +7,7 @@ import groovy.text.Template;
 import groovy.text.TemplateEngine;
 import groovy.text.XmlTemplateEngine;
 import org.codehaus.groovy.runtime.MethodClosure;
-import org.jbake.app.ContentStore;
+import org.jbake.db.ContentStore;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.model.TemplateModel;
 import org.xml.sax.SAXException;

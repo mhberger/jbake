@@ -1,6 +1,6 @@
 package org.jbake.render;
 
-import org.jbake.app.ContentStoreOrientDb;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;

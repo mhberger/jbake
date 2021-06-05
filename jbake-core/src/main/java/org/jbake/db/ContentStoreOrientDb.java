@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.jbake.app;
+package org.jbake.db;
 
 import com.orientechnologies.common.log.OLogManager;
 import com.orientechnologies.orient.core.Orient;
@@ -34,6 +34,9 @@ import com.orientechnologies.orient.core.metadata.schema.OSchema;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.record.impl.ODocument;
 import com.orientechnologies.orient.core.sql.executor.OResultSet;
+import org.jbake.app.DBUtil;
+import org.jbake.app.DocumentList;
+import org.jbake.app.FileUtil;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.jbake.model.ModelAttributes;

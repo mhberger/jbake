@@ -1,6 +1,7 @@
 package org.jbake.app;
 
 import org.jbake.app.configuration.JBakeConfiguration;
+import org.jbake.db.ContentStore;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.ModelAttributes;
 import org.jbake.template.DelegatingTemplateEngine;

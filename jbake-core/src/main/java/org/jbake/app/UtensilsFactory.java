@@ -2,6 +2,7 @@ package org.jbake.app;
 
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationInspector;
+import org.jbake.db.ContentStoreOrientDb;
 
 /**
  * A factory to create a {@link Utensils} object

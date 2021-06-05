@@ -6,6 +6,7 @@ import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.app.configuration.JBakeConfigurationInspector;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.model.DocumentTypes;
 import org.jbake.render.RenderingTool;
 import org.jbake.template.ModelExtractors;

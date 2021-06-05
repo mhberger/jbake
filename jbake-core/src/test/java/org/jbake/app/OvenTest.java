@@ -5,6 +5,7 @@ import org.jbake.TestUtils;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.PropertyList;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.model.DocumentTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -3,6 +3,8 @@ package org.jbake.app;
 import com.orientechnologies.orient.core.db.record.OTrackedList;
 import com.orientechnologies.orient.core.sql.executor.OResult;
 import org.jbake.app.configuration.JBakeConfiguration;
+import org.jbake.db.ContentStore;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.model.DocumentModel;
 
 public class DBUtil {

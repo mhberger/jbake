@@ -1,6 +1,6 @@
 package org.jbake.template;
 
-import org.jbake.app.ContentStore;
+import org.jbake.db.ContentStore;
 import org.jbake.model.DocumentTypeUtils;
 import org.jbake.template.model.PublishedCustomExtractor;
 import org.jbake.template.model.TypedDocumentsExtractor;
