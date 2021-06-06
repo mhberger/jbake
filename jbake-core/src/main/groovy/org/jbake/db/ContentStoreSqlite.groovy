@@ -1,5 +1,6 @@
 package org.jbake.db
 
+import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.jbake.app.DocumentList
 import org.jbake.domain.Document
@@ -24,7 +25,7 @@ public class ContentStoreSqlite implements ContentStore {
 
         String sql = """
             CREATE TABLE documents (
-              id                      BIGINT                      NOT NULL,
+              id                      INTEGER                     NOT NULL,
               uri                     VARCHAR(255)                NOT NULL,
               name                    VARCHAR(255)                NOT NULL,
               status                  VARCHAR(25)                 NOT NULL,
@@ -66,7 +67,7 @@ public class ContentStoreSqlite implements ContentStore {
         db.execute(sql);
     }
 
-    void addDocumentToDb(Document document, Sql db) {
+    void addDocumentToDb(Document document) {
         db.execute("""
          insert into documents (
             uri,
@@ -99,7 +100,7 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     // Map from DB row
-    Document mapFromDb(groovy.sql.GroovyRowResult row) {
+    Document mapFromDb(GroovyRowResult row) {
         return new Document(row)
     }
 
