@@ -1,12 +1,9 @@
 package org.jbake.db
 
-import org.jbake.app.DocumentList;
-import org.jbake.model.DocumentModel;
-
-import org.sqlite.SQLiteDataSource
 import groovy.sql.Sql
-
-import java.util.Set;
+import org.jbake.app.DocumentList
+import org.jbake.domain.Document
+import org.jbake.model.DocumentModel
 
 public class ContentStoreSqlite implements ContentStore {
 
@@ -67,6 +64,43 @@ public class ContentStoreSqlite implements ContentStore {
            """.stripIndent()
 
         db.execute(sql);
+    }
+
+    void addDocumentToDb(Document document, Sql db) {
+        db.execute("""
+         insert into documents (
+            uri,
+            name,
+            status,
+            type,
+            source_uri,
+            document_date,
+            sha1,
+            rendered,
+            cached,
+            tags,
+            body
+         )
+         values(
+            ${document.uri},
+            ${document.name},
+            ${document.status},
+            ${document.type},
+            ${document.source_uri},
+            ${document.document_date},
+            ${document.sha1},
+            ${document.rendered},
+            ${document.cached},
+            ${document.tags},
+            ${document.body}
+         )
+         """
+        )
+    }
+
+    // Map from DB row
+    Document mapFromDb(groovy.sql.GroovyRowResult row) {
+        return new Document(row)
     }
 
     @Override
