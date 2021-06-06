@@ -31,7 +31,7 @@ public class ContentStoreSqlite implements ContentStore {
               status                  VARCHAR(25)                 NOT NULL,
               type                    VARHCAR(50)                 NOT NULL,
               source_uri              TEXT                        NOT NULL,
-              document_date           TIMESTAMP WITH TIME ZONE    NOT NULL,
+              document_date           TEXT                        NOT NULL,
               sha1                    VARHCAR(40)                 NOT NULL,
               rendered                BOOLEAN                     NOT NULL,
               cached                  BOOLEAN                     NOT NULL,
@@ -67,8 +67,8 @@ public class ContentStoreSqlite implements ContentStore {
         db.execute(sql);
     }
 
-    void addDocumentToDb(Document document) {
-        db.execute("""
+    Long addDocumentToDb(Document document) {
+        def result = db.executeInsert("""
          insert into documents (
             uri,
             name,
@@ -92,16 +92,32 @@ public class ContentStoreSqlite implements ContentStore {
             ${document.sha1},
             ${document.rendered},
             ${document.cached},
-            ${document.tags},
+            ${document.tag_string},
             ${document.body}
          )
          """
         )
+
+        def id = Long.valueOf(result[0][0])
+        return id
     }
 
     // Map from DB row
     Document mapFromDb(GroovyRowResult row) {
-        return new Document(row)
+        Document document = new Document()
+        document.id =            row.id
+        document.uri =           row.uri
+        document.name =          row.name
+        document.status =        row.status
+        document.type =          row.type
+        document.source_uri =    row.source_uri
+        document.document_date = row.document_date
+        document.sha1 =          row.sha1
+        document.rendered =      row.rendered
+        document.cached =        row.cached
+        document.tag_string =    row.tags
+        document.body =          row.body
+        return document
     }
 
     @Override

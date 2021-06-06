@@ -40,6 +40,23 @@ public class ContentStoreSqliteIntegrationTest {
         return contentStoreSqlite.getDb();
     }
 
+    private Document makeTestDocument() {
+        Document document = new Document(
+            uri: 'test uri 1',
+            name: 'name',
+            status: 'status',
+            type: 'type',
+            source_uri: 'source_uri',
+            document_date: '2021-06-13',
+            sha1: 'sha1',
+            rendered: 'rendered',
+            cached: 'cached',
+            tag_string: 'tag3,tag1',
+            body: 'body'
+        )
+        document
+    }
+
     @Test
     public void confirmTablesExist() throws Exception {
         GroovyRowResult result = getDb().firstRow("select count(*) numTables from sqlite_master where type = 'table'");
@@ -47,25 +64,24 @@ public class ContentStoreSqliteIntegrationTest {
     }
 
     @Test
-    public void confirmRowAddedt() throws Exception {
-        Document document = new Document(
-            uri:               'uri',
-            name:              'name',
-            status:            'status',
-            type:              'type',
-            source_uri:        'source_uri',
-            document_date:     new Date(),
-            sha1:              'sha1',
-            rendered:          'rendered',
-            cached:            'cached',
-            tags:              ['tags'],
-            body:              'body'
-        )
-
+    public void confirmRowAdded() throws Exception {
+        Document document = makeTestDocument()
         contentStoreSqlite.addDocumentToDb(document)
 
         GroovyRowResult result = getDb().firstRow("select count(*) numTables from documents");
         assertEquals(1, result.getProperty("numTables"));
+    }
+
+    @Test
+    public void confirmRowReturned() throws Exception {
+        Document document = makeTestDocument()
+        Long id = contentStoreSqlite.addDocumentToDb(document)
+        document.id = id
+
+        GroovyRowResult result = getDb().firstRow("select * from documents where uri = 'test uri 1'");
+        Document testDocument = contentStoreSqlite.mapFromDb(result)
+
+        assertEquals(document, testDocument)
     }
 
 }
