@@ -26,15 +26,15 @@ public class ContentStoreSqlite implements ContentStore {
         String sql = """
             CREATE TABLE documents (
               id                      INTEGER                     NOT NULL,
-              name                    VARCHAR(255)                NOT NULL,
+              name                    VARCHAR(255),
               title                   TEXT                        NOT NULL,
               status                  VARCHAR(25)                 NOT NULL,
               type                    VARHCAR(50)                 NOT NULL,
-              root_path               TEXT                        NOT NULL,
+              root_path               TEXT,
               file                    TEXT                        NOT NULL,
               uri                     TEXT                        NOT NULL,
-              uri_no_extensions       TEXT                        NOT NULL,
-              source_uri              TEXT                        NOT NULL,
+              uri_no_extensions       TEXT,
+              source_uri              TEXT,
               document_date           TEXT                        NOT NULL,
               sha1                    VARHCAR(40)                 NOT NULL,
               rendered                BOOLEAN                     NOT NULL,
@@ -179,17 +179,26 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getDocumentByUri(String uri) {
-        return null;
+        GroovyRowResult result = getDb().firstRow("select * from documents where uri = ?", uri);
+        return mapFromDb(result)
     }
 
     @Override
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
-        return null;
+        List<DocumentModel> docs = []
+        getDb().rows("select * from documents where uri = ?", uri).each {row ->
+            docs.add(mapFromDb(row))
+        }
+        return docs
     }
 
     @Override
     public DocumentList<DocumentModel> getPublishedPosts() {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        getDb().rows("select * from Documents where status='published' and type= 'post' order by document_date desc").each {row ->
+            docs.add(mapFromDb(row))
+        }
+        return docs
     }
 
     @Override
@@ -259,7 +268,7 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public void addDocument(DocumentModel document) {
-
+       addDocumentToDb(Document.fromDocumentModel(document))
     }
 
     @Override
