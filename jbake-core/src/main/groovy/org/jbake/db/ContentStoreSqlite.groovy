@@ -168,7 +168,8 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public long getDocumentCount(String docType) {
-        return 0;
+        GroovyRowResult result = getDb().firstRow("select count(*) count_docs  from documents where type = ?", docType);
+        result.getProperty('count_docs')
     }
 
     @Override

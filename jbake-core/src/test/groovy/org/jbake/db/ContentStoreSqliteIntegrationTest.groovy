@@ -113,6 +113,17 @@ public class ContentStoreSqliteIntegrationTest {
     }
 
     @Test
+    public void confirmGetDocumentCount() throws Exception {
+        Document document = makeTestDocument()
+        document.setType('post')
+        Long id = contentStoreSqlite.addDocumentToDb(document)
+
+        def count = contentStoreSqlite.getDocumentCount('post')
+
+        assertEquals(1, count)
+    }
+
+    @Test
     public void confirmDocumentConvertsToDocumentModel() throws Exception {
         Document document = makeTestDocument()
         DocumentModel documentModel = document.toDocumentModel()
