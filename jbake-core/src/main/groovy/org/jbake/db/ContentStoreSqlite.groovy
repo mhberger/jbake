@@ -26,10 +26,14 @@ public class ContentStoreSqlite implements ContentStore {
         String sql = """
             CREATE TABLE documents (
               id                      INTEGER                     NOT NULL,
-              uri                     VARCHAR(255)                NOT NULL,
               name                    VARCHAR(255)                NOT NULL,
+              title                   TEXT                        NOT NULL,
               status                  VARCHAR(25)                 NOT NULL,
               type                    VARHCAR(50)                 NOT NULL,
+              root_path               TEXT                        NOT NULL,
+              file                    TEXT                        NOT NULL,
+              uri                     TEXT                        NOT NULL,
+              uri_no_extensions       TEXT                        NOT NULL,
               source_uri              TEXT                        NOT NULL,
               document_date           TEXT                        NOT NULL,
               sha1                    VARHCAR(40)                 NOT NULL,
@@ -70,10 +74,14 @@ public class ContentStoreSqlite implements ContentStore {
     Long addDocumentToDb(Document document) {
         def result = db.executeInsert("""
          insert into documents (
-            uri,
             name,
+            title,
             status,
             type,
+            root_path,
+            file,
+            uri,
+            uri_no_extensions,
             source_uri,
             document_date,
             sha1,
@@ -83,10 +91,14 @@ public class ContentStoreSqlite implements ContentStore {
             body
          )
          values(
-            ${document.uri},
             ${document.name},
+            ${document.title},
             ${document.status},
             ${document.type},
+            ${document.root_path},
+            ${document.file},
+            ${document.uri},
+            ${document.uri_no_extensions},
             ${document.source_uri},
             ${document.document_date},
             ${document.sha1},
@@ -103,13 +115,17 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     // Map from DB row
-    Document mapFromDb(GroovyRowResult row) {
+    static Document mapFromDb(GroovyRowResult row) {
         Document document = new Document()
         document.id =            row.id
-        document.uri =           row.uri
         document.name =          row.name
+        document.title =         row.title
         document.status =        row.status
         document.type =          row.type
+        document.root_path =     row.root_path
+        document.file =          row.file
+        document.uri =           row.uri
+        document.uri_no_extensions =   row.uri_no_extensions
         document.source_uri =    row.source_uri
         document.document_date = row.document_date
         document.sha1 =          row.sha1

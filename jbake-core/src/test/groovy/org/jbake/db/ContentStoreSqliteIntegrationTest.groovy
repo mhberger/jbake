@@ -3,6 +3,7 @@ package org.jbake.db
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.jbake.domain.Document
+import org.jbake.model.DocumentModel
 import org.junit.After
 import org.junit.AfterClass
 import org.junit.Before
@@ -42,10 +43,14 @@ public class ContentStoreSqliteIntegrationTest {
 
     private Document makeTestDocument() {
         Document document = new Document(
-            uri: 'test uri 1',
             name: 'name',
+            title: 'title',
             status: 'status',
             type: 'type',
+            root_path: 'root_path',
+            file: 'file',
+            uri: 'test uri 1',
+            uri_no_extensions: 'uri_no_extensions',
             source_uri: 'source_uri',
             document_date: '2021-06-13',
             sha1: 'sha1',
@@ -82,6 +87,15 @@ public class ContentStoreSqliteIntegrationTest {
         Document testDocument = contentStoreSqlite.mapFromDb(result)
 
         assertEquals(document, testDocument)
+    }
+
+    @Test
+    public void confirmDocumentConvertsToDocumentModel() throws Exception {
+        Document document = makeTestDocument()
+        DocumentModel documentModel = document.toDocumentModel()
+
+        assertEquals(documentModel.getTitle(), document.title)
+        assertEquals(documentModel.getDate(), document.documentDate())
     }
 
 }
