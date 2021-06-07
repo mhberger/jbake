@@ -62,6 +62,29 @@ public class ContentStoreSqliteIntegrationTest {
         document
     }
 
+    private DocumentModel makeTestDocumentModel() {
+        DocumentModel documentModel = new DocumentModel()
+
+        documentModel.setName('documentModel name')
+        documentModel.setTitle('documentModel title')
+        documentModel.setStatus('documentModel status')
+        documentModel.setType('documentModel type')
+        documentModel.setRootPath('documentModel rootPath')
+        documentModel.setFile('documentModel file')
+        documentModel.setUri('documentModel uri')
+        documentModel.setNoExtensionUri('documentModel noExtensionsUri')
+        documentModel.setSourceUri('documentModel sourceUrl')
+        documentModel.setDate(Date.parse('yyyy-MM-dd', '2020-05-04'))
+        documentModel.setSha1('documentModel sha1')
+        documentModel.setRendered(false)
+        documentModel.setCached(false)
+        documentModel.setTags(['tag1', 'tag2'] as String[])
+        documentModel.setBody('documentModel body')
+
+        documentModel
+    }
+
+
     @Test
     public void confirmTablesExist() throws Exception {
         GroovyRowResult result = getDb().firstRow("select count(*) numTables from sqlite_master where type = 'table'");
@@ -96,6 +119,15 @@ public class ContentStoreSqliteIntegrationTest {
 
         assertEquals(documentModel.getTitle(), document.title)
         assertEquals(documentModel.getDate(), document.documentDate())
+    }
+
+    @Test
+    public void confirmDocumentConvertsFromDocumentModel() throws Exception {
+        DocumentModel documentModel = makeTestDocumentModel()
+        Document document = Document.fromDocumentModel(documentModel)
+
+        assertEquals(document.title, documentModel.getTitle())
+        assertEquals(document.documentDate(), documentModel.getDate())
     }
 
 }
