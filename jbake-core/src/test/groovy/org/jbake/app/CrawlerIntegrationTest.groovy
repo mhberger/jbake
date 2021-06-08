@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 
-@Ignore("Need to fix up the DocumentList first.")
+//@Ignore("Need to fix up the DocumentList first.")
 class CrawlerIntegrationTest {
     protected static ContentStoreSqlite contentStoreSqlite;
     protected static DefaultJBakeConfiguration config;
@@ -70,11 +70,14 @@ class CrawlerIntegrationTest {
 
         assertThat(results.size()).isEqualTo(3);
 
-        for (Map<String, Object> content : results) {
-            assertThat(content)
-                .containsKey(ModelAttributes.ROOTPATH)
-                .containsValue("../../../");
+        results.each {
+            assertThat(it.getRootPath() == "../../../")
         }
+//        for (Map<String, Object> content : results) {
+//            assertThat(content)
+//                .containsKey(ModelAttributes.ROOTPATH)
+//                .containsValue("../../../");
+//        }
 
         DocumentList<DocumentModel> allPosts = contentStoreSqlite.getAllContent("post");
 

@@ -187,7 +187,8 @@ public class ContentStoreSqlite implements ContentStore {
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
         List<DocumentModel> docs = []
         getDb().rows("select * from documents where uri = ?", uri).each {row ->
-            docs.add(mapFromDb(row))
+            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            docs.add(documentModel)
         }
         return docs
     }
@@ -196,7 +197,8 @@ public class ContentStoreSqlite implements ContentStore {
     public DocumentList<DocumentModel> getPublishedPosts() {
         DocumentList<DocumentModel> docs = []
         getDb().rows("select * from Documents where status='published' and type= 'post' order by document_date desc").each {row ->
-            docs.add(mapFromDb(row))
+            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            docs.add(documentModel)
         }
         return docs
     }
