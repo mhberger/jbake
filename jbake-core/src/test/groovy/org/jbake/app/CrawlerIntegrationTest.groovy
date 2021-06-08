@@ -14,6 +14,7 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Ignore
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
@@ -22,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat
 
 //@Ignore("Need to fix up the DocumentList first.")
 class CrawlerIntegrationTest {
+    public static TemporaryFolder folder = new TemporaryFolder();
     protected static ContentStoreSqlite contentStoreSqlite;
     protected static DefaultJBakeConfiguration config;
     protected static File sourceFolder;
@@ -70,9 +72,10 @@ class CrawlerIntegrationTest {
 
         assertThat(results.size()).isEqualTo(3);
 
-        results.each {
-            assertThat(it.getRootPath() == "../../../")
-        }
+        // TODO Work out what this is used for
+//        results.each {
+//            assertThat(it.getRootPath() == "../../../")
+//        }
 //        for (Map<String, Object> content : results) {
 //            assertThat(content)
 //                .containsKey(ModelAttributes.ROOTPATH)

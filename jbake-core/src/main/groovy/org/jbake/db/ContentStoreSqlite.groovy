@@ -210,12 +210,24 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedPostsByTag(String tag) {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        String sql = "select * from Documents where type = 'post' and status = 'published' and (tags like '%${tag},%' OR tags like '%,${tag},%')"
+        getDb().rows(sql).each {row ->
+            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
     public DocumentList<DocumentModel> getPublishedDocumentsByTag(String tag) {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        String sql = "select * from Documents where status = 'published' and (tags like '%${tag},%' OR tags like '%,${tag},%')"
+        getDb().rows(sql).each {row ->
+            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -230,7 +242,12 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getAllContent(String docType) {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        getDb().rows("select * from Documents where type= ? order by document_date desc", docType).each {row ->
+            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
