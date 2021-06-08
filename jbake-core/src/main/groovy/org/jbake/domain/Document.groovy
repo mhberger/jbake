@@ -77,7 +77,7 @@ class Document {
         document.sha1               =  documentModel.sha1
         document.rendered           =  documentModel.rendered
         document.cached             =  documentModel.cached
-        document.tag_string         =  documentModel.getTags().join(/,/).toString()
+        document.tag_string         =  documentModel.getTags().join(/,/).toString()+","
         document.body               =  documentModel.body
 
         document
