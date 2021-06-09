@@ -4,6 +4,7 @@ import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.jbake.app.DocumentList
 import org.jbake.domain.Document
+import org.jbake.domain.DataFile
 import org.jbake.model.DocumentModel
 
 public class ContentStoreSqlite implements ContentStore {
@@ -16,6 +17,7 @@ public class ContentStoreSqlite implements ContentStore {
 
     void createTables() {
         createDocumentsTable()
+        createDataFilesTable()
         createSignaturesTable()
     }
 
@@ -52,6 +54,30 @@ public class ContentStoreSqlite implements ContentStore {
         db.execute(sql);
     }
 
+    void createDataFilesTable() {
+
+        db.execute("drop table if exists data_files");
+
+        String sql = """
+            CREATE TABLE data_files (
+              id                      INTEGER                     NOT NULL,
+              sha1                    VARHCAR(40)                 NOT NULL,
+              rendered                BOOLEAN                     NOT NULL,
+              file                    TEXT                        NOT NULL,
+              source_uri              TEXT,
+              type                    VARHCAR(50)                 NOT NULL,
+              data                    TEXT                        NOT NULL,
+              created_timestamp       TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              last_updated_timestamp  TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
+              version                 BIGINT                      NOT NULL DEFAULT (0),
+
+              CONSTRAINT documents_pk PRIMARY KEY ( id )
+            );
+            """.stripIndent()
+
+        db.execute(sql);
+    }
+
     void createSignaturesTable() {
 
         db.execute("drop table if exists signatures");
@@ -69,6 +95,31 @@ public class ContentStoreSqlite implements ContentStore {
            """.stripIndent()
 
         db.execute(sql);
+    }
+
+    Long addDataFileToDb(DataFile dataFile) {
+        def result = db.executeInsert("""
+         insert into data_files (
+            sha1,
+            rendered,
+            file,
+            source_uri,
+            type,
+            data
+         )
+         values(
+            ${dataFile.sha1},
+            ${dataFile.rendered},
+            ${dataFile.file},
+            ${dataFile.source_uri},
+            ${dataFile.type},
+            ${dataFile.data}
+         )
+         """
+        )
+
+        def id = Long.valueOf(result[0][0])
+        return id
     }
 
     Long addDocumentToDb(Document document) {
@@ -115,24 +166,40 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     // Map from DB row
+    static DataFile mapDataFileFromDb(GroovyRowResult row) {
+        DataFile dataFile = new DataFile()
+
+        dataFile.id          =  row.id
+        dataFile.sha1        =  row.sha1
+        dataFile.rendered    =  row.rendered
+        dataFile.file        =  row.file
+        dataFile.source_uri  =  row.source_uri
+        dataFile.type        =  row.type
+        dataFile.data        =  row.data
+
+        return dataFile
+    }
+
+    // Map from DB row
     static Document mapDocumentFromDb(GroovyRowResult row) {
         Document document = new Document()
-        document.id =            row.id
-        document.name =          row.name
-        document.title =         row.title
-        document.status =        row.status
-        document.type =          row.type
-        document.root_path =     row.root_path
-        document.file =          row.file
-        document.uri =           row.uri
-        document.uri_no_extensions =   row.uri_no_extensions
-        document.source_uri =    row.source_uri
-        document.document_date = row.document_date
-        document.sha1 =          row.sha1
-        document.rendered =      row.rendered
-        document.cached =        row.cached
-        document.tag_string =    row.tags
-        document.body =          row.body
+
+        document.id                = row.id
+        document.name              = row.name
+        document.title             = row.title
+        document.status            = row.status
+        document.type              = row.type
+        document.root_path         = row.root_path
+        document.file              = row.file
+        document.uri               = row.uri
+        document.uri_no_extensions = row.uri_no_extensions
+        document.source_uri        = row.source_uri
+        document.document_date     = row.document_date
+        document.sha1              = row.sha1
+        document.rendered          = row.rendered
+        document.cached            = row.cached
+        document.tag_string        = row.tags
+        document.body              = row.body
         return document
     }
 
@@ -168,13 +235,31 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public long getDocumentCount(String docType) {
-        GroovyRowResult result = getDb().firstRow("select count(*) count_docs  from documents where type = ?", docType);
-        result.getProperty('count_docs')
+
+        GroovyRowResult result
+
+        if (docType == 'data') {
+            result = getDb().firstRow("select count(*) count_docs  from data_files");
+        }
+        else {
+            result = getDb().firstRow("select count(*) count_docs  from documents where type = ?", docType);
+        }
+        result.getProperty('count_docs') as long
     }
 
     @Override
     public long getPublishedCount(String docType) {
         return 0;
+    }
+
+    @Override
+    DocumentList<DocumentModel> getDataFileByUri(String uri) {
+        DocumentList<DocumentModel> docs = []
+        getDb().rows("select * from data_files where source_uri = ?", uri).each {row ->
+            DocumentModel documentModel = mapDataFileFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -286,8 +371,13 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     @Override
-    public void addDocument(DocumentModel document) {
-       addDocumentToDb(Document.fromDocumentModel(document))
+    public void addDocument(DocumentModel documentModel) {
+        if (documentModel.getType() == 'data') {
+            addDataFileToDb(DataFile.fromDocumentModel(documentModel))
+        }
+        else {
+            addDocumentToDb(Document.fromDocumentModel(documentModel))
+        }
     }
 
     @Override

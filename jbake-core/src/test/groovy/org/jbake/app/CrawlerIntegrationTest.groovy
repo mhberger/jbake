@@ -6,7 +6,9 @@ import org.jbake.app.configuration.ConfigUtil
 import org.jbake.app.configuration.DefaultJBakeConfiguration
 import org.jbake.db.ContentStoreSqlite
 import org.jbake.model.DocumentModel
+import org.jbake.model.DocumentTypes
 import org.jbake.model.ModelAttributes
+import org.jbake.util.DataFileUtil
 import org.junit.After
 import org.junit.AfterClass
 import org.junit.Assert
@@ -95,6 +97,21 @@ class CrawlerIntegrationTest {
         // covers bug #213
         DocumentList<DocumentModel> publishedPostsByTag = contentStoreSqlite.getPublishedPostsByTag("blog");
         Assert.assertEquals(3, publishedPostsByTag.size());
+    }
+    @Test
+    public void crawlDataFiles() {
+        Crawler crawler = new Crawler(contentStoreSqlite, config);
+
+        // manually register data doctype
+//        DocumentTypes.addDocumentType(config.getDataFileDocType());
+//        db.updateSchema();
+        crawler.crawlDataFiles();
+        Assert.assertEquals(1, contentStoreSqlite.getDocumentCount("data"));
+
+        DataFileUtil util = new DataFileUtil(contentStoreSqlite, "data");
+        Map<String, Object> data = util.get("videos.yaml");
+        Assert.assertFalse(data.isEmpty());
+        Assert.assertNotNull(data.get("data"));
     }
 
 

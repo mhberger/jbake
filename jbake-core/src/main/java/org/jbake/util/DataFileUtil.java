@@ -23,7 +23,7 @@ public class DataFileUtil {
 
     public Map<String, Object> get(String ref) {
         Map<String, Object> result = new HashMap<>();
-        DocumentList<DocumentModel> docs = db.getDocumentByUri(ref);
+        DocumentList<DocumentModel> docs = db.getDataFileByUri(ref);
         if (docs.isEmpty()) {
             LOGGER.warn("Unable to locate content for ref: {}", ref);
         } else {

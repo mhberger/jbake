@@ -88,7 +88,7 @@ public class ContentStoreSqliteIntegrationTest {
     @Test
     public void confirmTablesExist() throws Exception {
         GroovyRowResult result = getDb().firstRow("select count(*) numTables from sqlite_master where type = 'table'");
-        assertEquals(2, result.getProperty("numTables"));
+        assertEquals(3, result.getProperty("numTables"));
     }
 
     @Test

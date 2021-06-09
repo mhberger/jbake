@@ -73,7 +73,7 @@ class Document {
         document.uri                =  documentModel.uri
         document.uri_no_extensions  =  documentModel.noExtensionsUri
         document.source_uri         =  documentModel.sourceUrl
-        document.document_date      =  formatDate(documentModel.getDate())
+        document.document_date      = formatDate(documentModel.getDate())
         document.sha1               =  documentModel.sha1
         document.rendered           =  documentModel.rendered
         document.cached             =  documentModel.cached
