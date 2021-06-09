@@ -39,6 +39,8 @@ public interface ContentStore {
 
     long getPublishedCount(String docType);
 
+    DocumentList<DocumentModel> getDataFileByUri(String uri);
+
     DocumentList<DocumentModel> getDocumentByUri(String uri);
 
     DocumentList<DocumentModel> getDocumentStatus(String uri);

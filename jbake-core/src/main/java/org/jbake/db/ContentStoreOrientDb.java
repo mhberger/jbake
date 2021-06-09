@@ -186,6 +186,11 @@ public class ContentStoreOrientDb implements ContentStore {
     }
 
     @Override
+    public DocumentList<DocumentModel> getDataFileByUri(String uri) {
+        return getDocumentByUri(uri);
+    }
+
+    @Override
     public DocumentList<DocumentModel> getDocumentByUri(String uri) {
         return query("select * from Documents where sourceuri=?", uri);
     }
