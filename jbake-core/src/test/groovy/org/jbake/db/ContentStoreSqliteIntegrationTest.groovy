@@ -107,7 +107,7 @@ public class ContentStoreSqliteIntegrationTest {
         document.id = id
 
         GroovyRowResult result = getDb().firstRow("select * from documents where uri = 'test uri 1'");
-        Document testDocument = contentStoreSqlite.mapFromDb(result)
+        Document testDocument = contentStoreSqlite.mapDocumentFromDb(result)
 
         assertEquals(document, testDocument)
     }

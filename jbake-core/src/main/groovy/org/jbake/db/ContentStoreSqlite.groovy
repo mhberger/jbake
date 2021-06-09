@@ -115,7 +115,7 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     // Map from DB row
-    static Document mapFromDb(GroovyRowResult row) {
+    static Document mapDocumentFromDb(GroovyRowResult row) {
         Document document = new Document()
         document.id =            row.id
         document.name =          row.name
@@ -180,14 +180,14 @@ public class ContentStoreSqlite implements ContentStore {
     @Override
     public DocumentList<DocumentModel> getDocumentByUri(String uri) {
         GroovyRowResult result = getDb().firstRow("select * from documents where uri = ?", uri);
-        return mapFromDb(result)
+        return mapDocumentFromDb(result)
     }
 
     @Override
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
         List<DocumentModel> docs = []
         getDb().rows("select * from documents where uri = ?", uri).each {row ->
-            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
         }
         return docs
@@ -197,7 +197,7 @@ public class ContentStoreSqlite implements ContentStore {
     public DocumentList<DocumentModel> getPublishedPosts() {
         DocumentList<DocumentModel> docs = []
         getDb().rows("select * from Documents where status='published' and type= 'post' order by document_date desc").each {row ->
-            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
         }
         return docs
@@ -213,7 +213,7 @@ public class ContentStoreSqlite implements ContentStore {
         DocumentList<DocumentModel> docs = []
         String sql = "select * from Documents where type = 'post' and status = 'published' and (tags like '%${tag},%' OR tags like '%,${tag},%')"
         getDb().rows(sql).each {row ->
-            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
         }
         return docs
@@ -224,7 +224,7 @@ public class ContentStoreSqlite implements ContentStore {
         DocumentList<DocumentModel> docs = []
         String sql = "select * from Documents where status = 'published' and (tags like '%${tag},%' OR tags like '%,${tag},%')"
         getDb().rows(sql).each {row ->
-            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
         }
         return docs
@@ -244,7 +244,7 @@ public class ContentStoreSqlite implements ContentStore {
     public DocumentList<DocumentModel> getAllContent(String docType) {
         DocumentList<DocumentModel> docs = []
         getDb().rows("select * from Documents where type= ? order by document_date desc", docType).each {row ->
-            DocumentModel documentModel = mapFromDb(row).toDocumentModel()
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
         }
         return docs
