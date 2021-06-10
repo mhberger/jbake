@@ -50,7 +50,7 @@ public class ContentStoreSqliteIntegrationTest {
             root_path: 'root_path',
             file: 'file',
             uri: 'test uri 1',
-            uri_no_extensions: 'uri_no_extensions',
+            uri_no_extension: 'uri_no_extensions',
             source_uri: 'source_uri',
             document_date: '2021-06-13',
             sha1: 'sha1',
@@ -73,7 +73,7 @@ public class ContentStoreSqliteIntegrationTest {
         documentModel.setFile('documentModel file')
         documentModel.setUri('documentModel uri')
         documentModel.setNoExtensionUri('documentModel noExtensionsUri')
-        documentModel.setSourceUri('documentModel sourceUrl')
+        documentModel.setSourceUri('documentModel sourceuri')
         documentModel.setDate(Date.parse('yyyy-MM-dd', '2020-05-04'))
         documentModel.setSha1('documentModel sha1')
         documentModel.setRendered(false)

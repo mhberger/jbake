@@ -16,7 +16,7 @@ class Document {
     String root_path
     String file
     String uri
-    String uri_no_extensions
+    String uri_no_extension
     String source_uri
     String document_date
     String sha1
@@ -45,11 +45,11 @@ class Document {
         d.title = title
         d.status = status
         d.type = type
-        d.rootPath = root_path
+        d.rootpath = root_path
         d.file = file
         d.uri = uri
-        d.noExtensionsUri = uri_no_extensions
-        d.sourceUrl = source_uri
+        d.noExtensionUri = uri_no_extension
+        d.sourceuri = source_uri
         d.date = documentDate()
         d.sha1 = sha1
         d.rendered = rendered
@@ -68,11 +68,11 @@ class Document {
         document.title              =  documentModel.title
         document.status             =  documentModel.status
         document.type               =  documentModel.type
-        document.root_path          =  documentModel.rootPath
+        document.root_path          =  documentModel.rootpath
         document.file               =  documentModel.file
         document.uri                =  documentModel.uri
-        document.uri_no_extensions  =  documentModel.noExtensionsUri
-        document.source_uri         =  documentModel.sourceUrl
+        document.uri_no_extension  =  documentModel.noExtensionUri
+        document.source_uri         =  documentModel.sourceuri
         document.document_date      = formatDate(documentModel.getDate())
         document.sha1               =  documentModel.sha1
         document.rendered           =  documentModel.rendered

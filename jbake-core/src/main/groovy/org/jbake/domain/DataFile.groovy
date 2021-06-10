@@ -19,7 +19,7 @@ class DataFile {
         d.sha1 = sha1
         d.rendered = rendered
         d.file = file
-        d.sourceUrl = source_uri
+        d.sourceuri = source_uri
         d.type = type
         d.data = data
 

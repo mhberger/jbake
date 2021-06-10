@@ -1,6 +1,9 @@
 package org.jbake.app
 
 import groovy.sql.Sql
+import org.apache.commons.io.FilenameUtils
+import org.hamcrest.BaseMatcher
+import org.hamcrest.Description
 import org.jbake.TestUtils
 import org.jbake.app.configuration.ConfigUtil
 import org.jbake.app.configuration.DefaultJBakeConfiguration
@@ -22,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
+import static org.hamcrest.CoreMatchers.is
 
 //@Ignore("Need to fix up the DocumentList first.")
 class CrawlerIntegrationTest {
@@ -114,5 +118,48 @@ class CrawlerIntegrationTest {
         Assert.assertNotNull(data.get("data"));
     }
 
+    @Test
+    public void renderWithPrettyUrls() {
 
+        config.setUriWithoutExtension(true);
+        config.setPrefixForUriWithoutExtension("/blog");
+
+        Crawler crawler = new Crawler(contentStoreSqlite, config);
+        crawler.crawl();
+
+        Assert.assertEquals(4, contentStoreSqlite.getDocumentCount("post"));
+        Assert.assertEquals(3, contentStoreSqlite.getDocumentCount("page"));
+
+        DocumentList<DocumentModel> documents = contentStoreSqlite.getPublishedPosts();
+
+        for (DocumentModel model : documents) {
+            String noExtensionUri = "blog/\\d{4}/" + FilenameUtils.getBaseName(model.getFile()) + "/";
+
+            Assert.assertThat(model.getNoExtensionUri(), CrawlerIntegrationTest.RegexMatcher.matches(noExtensionUri));
+            Assert.assertThat(model.getUri(), CrawlerIntegrationTest.RegexMatcher.matches(noExtensionUri + "index\\.html"));
+            Assert.assertThat(model.getRootPath(), is("../../../"));
+        }
+    }
+
+    private static class RegexMatcher extends BaseMatcher<Object> {
+        private final String regex;
+
+        public RegexMatcher(String regex) {
+            this.regex = regex;
+        }
+
+        public static RegexMatcher matches(String regex) {
+            return new RegexMatcher(regex);
+        }
+
+        @Override
+        public boolean matches(Object o) {
+            return ((String) o).matches(regex);
+        }
+
+        @Override
+        public void describeTo(Description description) {
+            description.appendText("matches regex: " + regex);
+        }
+    }
 }
