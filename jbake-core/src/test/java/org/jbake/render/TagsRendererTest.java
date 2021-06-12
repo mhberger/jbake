@@ -1,25 +1,21 @@
 package org.jbake.render;
 
-import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.template.RenderingException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class TagsRendererTest {
 
     @Test
@@ -92,8 +88,8 @@ public class TagsRendererTest {
         verify(mockRenderer, times(1)).renderTags(anyString());
     }
 
-    @Test(expected = RenderingException.class)
-    public void propogatesRenderingException() throws Exception {
+    @Test
+    public void propagatesRenderingException() throws Exception {
         TagsRenderer renderer = new TagsRenderer();
 
         JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);

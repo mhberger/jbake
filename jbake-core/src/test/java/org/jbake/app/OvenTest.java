@@ -10,6 +10,7 @@ import org.jbake.model.DocumentTypes;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -30,6 +31,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class OvenTest {
 
     @TempDir

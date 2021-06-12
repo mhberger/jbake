@@ -12,10 +12,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public abstract class ContentStoreOrientDbIntegrationTest {
 
     @ClassRule

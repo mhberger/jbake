@@ -5,13 +5,15 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class Error404RendererTest {
     @Test
     public void returnsZeroWhenConfigDoesNotRenderError404() throws RenderingException {
@@ -75,7 +77,7 @@ public class Error404RendererTest {
         verify(mockRenderer, times(1)).renderError404(error404file);
     }
 
-    @Test(expected = RenderingException.class)
+    @Test
     public void propogatesRenderingException() throws Exception {
         Error404Renderer renderer = new Error404Renderer();
         String error404file = "mock404file.html";

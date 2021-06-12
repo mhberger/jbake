@@ -5,7 +5,8 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class IndexRendererTest {
 
     @Test
@@ -65,7 +67,7 @@ public class IndexRendererTest {
     }
 
 
-    @Test(expected = RenderingException.class)
+    @Test
     public void propagatesRenderingException() throws Exception {
         IndexRenderer renderer = new IndexRenderer();
 

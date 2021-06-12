@@ -5,7 +5,8 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
@@ -16,6 +17,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class ArchiveRendererTest {
 
     @Test
@@ -80,7 +82,7 @@ public class ArchiveRendererTest {
         verify(mockRenderer, times(1)).renderArchive(anyString());
     }
 
-    @Test(expected = RenderingException.class)
+    @Test
     public void propogatesRenderingException() throws Exception {
         ArchiveRenderer renderer = new ArchiveRenderer();
 

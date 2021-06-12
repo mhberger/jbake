@@ -33,6 +33,9 @@ dependencies {
     // cli specific dependencies
     implementation "org.eclipse.jetty:jetty-server:$jettyServerVersion", optional
     implementation "info.picocli:picocli:$picocli", optional
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
 }
 
 sourceSets {

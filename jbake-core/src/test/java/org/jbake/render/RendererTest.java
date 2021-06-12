@@ -1,16 +1,16 @@
 package org.jbake.render;
 
 import org.jbake.TestUtils;
-import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
+import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.model.DocumentModel;
 import org.jbake.template.DelegatingTemplateEngine;
-import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,7 +19,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 @RunWith(MockitoJUnitRunner.class)
 public class RendererTest {
 
@@ -34,7 +36,7 @@ public class RendererTest {
     @Mock
     private DelegatingTemplateEngine renderingEngine;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
 
         File sourcePath = TestUtils.getTestResourcesAsSourceFolder();
@@ -54,7 +56,7 @@ public class RendererTest {
     @Test
     public void testRenderFileWorksWhenPathHasDotInButFileDoesNot() throws Exception {
 
-        Assume.assumeFalse("Ignore running on Windows", TestUtils.isWindows());
+        assumeFalse(TestUtils.isWindows(), "Ignore running on Windows");
         String FOLDER = "real.path";
 
         final String FILENAME = "about";

@@ -5,7 +5,8 @@ import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.jbake.model.ModelAttributes.Status;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import java.util.Collections;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class ContentStoreOrientDbTest extends ContentStoreOrientDbIntegrationTest {
 
     public static final String DOC_TYPE_POST = "post";
