@@ -205,6 +205,15 @@ public class DefaultJBakeConfiguration implements JBakeConfiguration {
         return getAsString(DATA_FILE_DOCTYPE.getKey());
     }
 
+    @Override
+    public String getDatabaseImplementation() {
+        return getAsString(DB_IMPLEMENTATION.getKey());
+    }
+
+    public void setDatabaseImplementation(String implementation) {
+        setProperty(DB_IMPLEMENTATION.getKey(), implementation);
+    }
+
     public void setDataFileDocType(String dataFileDocType) {
         setProperty(DATA_FILE_DOCTYPE.getKey(), dataFileDocType);
     }

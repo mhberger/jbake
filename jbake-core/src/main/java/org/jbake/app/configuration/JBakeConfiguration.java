@@ -102,6 +102,11 @@ public interface JBakeConfiguration {
     String getDataFileDocType();
 
     /**
+     * @return Return the type of database implementation (OrientDB or SQLite)
+     */
+    String getDatabaseImplementation();
+
+    /**
      * @return Folder to store database files in
      */
     String getDatabasePath();

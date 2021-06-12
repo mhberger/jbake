@@ -70,6 +70,11 @@ public abstract class PropertyList {
         "default date format used in content files"
     );
 
+    public static final Property DB_IMPLEMENTATION = new Property(
+        "db.implementation",
+        "database implementation (OrientDB, SQLite)"
+    );
+
     public static final Property DB_STORE = new Property(
         "db.store",
         "database store (plocal, memory)"
