@@ -204,6 +204,11 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     @Override
+    void startup() {
+        createTables()
+    }
+
+    @Override
     public long getStart() {
         return 0;
     }
@@ -249,7 +254,9 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public long getPublishedCount(String docType) {
-        return 0;
+        // select * from Documents where status='published' and type='%s' order by date desc
+        GroovyRowResult result = getDb().firstRow("select count(*) count_docs  from documents where status = 'published' and type = ?", docType);
+        result.getProperty('count_docs') as long
     }
 
     @Override
@@ -317,7 +324,13 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedPages() {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        String sql = "select * from Documents where status = 'published' and type = 'pages'"
+        getDb().rows(sql).each {row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -342,7 +355,12 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getUnrenderedContent() {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        getDb().rows("select * from Documents where rendered=false order by document_date desc").each {row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
