@@ -6,6 +6,7 @@ import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationFactory;
 import org.jbake.app.configuration.JBakeConfigurationInspector;
+import org.jbake.db.ContentStore;
 import org.jbake.db.ContentStoreOrientDb;
 import org.jbake.model.DocumentTypes;
 import org.jbake.render.RenderingTool;
@@ -148,7 +149,7 @@ public class Oven {
      */
     public void bake() {
 
-        ContentStoreOrientDb contentStore = utensils.getContentStore();
+        ContentStore contentStore = utensils.getContentStore();
         JBakeConfiguration config = utensils.getConfiguration();
         Crawler crawler = utensils.getCrawler();
         Asset asset = utensils.getAsset();
@@ -158,10 +159,12 @@ public class Oven {
 
             final long start = new Date().getTime();
             LOGGER.info("Baking has started...");
-            contentStore.startup();
-            updateDocTypesFromConfiguration();
-            contentStore.updateSchema();
-            contentStore.updateAndClearCacheIfNeeded(config.getClearCache(), config.getTemplateFolder());
+            if (config.getDatabaseImplementation() == "OrientDb") {
+                contentStore.startup();
+                updateDocTypesFromConfiguration();
+                contentStore.updateSchema();
+                contentStore.updateAndClearCacheIfNeeded(config.getClearCache(), config.getTemplateFolder());
+            }
 
             // process source content
             crawler.crawl();
@@ -185,8 +188,10 @@ public class Oven {
                 LOGGER.error("Failed to bake {} item(s)!", errors.size());
             }
         } finally {
-            contentStore.close();
-            contentStore.shutdown();
+            if (config.getDatabaseImplementation() == "OrientDb") {
+                contentStore.close();
+                contentStore.shutdown();
+            }
         }
     }
 
@@ -220,7 +225,7 @@ public class Oven {
     private void renderContent() {
         JBakeConfiguration config = utensils.getConfiguration();
         Renderer renderer = utensils.getRenderer();
-        ContentStoreOrientDb contentStore = utensils.getContentStore();
+        ContentStore contentStore = utensils.getContentStore();
 
         for (RenderingTool tool : ServiceLoader.load(RenderingTool.class)) {
             try {

@@ -2,7 +2,8 @@ package org.jbake.app;
 
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfigurationInspector;
-import org.jbake.db.ContentStoreOrientDb;
+import org.jbake.db.ContentStore;
+import org.jbake.db.ContentStoreSqlite;
 
 /**
  * A factory to create a {@link Utensils} object
@@ -21,7 +22,14 @@ public class UtensilsFactory {
 
         Utensils utensils = new Utensils();
         utensils.setConfiguration(config);
-        ContentStoreOrientDb contentStore = DBUtil.createDataStore(config);
+        ContentStore contentStore;
+        if (config.getDatabaseImplementation() == "OrientDB") {
+            contentStore = DBUtil.createDataStore(config);
+            utensils.setContentStore(contentStore);
+        } else {
+            contentStore = new ContentStoreSqlite();
+            contentStore.startup();
+        }
         utensils.setContentStore(contentStore);
         utensils.setCrawler(new Crawler(contentStore, config));
         utensils.setRenderer(new Renderer(contentStore, config));
