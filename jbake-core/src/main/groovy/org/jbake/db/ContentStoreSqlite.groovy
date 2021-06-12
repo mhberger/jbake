@@ -3,16 +3,17 @@ package org.jbake.db
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.jbake.app.DocumentList
-import org.jbake.domain.Document
 import org.jbake.domain.DataFile
+import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
+import org.sqlite.SQLiteDataSource
 
 public class ContentStoreSqlite implements ContentStore {
 
     Sql db
 
     ContentStoreSqlite() {
-        this.db = new Sql(new org.sqlite.SQLiteDataSource(url: "jdbc:sqlite:mhb_sample_sqlite.db"))
+        this.db = new Sql(new SQLiteDataSource(url: "jdbc:sqlite:mhb_sample_sqlite.db"))
     }
 
     void createTables() {
@@ -239,6 +240,31 @@ public class ContentStoreSqlite implements ContentStore {
     }
 
     @Override
+    void close() {
+        // Will not implement
+    }
+
+    @Override
+    void shutdown() {
+        // Will not implement
+    }
+
+    @Override
+    void startupIfEnginesAreMissing() {
+        // Will not implement
+    }
+
+    @Override
+    void drop() {
+        // Will not implement
+    }
+
+    @Override
+    void activateOnCurrentThread() {
+        // Will not implement
+    }
+
+    @Override
     public long getDocumentCount(String docType) {
 
         GroovyRowResult result
@@ -421,6 +447,11 @@ public class ContentStoreSqlite implements ContentStore {
     @Override
     public void executeCommand(String query, Object... args) {
 
+    }
+
+    @Override
+    void updateAndClearCacheIfNeeded(boolean needed, File templateFolder) {
+        // Will not implement
     }
 
     @Override

@@ -69,6 +69,7 @@ public class ContentStoreOrientDb implements ContentStore {
     }
 
 
+    @Override
     public void startup() {
         startupIfEnginesAreMissing();
 
@@ -126,6 +127,7 @@ public class ContentStoreOrientDb implements ContentStore {
         }
     }
 
+    @Override
     public void close() {
         if (db != null) {
             activateOnCurrentThread();
@@ -138,12 +140,14 @@ public class ContentStoreOrientDb implements ContentStore {
         DBUtil.closeDataStore();
     }
 
+    @Override
     public void shutdown() {
 
 //        Orient.instance().shutdown();
     }
 
-    private void startupIfEnginesAreMissing() {
+    @Override
+    public void startupIfEnginesAreMissing() {
         // Using a jdk which doesn't bundle a javascript engine
         // throws a NoClassDefFoundError while logging the warning
         // see https://github.com/orientechnologies/orientdb/issues/5855
@@ -157,6 +161,7 @@ public class ContentStoreOrientDb implements ContentStore {
         OLogManager.instance().setWarnEnabled(true);
     }
 
+    @Override
     public void drop() {
         activateOnCurrentThread();
 //        db.drop();
@@ -164,7 +169,8 @@ public class ContentStoreOrientDb implements ContentStore {
         orient.drop(name);
     }
 
-    private void activateOnCurrentThread() {
+    @Override
+    public void activateOnCurrentThread() {
         if (db != null) {
             db.activateOnCurrentThread();
         } else {
@@ -373,6 +379,7 @@ public class ContentStoreOrientDb implements ContentStore {
         signatures.createIndex("sha1Idx", OClass.INDEX_TYPE.UNIQUE, ModelAttributes.SHA1);
     }
 
+    @Override
     public void updateAndClearCacheIfNeeded(boolean needed, File templateFolder) {
 
         boolean clearCache = needed;

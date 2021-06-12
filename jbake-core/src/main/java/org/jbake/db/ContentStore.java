@@ -3,6 +3,7 @@ package org.jbake.db;
 import org.jbake.app.DocumentList;
 import org.jbake.model.DocumentModel;
 
+import java.io.File;
 import java.util.Set;
 
 public interface ContentStore {
@@ -23,6 +24,8 @@ public interface ContentStore {
     String STATEMENT_UPDATE_TEMPLATE_SIGNATURE = "update Signatures set sha1=? where key='templates'";
     String STATEMENT_GET_DOCUMENT_COUNT_BY_TYPE = "select count(*) as count from Documents where type='%s'";
 
+    void startup();
+
     long getStart();
 
     void setStart(int start);
@@ -34,6 +37,16 @@ public interface ContentStore {
     void resetPagination();
 
     void updateSchema();
+
+    void close();
+
+    void shutdown();
+
+    void startupIfEnginesAreMissing();
+
+    void drop();
+
+    void activateOnCurrentThread();
 
     long getDocumentCount(String docType);
 
@@ -84,6 +97,8 @@ public interface ContentStore {
     DocumentList<DocumentModel> query(String sql, Object... args);
 
     void executeCommand(String query, Object... args);
+
+    void updateAndClearCacheIfNeeded(boolean needed, File templateFolder);
 
     void deleteAllDocumentTypes();
 }
