@@ -23,10 +23,14 @@
  */
 package org.jbake.app.template;
 
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
 /**
  *
  * @author jsb
  */
+
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class PebbleTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest{
 
     public PebbleTemplateEngineRenderingTest() {

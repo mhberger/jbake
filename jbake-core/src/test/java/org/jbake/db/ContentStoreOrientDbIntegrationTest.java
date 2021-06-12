@@ -5,17 +5,18 @@ import org.jbake.TestUtils;
 import org.jbake.app.DBUtil;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
-import org.jbake.db.ContentStoreOrientDb;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public abstract class ContentStoreOrientDbIntegrationTest {
@@ -27,16 +28,16 @@ public abstract class ContentStoreOrientDbIntegrationTest {
     protected static StorageType storageType = StorageType.MEMORY;
     protected static File sourceFolder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
 
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder();
-        Assert.assertTrue("Cannot find sample data structure!", sourceFolder.exists());
+        assertTrue(sourceFolder.exists(), "Cannot find sample data structure!");
 
         config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(sourceFolder);
         config.setSourceFolder(sourceFolder);
 
-        Assert.assertEquals(".html", config.getOutputExtension());
+        assertEquals(".html", config.getOutputExtension());
         config.setDatabaseStore(storageType.toString());
         String dbPath = folder.newFolder("documents" + System.currentTimeMillis()).getAbsolutePath();
 
@@ -49,18 +50,18 @@ public abstract class ContentStoreOrientDbIntegrationTest {
         db = DBUtil.createDataStore(config);
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanUpClass() {
         db.close();
         db.shutdown();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         db.startup();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         db.drop();
     }

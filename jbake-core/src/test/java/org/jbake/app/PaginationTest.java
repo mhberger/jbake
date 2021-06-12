@@ -27,21 +27,23 @@ import org.jbake.FakeDocumentBuilder;
 import org.jbake.db.ContentStoreOrientDbIntegrationTest;
 import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author jdlee
  */
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class PaginationTest extends ContentStoreOrientDbIntegrationTest {
 
-    @Before
+    @BeforeEach
     public void setUpOwn() {
         for (String docType : DocumentTypes.getDocumentTypes()) {
             String fileBaseName = docType;
@@ -89,6 +91,6 @@ public class PaginationTest extends ContentStoreOrientDbIntegrationTest {
             pageCount++;
             start += PER_PAGE;
         }
-        Assert.assertEquals(4, pageCount);
+        assertEquals(4, pageCount);
     }
 }

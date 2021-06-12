@@ -23,15 +23,17 @@
  */
 package org.jbake.app.template;
 
-import org.junit.BeforeClass;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 /**
  *
  * @author jdlee
  */
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class GroovyTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
         //setUpDatabase(StorageType.PLOCAL);
     }

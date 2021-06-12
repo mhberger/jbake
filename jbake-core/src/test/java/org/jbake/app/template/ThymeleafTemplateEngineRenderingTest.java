@@ -23,10 +23,14 @@
  */
 package org.jbake.app.template;
 
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+
 /**
  *
  * @author jdlee
  */
+
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class ThymeleafTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest{
 
     public ThymeleafTemplateEngineRenderingTest() {

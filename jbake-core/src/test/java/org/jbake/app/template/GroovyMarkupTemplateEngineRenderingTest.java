@@ -6,20 +6,21 @@ import org.jbake.app.DBUtil;
 import org.jbake.app.Parser;
 import org.jbake.app.Renderer;
 import org.jbake.model.DocumentModel;
-import org.jbake.model.DocumentTypes;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
 public class GroovyMarkupTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest {
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpTest() {
         //switch to PLOCAL mode for this test class as Travis sometimes runs out of memory
         db.close();
@@ -77,7 +78,7 @@ public class GroovyMarkupTemplateEngineRenderingTest extends AbstractTemplateEng
         content.setUri("/" + filename);
         renderer.render(content);
         File outputFile = new File(destinationFolder, filename);
-        Assert.assertTrue(outputFile.exists());
+        assertTrue(outputFile.exists());
 
         // verify
         String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
