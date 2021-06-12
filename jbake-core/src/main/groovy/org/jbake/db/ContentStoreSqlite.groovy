@@ -6,6 +6,7 @@ import org.jbake.app.DocumentList
 import org.jbake.domain.DataFile
 import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
+import org.jbake.model.DocumentTypes
 import org.sqlite.SQLiteDataSource
 
 public class ContentStoreSqlite implements ContentStore {
@@ -411,7 +412,17 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public Set<String> getAllTags() {
-        return null;
+        Set<String> tags = []
+        DocumentTypes.getDocumentTypes().each { doctype ->
+            String sql = "select tags from Documents where type= '${doctype}' and tags <> ',' order by document_date desc"
+            getDb().rows(sql).each { row ->
+                def tagList = row.TAGS.split(/,/)
+                tagList.each {
+                    tags.add(it)
+                }
+            }
+            return tags
+        }
     }
 
     @Override
