@@ -2,7 +2,7 @@ import java.time.format.DateTimeFormatter
 
 apply from: "$rootDir/gradle/sonarqube.gradle"
 apply plugin: 'java-library'
-
+apply plugin: 'groovy'
 
 description = "The core library of JBake"
 
@@ -16,6 +16,7 @@ dependencies {
         exclude group: "junit", module: "junit"
     }
     implementation "com.orientechnologies:orientdb-core:$orientDbVersion"
+    implementation "org.xerial:sqlite-jdbc:$sqliteVersion"
     implementation "org.asciidoctor:asciidoctorj:$asciidoctorjVersion", optional
     implementation "org.codehaus.groovy:groovy:$groovyVersion", optional
     implementation "org.codehaus.groovy:groovy-templates:$groovyVersion", optional
@@ -32,6 +33,13 @@ dependencies {
     // cli specific dependencies
     implementation "org.eclipse.jetty:jetty-server:$jettyServerVersion", optional
     implementation "info.picocli:picocli:$picocli", optional
+}
+
+sourceSets {
+    main {
+        java { srcDirs = [] }    // no source dirs for the java compiler
+        groovy { srcDirs = ["src/main/java", "src/main/groovy"] }  // compile   everything in src/ with groovy
+    }
 }
 
 processResources {

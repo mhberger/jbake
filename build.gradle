@@ -118,8 +118,7 @@ subprojects {
         testImplementation "org.mockito:mockito-junit-jupiter:$mockitoVersion"
         testImplementation 'org.itsallcode:junit5-system-extensions:1.1.0'
 
-        implementation "org.codehaus.groovy:groovy-sql:3.0.7"
-        implementation 'org.xerial:sqlite-jdbc:3.34.0'
+        implementation "org.codehaus.groovy:groovy-sql:$groovyVersion"
     }
 
     dependencyUpdates.resolutionStrategy {
