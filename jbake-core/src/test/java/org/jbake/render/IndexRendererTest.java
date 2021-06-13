@@ -18,7 +18,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class IndexRendererTest {
 
     @Test
@@ -70,20 +69,22 @@ public class IndexRendererTest {
 
     @Test
     public void propagatesRenderingException() throws Exception {
-        IndexRenderer renderer = new IndexRenderer();
+        Assertions.assertThrows(RenderingException.class, () -> {
+            IndexRenderer renderer = new IndexRenderer();
 
-        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-        when(configuration.getRenderIndex()).thenReturn(true);
-        when(configuration.getIndexFileName()).thenReturn("mockindex.html");
+            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+            when(configuration.getRenderIndex()).thenReturn(true);
+            when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-        Renderer mockRenderer = mock(Renderer.class);
+            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+            Renderer mockRenderer = mock(Renderer.class);
 
-        doThrow(new Exception()).when(mockRenderer).renderIndex(anyString());
+            doThrow(new Exception()).when(mockRenderer).renderIndex(anyString());
 
-        renderer.render(mockRenderer, contentStore, configuration);
+            renderer.render(mockRenderer, contentStore, configuration);
 
-        verify(mockRenderer, never()).renderIndex(anyString());
+            verify(mockRenderer, never()).renderIndex(anyString());
+        });
     }
 
 
@@ -108,21 +109,19 @@ public class IndexRendererTest {
 
     @Test
     public void shouldRenderPaginatedIndex() throws Exception {
-        Assertions.assertThrows(RenderingException.class, () -> {
-            IndexRenderer renderer = new IndexRenderer();
+        IndexRenderer renderer = new IndexRenderer();
 
-            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-            when(configuration.getRenderIndex()).thenReturn(true);
-            when(configuration.getPaginateIndex()).thenReturn(true);
-            when(configuration.getIndexFileName()).thenReturn("mockindex.html");
+        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+        when(configuration.getRenderIndex()).thenReturn(true);
+        when(configuration.getPaginateIndex()).thenReturn(true);
+        when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-            Renderer mockRenderer = mock(Renderer.class);
+        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+        Renderer mockRenderer = mock(Renderer.class);
 
-            renderer.render(mockRenderer, contentStore, configuration);
+        renderer.render(mockRenderer, contentStore, configuration);
 
-            verify(mockRenderer, times(1)).renderIndexPaging(anyString());
-        });
+        verify(mockRenderer, times(1)).renderIndexPaging(anyString());
     }
 }
 

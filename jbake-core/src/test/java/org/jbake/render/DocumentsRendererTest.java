@@ -23,7 +23,6 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class DocumentsRendererTest {
 
     public DocumentsRenderer documentsRenderer;

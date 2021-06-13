@@ -14,7 +14,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
-@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class Error404RendererTest {
     @Test
     public void returnsZeroWhenConfigDoesNotRenderError404() throws RenderingException {

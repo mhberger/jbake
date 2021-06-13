@@ -18,7 +18,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class ArchiveRendererTest {
 
     @Test
