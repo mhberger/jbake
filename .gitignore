@@ -14,3 +14,4 @@ build/
 .gradletasknamecache
 *.db
 .DS_Store
+tmp/
