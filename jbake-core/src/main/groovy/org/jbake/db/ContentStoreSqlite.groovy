@@ -237,7 +237,7 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public void updateSchema() {
-
+        createTables()
     }
 
     @Override
@@ -362,7 +362,13 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedContent(String docType) {
-        return null;
+        DocumentList<DocumentModel> docs = []
+        String sql = "select * from Documents where status = 'published' and type = '${docType}'"
+        getDb().rows(sql).each {row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -392,17 +398,16 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public void deleteContent(String uri) {
-
+        db.execute('delete from documents where uri = ?', uri)
     }
 
     @Override
     public void markContentAsRendered(DocumentModel document) {
-
     }
 
     @Override
     public void deleteAllByDocType(String docType) {
-
+        db.execute('delete from documents where type = ?', docType)
     }
 
     @Override
@@ -421,8 +426,8 @@ public class ContentStoreSqlite implements ContentStore {
                     tags.add(it)
                 }
             }
-            return tags
         }
+        return tags
     }
 
     @Override
