@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 ```
 
-* Use `-Dbake.db.implementation=OrientDB` to run tests using OrientDb.
+* Use `-Djbake.db.implementation=OrientDB` to run tests using OrientDb.
 
 
 ### Sample commands
@@ -64,4 +64,10 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 ```
 # Run tests
 ./gradlew clean test --tests *OvenInte* --tests *Sqlite* --tests *CrawlerInte*
+
+# Run tests to test OrientDb
+./gradlew -Djbake.db.implementation=OrientDB clean test
+
+# Run tests to test SQLite
+./gradlew -Djbake.db.implementation=SQLite clean test
 ```
