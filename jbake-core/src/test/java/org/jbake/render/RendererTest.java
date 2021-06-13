@@ -10,7 +10,7 @@ import org.jbake.template.DelegatingTemplateEngine;
 import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.rules.TemporaryFolder;
 
@@ -22,7 +22,7 @@ import java.io.File;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 @ExtendWith(MockitoExtension.class)
 public class RendererTest {
 

@@ -10,7 +10,7 @@ import org.jbake.model.ModelAttributes;
 import org.jbake.util.DataFileUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB*")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB*")
 public class CrawlerTest extends ContentStoreOrientDbIntegrationTest {
 
     @Test

@@ -25,7 +25,7 @@ package org.jbake.app.template;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * @author jdlee
  */
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class FreemarkerTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest {
 
     public FreemarkerTemplateEngineRenderingTest() {

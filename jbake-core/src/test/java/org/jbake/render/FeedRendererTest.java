@@ -5,8 +5,9 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class FeedRendererTest {
 
     @Test
@@ -83,20 +84,22 @@ public class FeedRendererTest {
 
     @Test
     public void propogatesRenderingException() throws Exception {
-        FeedRenderer renderer = new FeedRenderer();
+        Assertions.assertThrows(RenderingException.class, () -> {
+            FeedRenderer renderer = new FeedRenderer();
 
-        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-        when(configuration.getRenderFeed()).thenReturn(true);
-        when(configuration.getFeedFileName()).thenReturn("mockfeedfile.xml");
+            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+            when(configuration.getRenderFeed()).thenReturn(true);
+            when(configuration.getFeedFileName()).thenReturn("mockfeedfile.xml");
 
-        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-        Renderer mockRenderer = mock(Renderer.class);
+            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+            Renderer mockRenderer = mock(Renderer.class);
 
-        doThrow(new Exception()).when(mockRenderer).renderFeed(anyString());
+            doThrow(new Exception()).when(mockRenderer).renderFeed(anyString());
 
-        renderer.render(mockRenderer, contentStore, configuration);
+            renderer.render(mockRenderer, contentStore, configuration);
 
-        verify(mockRenderer, never()).renderFeed("random string");
+            verify(mockRenderer, never()).renderFeed("random string");
+        });
     }
 
 }

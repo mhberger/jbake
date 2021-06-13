@@ -5,8 +5,9 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class ArchiveRendererTest {
 
     @Test
@@ -84,20 +85,22 @@ public class ArchiveRendererTest {
 
     @Test
     public void propogatesRenderingException() throws Exception {
-        ArchiveRenderer renderer = new ArchiveRenderer();
+        Assertions.assertThrows(RenderingException.class, () -> {
+            ArchiveRenderer renderer = new ArchiveRenderer();
 
-        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-        when(configuration.getRenderArchive()).thenReturn(true);
-        when(configuration.getArchiveFileName()).thenReturn("mockarchive.html");
+            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+            when(configuration.getRenderArchive()).thenReturn(true);
+            when(configuration.getArchiveFileName()).thenReturn("mockarchive.html");
 
-        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-        Renderer mockRenderer = mock(Renderer.class);
+            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+            Renderer mockRenderer = mock(Renderer.class);
 
-        doThrow(new Exception()).when(mockRenderer).renderArchive(anyString());
+            doThrow(new Exception()).when(mockRenderer).renderArchive(anyString());
 
-        renderer.render(mockRenderer, contentStore, configuration);
+            renderer.render(mockRenderer, contentStore, configuration);
 
-        verify(mockRenderer, never()).renderArchive("random string");
+            verify(mockRenderer, never()).renderArchive("random string");
+        });
     }
 
 }

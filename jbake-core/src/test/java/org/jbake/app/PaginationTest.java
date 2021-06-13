@@ -29,7 +29,7 @@ import org.jbake.model.DocumentModel;
 import org.jbake.model.DocumentTypes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * @author jdlee
  */
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class PaginationTest extends ContentStoreOrientDbIntegrationTest {
 
     @BeforeEach

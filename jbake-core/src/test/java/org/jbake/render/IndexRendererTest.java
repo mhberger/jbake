@@ -5,8 +5,9 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.anyString;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class IndexRendererTest {
 
     @Test
@@ -107,21 +108,21 @@ public class IndexRendererTest {
 
     @Test
     public void shouldRenderPaginatedIndex() throws Exception {
+        Assertions.assertThrows(RenderingException.class, () -> {
+            IndexRenderer renderer = new IndexRenderer();
 
-        IndexRenderer renderer = new IndexRenderer();
+            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+            when(configuration.getRenderIndex()).thenReturn(true);
+            when(configuration.getPaginateIndex()).thenReturn(true);
+            when(configuration.getIndexFileName()).thenReturn("mockindex.html");
 
-        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-        when(configuration.getRenderIndex()).thenReturn(true);
-        when(configuration.getPaginateIndex()).thenReturn(true);
-        when(configuration.getIndexFileName()).thenReturn("mockindex.html");
+            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+            Renderer mockRenderer = mock(Renderer.class);
 
-        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-        Renderer mockRenderer = mock(Renderer.class);
+            renderer.render(mockRenderer, contentStore, configuration);
 
-        renderer.render(mockRenderer, contentStore, configuration);
-
-        verify(mockRenderer, times(1)).renderIndexPaging(anyString());
-
+            verify(mockRenderer, times(1)).renderIndexPaging(anyString());
+        });
     }
 }
 

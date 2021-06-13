@@ -50,13 +50,13 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 ```
 
-* Use `-Djbake.db.implementation=OrientDB` to run tests using OrientDb.
+* Set environment variable `jbake.db.implementation=OrientDB` to run tests using OrientDb.
 
 
 ### Sample commands
@@ -66,8 +66,11 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 ./gradlew clean test --tests *OvenInte* --tests *Sqlite* --tests *CrawlerInte*
 
 # Run tests to test OrientDb
-./gradlew -Djbake.db.implementation=OrientDB clean test
+export jbake_db_implementation=OrientDB
+./gradlew --no-daemon --no-build-cache --no-configuration-cache --no-configure-on-demand clean test
+./gradlew --no-daemon --no-build-cache --no-configuration-cache --no-configure-on-demand clean test --tests "TagsRen*"
 
 # Run tests to test SQLite
-./gradlew -Djbake.db.implementation=SQLite clean test
+export jbake_db_implementation=SQLite
+./gradlew clean test
 ```

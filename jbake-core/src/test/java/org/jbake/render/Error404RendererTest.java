@@ -5,15 +5,16 @@ import org.jbake.app.Renderer;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.app.configuration.JBakeConfiguration;
 import org.jbake.template.RenderingException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
+import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.never;
 
-@EnabledIfSystemProperty(named = "jbake.db.implementation", matches = "OrientDB")
+@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class Error404RendererTest {
     @Test
     public void returnsZeroWhenConfigDoesNotRenderError404() throws RenderingException {
@@ -79,20 +80,22 @@ public class Error404RendererTest {
 
     @Test
     public void propogatesRenderingException() throws Exception {
-        Error404Renderer renderer = new Error404Renderer();
-        String error404file = "mock404file.html";
+        Assertions.assertThrows(RenderingException.class, () -> {
+            Error404Renderer renderer = new Error404Renderer();
+            String error404file = "mock404file.html";
 
-        JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
-        when(configuration.getRenderError404()).thenReturn(true);
-        when(configuration.getError404FileName()).thenReturn(error404file);
+            JBakeConfiguration configuration = mock(DefaultJBakeConfiguration.class);
+            when(configuration.getRenderError404()).thenReturn(true);
+            when(configuration.getError404FileName()).thenReturn(error404file);
 
-        ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
-        Renderer mockRenderer = mock(Renderer.class);
+            ContentStoreOrientDb contentStore = mock(ContentStoreOrientDb.class);
+            Renderer mockRenderer = mock(Renderer.class);
 
-        doThrow(new Exception()).when(mockRenderer).renderError404(anyString());
+            doThrow(new Exception()).when(mockRenderer).renderError404(anyString());
 
-        int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
+            int renderResponse = renderer.render(mockRenderer, contentStore, configuration);
 
-        verify(mockRenderer, never()).renderError404(error404file);
+            verify(mockRenderer, never()).renderError404(error404file);
+        });
     }
 }
