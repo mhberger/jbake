@@ -4,35 +4,32 @@ import org.jbake.TestUtils;
 import org.jbake.app.Renderer;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
-import org.jbake.db.ContentStoreOrientDb;
+import org.jbake.db.ContentStore;
 import org.jbake.model.DocumentModel;
 import org.jbake.template.DelegatingTemplateEngine;
-import org.junit.Rule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.rules.TemporaryFolder;
-
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
-@EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 @ExtendWith(MockitoExtension.class)
 public class RendererTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public static Path folder;
     private DefaultJBakeConfiguration config;
     private File outputPath;
 
     @Mock
-    private ContentStoreOrientDb db;
+    private ContentStore db;
 
     @Mock
     private DelegatingTemplateEngine renderingEngine;
@@ -44,7 +41,7 @@ public class RendererTest {
         if (!sourcePath.exists()) {
             throw new Exception("Cannot find base path for test!");
         }
-        outputPath = folder.newFolder("output");
+        outputPath = folder.resolve("output").toFile();
         config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(sourcePath);
         config.setDestinationFolder(outputPath);
     }
@@ -62,7 +59,7 @@ public class RendererTest {
 
         final String FILENAME = "about";
         config.setOutputExtension("");
-        config.setTemplateFolder(folder.newFolder("templates"));
+        config.setTemplateFolder(folder.resolve("templates").toFile());
         Renderer renderer = new Renderer(db, config, renderingEngine);
 
         DocumentModel content = new DocumentModel();
