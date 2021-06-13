@@ -5,15 +5,15 @@ import org.jbake.TestUtils;
 import org.jbake.app.DBUtil;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
-import org.junit.ClassRule;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
+import java.nio.file.Path;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,8 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public abstract class ContentStoreOrientDbIntegrationTest {
 
-    @ClassRule
-    public static TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public static Path folder;
     protected static ContentStoreOrientDb db;
     protected static DefaultJBakeConfiguration config;
     protected static StorageType storageType = StorageType.MEMORY;
@@ -39,7 +39,7 @@ public abstract class ContentStoreOrientDbIntegrationTest {
 
         assertEquals(".html", config.getOutputExtension());
         config.setDatabaseStore(storageType.toString());
-        String dbPath = folder.newFolder("documents" + System.currentTimeMillis()).getAbsolutePath();
+        String dbPath = folder.resolve("documents" + System.currentTimeMillis()).toAbsolutePath().toString();
 
         // setting the database path with a colon creates an invalid url for OrientDB.
         // only one colon is expected. there is no documentation about proper url path for windows available :(

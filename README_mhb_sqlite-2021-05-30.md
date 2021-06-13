@@ -58,6 +58,22 @@ import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
 * Set environment variable `jbake.db.implementation=OrientDB` to run tests using OrientDb.
 
+* JUnit 5 – Migrating
+```
+from
+-    @ClassRule
+-    public static TemporaryFolder folder = new TemporaryFolder();
+to
++    @TempDir
++    public static Path folder;
+
+and
+from
+    String dbPath = folder.newFolder("documents" + System.currentTimeMillis()).getAbsolutePath();
+to
+    String dbPath = folder.resolve("documents" + System.currentTimeMillis()).toAbsolutePath().toString();
+
+```
 
 ### Sample commands
 

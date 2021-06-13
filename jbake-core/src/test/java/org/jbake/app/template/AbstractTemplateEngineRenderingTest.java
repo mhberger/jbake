@@ -77,7 +77,7 @@ public abstract class AbstractTemplateEngineRenderingTest extends ContentStoreOr
             throw new Exception("Cannot find template folder!");
         }
 
-        destinationFolder = folder.getRoot();
+        destinationFolder = folder.toFile();
         config.setDestinationFolder(destinationFolder);
         config.setTemplateFolder(templateFolder);
 

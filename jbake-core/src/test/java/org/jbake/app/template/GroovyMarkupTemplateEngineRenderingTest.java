@@ -20,13 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class GroovyMarkupTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest {
 
-    @BeforeAll
-    public static void setUpTest() {
-        //switch to PLOCAL mode for this test class as Travis sometimes runs out of memory
-        db.close();
-        config.setDatabaseStore(StorageType.PLOCAL.toString());
-        db = DBUtil.createDataStore(config);
-    }
+//    Should only have one @BeforeAll in the class hierarchy
+//    @BeforeAll
+//    public static void setUpTest() {
+//        //switch to PLOCAL mode for this test class as Travis sometimes runs out of memory
+//        db.close();
+//        config.setDatabaseStore(StorageType.PLOCAL.toString());
+//        db = DBUtil.createDataStore(config);
+//    }
 
     public GroovyMarkupTemplateEngineRenderingTest() {
         super("groovyMarkupTemplates", "tpl");

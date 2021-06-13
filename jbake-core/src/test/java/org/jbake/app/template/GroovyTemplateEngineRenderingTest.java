@@ -33,10 +33,11 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 @EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB")
 public class GroovyTemplateEngineRenderingTest extends AbstractTemplateEngineRenderingTest {
 
-    @BeforeAll
-    public static void setUpClass() {
-        //setUpDatabase(StorageType.PLOCAL);
-    }
+//    Should only have one @BeforeAll in the class hierarchy
+//    @BeforeAll
+//    public static void setUpClass() {
+//        //setUpDatabase(StorageType.PLOCAL);
+//    }
 
     public GroovyTemplateEngineRenderingTest() {
         super("groovyTemplates", "gsp");
