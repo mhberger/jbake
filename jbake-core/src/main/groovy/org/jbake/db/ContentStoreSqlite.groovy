@@ -48,6 +48,7 @@ public class ContentStoreSqlite implements ContentStore {
               created_timestamp       TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
               last_updated_timestamp  TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
               version                 BIGINT                      NOT NULL DEFAULT (0),
+              json_data               TEXT                        NOT NULL,
 
               CONSTRAINT documents_pk PRIMARY KEY ( id )
             );
@@ -141,7 +142,8 @@ public class ContentStoreSqlite implements ContentStore {
             rendered,
             cached,
             tags,
-            body
+            body,
+            json_data
          )
          values(
             ${document.name},
@@ -158,7 +160,8 @@ public class ContentStoreSqlite implements ContentStore {
             ${document.rendered},
             ${document.cached},
             ${document.tag_string},
-            ${document.body}
+            ${document.body},
+            ${document.json_data}
          )
          """
         )
@@ -202,6 +205,9 @@ public class ContentStoreSqlite implements ContentStore {
         document.cached            = row.cached
         document.tag_string        = row.tags
         document.body              = row.body
+
+        document.json_data         = row.json_data
+
         return document
     }
 

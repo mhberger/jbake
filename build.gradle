@@ -119,6 +119,7 @@ subprojects {
         testImplementation 'org.itsallcode:junit5-system-extensions:1.1.0'
 
         implementation "org.codehaus.groovy:groovy-sql:$groovyVersion"
+        implementation "org.codehaus.groovy:groovy-json:$groovyVersion"
     }
 
     dependencyUpdates.resolutionStrategy {

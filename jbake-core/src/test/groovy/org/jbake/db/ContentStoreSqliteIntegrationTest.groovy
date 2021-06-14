@@ -2,6 +2,9 @@ package org.jbake.db
 
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
+import groovy.json.JsonSlurper
+import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
 import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
 import org.junit.After
@@ -58,7 +61,8 @@ public class ContentStoreSqliteIntegrationTest {
             rendered: 'rendered',
             cached: 'cached',
             tag_string: 'tag3,tag1',
-            body: 'body'
+            body: 'body',
+            json_data: "{\"date\":\"2020-05-03\",\"summary\":\"This is a summary\",\"title\":\"documentModel title\",\"type\":\"documentModel type\",\"body\":\"documentModel body\",\"uri\":\"documentModel uri\",\"noExtensionUri\":\"documentModel noExtensionsUri\",\"tags\":[\"tag1\",\"tag2\"],\"sha1\":\"documentModel sha1\",\"file\":\"documentModel file\",\"rendered\":false,\"sourceuri\":\"documentModel sourceuri\",\"cached\":false,\"name\":\"documentModel name\",\"og\":\"{\\\"og:type\\\": \\\"article\\\"}\",\"id\":\"232\",\"rootpath\":\"documentModel rootPath\",\"status\":\"documentModel status\"}"
         )
         document
     }
@@ -82,6 +86,11 @@ public class ContentStoreSqliteIntegrationTest {
         documentModel.setCached(false)
         documentModel.setTags(['tag1', 'tag2'] as String[])
         documentModel.setBody('documentModel body')
+
+        // extra headers
+        documentModel["id"]       =  "232"
+        documentModel["summary"]  =  "This is a summary"
+        documentModel["og"]       =  '{"og:type": "article"}'
 
         documentModel
     }
@@ -130,8 +139,8 @@ public class ContentStoreSqliteIntegrationTest {
         Document document = makeTestDocument()
         DocumentModel documentModel = document.toDocumentModel()
 
-        assertEquals(documentModel.getTitle(), document.title)
-        assertEquals(documentModel.getDate(), document.documentDate())
+        // TODO a bit more
+        assertEquals(documentModel.getTitle(), "documentModel title")
     }
 
     @Test
@@ -141,6 +150,43 @@ public class ContentStoreSqliteIntegrationTest {
 
         assertEquals(document.title, documentModel.getTitle())
         assertEquals(document.documentDate(), documentModel.getDate())
+    }
+
+    @Test
+    public void testSerialisingDocumentModel() throws Exception {
+        DocumentModel documentModel = makeTestDocumentModel()
+        def json = new JsonBuilder(documentModel).toString()
+//        def json2 = new JsonBuilder(makeTestDocumentModel()).toString()
+
+        def slurper = new JsonSlurper()
+        def result = slurper.parseText(json)
+
+        DocumentModel d = new DocumentModel()
+        result.each {k, v ->
+            if (k == "date") {
+                d.setDate(Date.parse('yyyy-MM-dd', v))
+            }
+            else {
+                d[k] = v
+            }
+        }
+
+        assertEquals(documentModel["name"],                 d["name"])
+        assertEquals(documentModel["title"],                d["title"])
+        assertEquals(documentModel["status"],               d["status"])
+        assertEquals(documentModel["type"],                 d["type"])
+        assertEquals(documentModel["rootPath"],             d["rootPath"])
+        assertEquals(documentModel["file"],                 d["file"])
+        assertEquals(documentModel["uri"],                  d["uri"])
+        assertEquals(documentModel["noExtensionUri"],       d["noExtensionUri"])
+        assertEquals(documentModel["sourceUri"],            d["sourceUri"])
+//        assertEquals(documentModel["date"],                 d["date"])
+        assertEquals(documentModel["sha1"],                 d["sha1"])
+        assertEquals(documentModel["rendered"],             d["rendered"])
+        assertEquals(documentModel["cached"],               d["cached"])
+        assertEquals(documentModel["tags"],                 d["tags"])
+        assertEquals(documentModel["body"],                 d["body"])
+
     }
 
 }

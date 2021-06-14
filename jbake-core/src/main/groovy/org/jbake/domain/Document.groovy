@@ -4,6 +4,8 @@ package org.jbake.domain
 import groovy.transform.Canonical
 import org.jbake.model.DocumentModel
 
+import groovy.json.*
+
 import java.text.SimpleDateFormat
 
 @Canonical
@@ -24,6 +26,7 @@ class Document {
     Boolean cached
     String tag_string
     String body
+    String json_data
 
     List<String> tags() {
       List<String> tags = tag_string.split(/,/)
@@ -41,21 +44,32 @@ class Document {
     // Convert to ModelClass
     DocumentModel toDocumentModel() {
         DocumentModel d = new DocumentModel()
-        d.name = name
-        d.title = title
-        d.status = status
-        d.type = type
-        d.rootpath = root_path
-        d.file = file
-        d.uri = uri
-        d.noExtensionUri = uri_no_extension
-        d.sourceuri = source_uri
-        d.date = documentDate()
-        d.sha1 = sha1
-        d.rendered = rendered
-        d.cached = cached
-        d.tags = tags()
-        d.body = body
+//        d.name = name
+//        d.title = title
+//        d.status = status
+//        d.type = type
+//        d.rootpath = root_path
+//        d.file = file
+//        d.uri = uri
+//        d.noExtensionUri = uri_no_extension
+//        d.sourceuri = source_uri
+//        d.date = documentDate()
+//        d.sha1 = sha1
+//        d.rendered = rendered
+//        d.cached = cached
+//        d.tags = tags()
+//        d.body = body
+
+        def slurper = new JsonSlurper()
+        def result = slurper.parseText(json_data)
+        result.each {k, v ->
+            if (k == "date") {
+                d.setDate(Date.parse('yyyy-MM-dd', v))
+            }
+            else {
+                d[k] = v
+            }
+        }
 
         d
     }
@@ -64,6 +78,7 @@ class Document {
     static Document fromDocumentModel(DocumentModel documentModel) {
         Document document = new Document()
 
+        // TODO remove these and simplify document
         document.name               =  documentModel.name
         document.title              =  documentModel.title
         document.status             =  documentModel.status
@@ -71,7 +86,7 @@ class Document {
         document.root_path          =  documentModel.rootpath
         document.file               =  documentModel.file
         document.uri                =  documentModel.uri
-        document.uri_no_extension  =  documentModel.noExtensionUri
+        document.uri_no_extension   =  documentModel.noExtensionUri
         document.source_uri         =  documentModel.sourceuri
         document.document_date      = formatDate(documentModel.getDate())
         document.sha1               =  documentModel.sha1
@@ -80,7 +95,11 @@ class Document {
         document.tag_string         =  documentModel.getTags().join(/,/).toString()+","
         document.body               =  documentModel.body
 
+        document.json_data          = new JsonBuilder(documentModel).toString()
+
         document
     }
+
+
 
 }
