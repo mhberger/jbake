@@ -13,7 +13,6 @@ import org.jbake.model.DocumentTypes
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
@@ -21,8 +20,8 @@ import java.nio.charset.Charset
 import java.nio.file.Path
 
 import static org.assertj.core.api.Assertions.assertThat
-import static org.junit.jupiter.api.Assertions.assertTrue
 import static org.junit.jupiter.api.Assertions.assertEquals
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 public abstract class AbstractTemplateEngineRenderingIntegrationTest {
 
@@ -31,7 +30,7 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
 
     protected static ContentStoreSqlite contentStoreSqlite
 
-    protected static DefaultJBakeConfiguration config;
+    protected static DefaultJBakeConfiguration config
     protected String templateDir
     protected static File sourceFolder
     protected String templateExtension
@@ -56,10 +55,10 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder()
         assertTrue(sourceFolder.exists(),"Cannot find sample data structure!")
 
-        config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(sourceFolder);
-        config.setSourceFolder(sourceFolder);
+        config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(sourceFolder)
+        config.setSourceFolder(sourceFolder)
 
-        assertEquals(".html", config.getOutputExtension());
+        assertEquals(".html", config.getOutputExtension())
 
     }
 
@@ -71,7 +70,7 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
         ModelExtractorsDocumentTypeListener listener = new ModelExtractorsDocumentTypeListener()
         DocumentTypes.addListener(listener)
 
-        templateFolder = new java.io.File(sourceFolder, templateDir)
+        templateFolder = new File(sourceFolder, templateDir)
         if (!templateFolder.exists()) {
             throw new Exception("Cannot find template folder!")
         }
@@ -155,7 +154,7 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
     }
 
     protected List<String> getOutputStrings(String type) {
-        return outputStrings.get(type);
+        return outputStrings.get(type)
     }
 
     @Test
@@ -163,8 +162,7 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
         // setup
         String filename = "second-post.html"
 
-        File sampleFile = new File(sourceFolder.getPath() + File.separator + "content"
-            + File.separator + "blog" + File.separator + "2013" + File.separator + filename)
+        File sampleFile = new File(sourceFolder.getPath() + File.separator + "content" + File.separator + "blog" + File.separator + "2013" + File.separator + filename)
         DocumentModel content = parser.processFile(sampleFile)
         content.setUri("/" + filename)
         renderer.render(content)
@@ -181,127 +179,126 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
     @Test
     public void renderPage() throws Exception {
         // setup
-        String filename = "about.html";
+        String filename = "about.html"
 
-        File sampleFile = new File(sourceFolder.getPath() + File.separator + "content" + File.separator + filename);
-        DocumentModel content = parser.processFile(sampleFile);
-        content.setUri("/" + filename);
-        renderer.render(content);
-        File outputFile = new File(destinationFolder, filename);
-        assertTrue(outputFile.exists());
+        File sampleFile = new File(sourceFolder.getPath() + File.separator + "content" + File.separator + filename)
+        DocumentModel content = parser.processFile(sampleFile)
+        content.setUri("/" + filename)
+        renderer.render(content)
+        File outputFile = new File(destinationFolder, filename)
+        assertTrue(outputFile.exists())
 
         // verify
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("page")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderIndex() throws Exception {
         //exec
-        renderer.renderIndex("index.html");
+        renderer.renderIndex("index.html")
 
         //validate
-        File outputFile = new File(destinationFolder, "index.html");
-        assertTrue(outputFile.exists());
+        File outputFile = new File(destinationFolder, "index.html")
+        assertTrue(outputFile.exists())
 
         // verify
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("index")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderFeed() throws Exception {
-        renderer.renderFeed("feed.xml");
-        File outputFile = new File(destinationFolder, "feed.xml");
-        assertTrue(outputFile.exists());
+        renderer.renderFeed("feed.xml")
+        File outputFile = new File(destinationFolder, "feed.xml")
+        assertTrue(outputFile.exists())
 
         // verify
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("feed")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderArchive() throws Exception {
-        renderer.renderArchive("archive.html");
-        File outputFile = new File(destinationFolder, "archive.html");
-        assertTrue(outputFile.exists());
+        renderer.renderArchive("archive.html")
+        File outputFile = new File(destinationFolder, "archive.html")
+        assertTrue(outputFile.exists())
 
         // verify
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("archive")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderTags() throws Exception {
-        renderer.renderTags("tags");
+        renderer.renderTags("tags")
 
         // verify
         String destinationPath = destinationFolder.toString() + File.separator + "tags" + File.separator + "blog.html"
-        File outputFile = new File(destinationPath);
-        assertTrue(outputFile.exists());
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        File outputFile = new File(destinationPath)
+        assertTrue(outputFile.exists())
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("tags")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderTagsIndex() throws Exception {
-        config.setRenderTagsIndex(true);
+        config.setRenderTagsIndex(true)
 
-        renderer.renderTags("tags");
+        renderer.renderTags("tags")
 
         def destinationPath = destinationFolder.toString() + File.separator + "tags" + File.separator + "index.html"
-        File outputFile = new File(destinationPath);
-        assertTrue(outputFile.exists());
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        File outputFile = new File(destinationPath)
+        assertTrue(outputFile.exists())
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("tags-index")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
     }
 
     @Test
     public void renderSitemap() throws Exception {
-        DocumentTypes.addDocumentType("paper");
+        DocumentTypes.addDocumentType("paper")
 
-        renderer.renderSitemap("sitemap.xml");
-        File outputFile = new File(destinationFolder, "sitemap.xml");
-        assertTrue(outputFile.exists());
+        renderer.renderSitemap("sitemap.xml")
+        File outputFile = new File(destinationFolder, "sitemap.xml")
+        assertTrue(outputFile.exists())
 
         // verify
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
         for (String string : getOutputStrings("sitemap")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
-        assertThat(output).doesNotContain("draft-paper.html");
+        assertThat(output).doesNotContain("draft-paper.html")
     }
 
     @Test
     public void checkDbTemplateModelIsPopulated() throws Exception {
 
-        config.setPaginateIndex(true);
-        config.setPostsPerPage(1);
+        config.setPaginateIndex(true)
+        config.setPostsPerPage(1)
 
-        outputStrings.put("dbSpan", Arrays.asList("<span>3</span>"));
+        outputStrings.put("dbSpan", Arrays.asList("<span>3</span>"))
 
-        contentStoreSqlite.deleteAllByDocType("post");
+        contentStoreSqlite.deleteAllByDocType("post")
 
-        renderer.renderIndexPaging("index.html");
+        renderer.renderIndexPaging("index.html")
 
-        File outputFile = new File(destinationFolder, "index.html");
-        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset());
+        File outputFile = new File(destinationFolder, "index.html")
+        String output = FileUtils.readFileToString(outputFile, Charset.defaultCharset())
 
         for (String string : getOutputStrings("dbSpan")) {
-            assertThat(output).contains(string);
+            assertThat(output).contains(string)
         }
-
     }
 }
