@@ -73,7 +73,7 @@ public class MdParserTest {
 
     private String validHeader = "title=Title\nstatus=draft\ntype=post\n~~~~~~";
 
-    private String validHeaderWithCustomHeader = "title=Title\nstatus=draft\ntype=post\nog=hello there\n~~~~~~";
+    private String validHeaderWithCustomHeader = "title=Title\nstatus=draft\ntype=post\nid=232\nsummary=This is a custom summary\nog={\"og:type\" : \"article\"}\n~~~~~~";
 
     private String invalidHeader = "title=Title\n~~~~~~";
 
@@ -246,7 +246,9 @@ public class MdParserTest {
         Parser parser = new Parser(config);
         DocumentModel documentModel = parser.processFile(validMdFileBasicWithCustomHeader);
         Assert.assertNotNull(documentModel);
-        Assert.assertEquals("hello there", documentModel.get("og"));
+        Assert.assertEquals("This is a custom summary", documentModel.get("summary"));
+        Assert.assertEquals("232", documentModel.get("id"));
+        Assert.assertEquals("{\"og:type\":\"article\"}", documentModel.get("og").toString());
         Assert.assertEquals("draft", documentModel.getStatus());
         Assert.assertEquals("post", documentModel.getType());
         Assert.assertEquals("<h1>This is a file with a custom header</h1>\n", documentModel.getBody());
