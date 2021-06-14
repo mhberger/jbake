@@ -268,11 +268,9 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
         }
     }
 
-    @Disabled("Until we get FTL  working – this uses ftl")
     @Test
     public void renderSitemap() throws Exception {
         DocumentTypes.addDocumentType("paper");
-//        contentStoreSqlite.updateSchema();
 
         renderer.renderSitemap("sitemap.xml");
         File outputFile = new File(destinationFolder, "sitemap.xml");
@@ -286,7 +284,6 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
         assertThat(output).doesNotContain("draft-paper.html");
     }
 
-    @Disabled("Until we get pagination sorted")
     @Test
     public void checkDbTemplateModelIsPopulated() throws Exception {
 
