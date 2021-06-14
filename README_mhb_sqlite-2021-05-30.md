@@ -3,8 +3,9 @@ README for work specific to this branch
 
 NOTE: This is still rough as guts and is a work in progress.
 
-* The tests pass using SQLite on M1 Silicon. Tests failing on Intel when
-  running with SQLite or OrientDB..
+* The tests are failing using SQLite on M1 Silicon – need to fix selection of
+  db.
+* Tests failing on Intel when running with SQLite or OrientDB..
 * At runtime, content is generated on M1 Silicon, but dates are
   out (Timezone related)
 * Currently working on how the DocumentModel is persisted via Document
