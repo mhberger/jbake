@@ -3,6 +3,13 @@ README for work specific to this branch
 
 NOTE: This is still rough as guts and is a work in progress.
 
+* The tests pass using SQLite on M1 Silicon and Intel
+* At runtime, content is generated on both M1 Silicon and Intel, but dates are
+  out (Timezone related)
+* Currently working on how the DocumentModel is persisted via Document
+  and in Documents table.
+
+
 ## GitHub Isuses
 
 [JBake fails to run or build on Apple Silicon #709](https://github.com/jbake-org/jbake/issues/709)
@@ -11,12 +18,19 @@ NOTE: This is still rough as guts and is a work in progress.
 ## Notes
 
 * Targetting current LTS versions of Java e.g. using JDK11
-  * updating everything to use JUnit5 – allows conditional testing using java properties or environment etc
+  * updating everything to use JUnit5 – allows conditional testing using java
+    properties or environment etc
 * This branch is geared to test SQLIte implementation.
-* If one checks out on an M1 computer, then anything using OrientDB will fail
-* So we run focussed tests.
-* There is a new new property `db.implementation` that can be used to detect
-  which type of ContentStore is being used.
+* If one checks out on an Apple M1 computer, then anything using OrientDB will fail
+* There is an environment variable `jbake_db_implementation` that can be used
+  to enable/disable the OrientDB related tests from being run. By default it is
+  not set, so the OrientDB tests are not run. To enable these to be run do
+  ```
+  export jbake_db_implementation=OrientDB
+  ```
+  The SQLite tests always run.
+* At runtime, which contentstore to use is controlled via jbake.properties by
+  setting `db.implementation=SQLite` or `db.implementation=OrientDB`
 
 
 ## Upgrading to JUnit5
@@ -78,7 +92,7 @@ to
 ### Sample commands
 
 ```
-# Run tests
+# Run targetted tests
 ./gradlew clean test --tests *OvenInte* --tests *Sqlite* --tests *CrawlerInte*
 
 # Run tests to test OrientDb

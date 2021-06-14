@@ -23,13 +23,16 @@ public class UtensilsFactory {
         Utensils utensils = new Utensils();
         utensils.setConfiguration(config);
         ContentStore contentStore;
-        if (config.getDatabaseImplementation() == "OrientDB") {
+        System.out.println("MHB Database Implementation Specified: [" + config.getDatabaseImplementation() + "]");
+        System.out.println("MHB Database equals OrientDB: [" + (config.getDatabaseImplementation().equals("OrientDB")) + "]");
+        if (config.getDatabaseImplementation().equals("OrientDB")) {
             contentStore = DBUtil.createDataStore(config);
             utensils.setContentStore(contentStore);
         } else {
             contentStore = new ContentStoreSqlite();
             contentStore.startup();
         }
+        System.out.println("MHB ContentStore class: [" + contentStore.getClass().getName() + "]");
         utensils.setContentStore(contentStore);
         utensils.setCrawler(new Crawler(contentStore, config));
         utensils.setRenderer(new Renderer(contentStore, config));
