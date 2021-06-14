@@ -31,6 +31,8 @@ public class MdParserTest {
 
     private File validMdFileBasic;
 
+    private File validMdFileBasicWithCustomHeader;
+
     private File invalidMdFileBasic;
 
     private File mdFileHardWraps;
@@ -71,6 +73,8 @@ public class MdParserTest {
 
     private String validHeader = "title=Title\nstatus=draft\ntype=post\n~~~~~~";
 
+    private String validHeaderWithCustomHeader = "title=Title\nstatus=draft\ntype=post\nog=hello there\n~~~~~~";
+
     private String invalidHeader = "title=Title\n~~~~~~";
 
     @Before
@@ -84,6 +88,13 @@ public class MdParserTest {
         out.println(validHeader);
         out.println("# This is a test");
         out.close();
+
+        validMdFileBasicWithCustomHeader = folder.newFile("validBasicCustomHeader.md");
+        out = new PrintWriter(validMdFileBasicWithCustomHeader);
+        out.println(validHeaderWithCustomHeader);
+        out.println("# This is a file with a custom header");
+        out.close();
+
 
         invalidMdFileBasic = folder.newFile("invalidBasic.md");
         out = new PrintWriter(invalidMdFileBasic);
@@ -228,6 +239,17 @@ public class MdParserTest {
         out.println(validHeader);
         out.println("# header & some *formatting* ~~chars~~");
         out.close();
+    }
+
+    @Test
+    public void parseValidMarkdownFileBasicCustomHeader() {
+        Parser parser = new Parser(config);
+        DocumentModel documentModel = parser.processFile(validMdFileBasicWithCustomHeader);
+        Assert.assertNotNull(documentModel);
+        Assert.assertEquals("hello there", documentModel.get("og"));
+        Assert.assertEquals("draft", documentModel.getStatus());
+        Assert.assertEquals("post", documentModel.getType());
+        Assert.assertEquals("<h1>This is a file with a custom header</h1>\n", documentModel.getBody());
     }
 
     @Test
