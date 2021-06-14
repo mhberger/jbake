@@ -14,7 +14,7 @@ public class ContentStoreSqlite implements ContentStore {
     Sql db
 
     ContentStoreSqlite() {
-        this.db = new Sql(new SQLiteDataSource(url: "jdbc:sqlite:mhb_sample_sqlite.db"))
+        this.db = new Sql(new SQLiteDataSource(url: "jdbc:sqlite:jbake_sample_sqlite.db"))
     }
 
     void createTables() {
@@ -210,26 +210,31 @@ public class ContentStoreSqlite implements ContentStore {
         createTables()
     }
 
+    // Not needed
     @Override
     public long getStart() {
         return 0;
     }
 
+    // Not needed done per call
     @Override
     public void setStart(int start) {
 
     }
 
+    // Not needed done per call
     @Override
     public long getLimit() {
         return 0;
     }
 
+    // Not needed done per call
     @Override
     public void setLimit(int limit) {
 
     }
 
+    // Not needed done per call
     @Override
     public void resetPagination() {
 
@@ -240,26 +245,31 @@ public class ContentStoreSqlite implements ContentStore {
         createTables()
     }
 
+    // Not needed handled by JDBC
     @Override
     void close() {
         // Will not implement
     }
 
+    // Not needed handled by JDBC
     @Override
     void shutdown() {
         // Will not implement
     }
 
+    // Not needed handled by JDBC
     @Override
     void startupIfEnginesAreMissing() {
         // Will not implement
     }
 
+    // Not needed? Do we need explicit drop?
     @Override
     void drop() {
         // Will not implement
     }
 
+    // Not needed handled by JDBC
     @Override
     void activateOnCurrentThread() {
         // Will not implement
@@ -404,12 +414,9 @@ public class ContentStoreSqlite implements ContentStore {
 
     public DocumentList<DocumentModel> getAllContentPaged(String docType, boolean applyPaging, Integer start=0, Integer limit=10, String sortOrder="desc") {
         DocumentList<DocumentModel> docs = []
-        String sql
+        String sql = "select * from Documents where type = '${docType}' order by document_date ${sortOrder}"
         if (applyPaging) {
-            sql = "select * from Documents where type = '${docType}' order by document_date ${sortOrder} LIMIT ${limit} OFFSET ${start}"
-        }
-        else {
-            sql = "select * from Documents where type= '${docType}' order by document_date ${sortOrder}"
+            sql = sql + " LIMIT ${limit} OFFSET ${start}"
         }
         getDb().rows(sql).each { row ->
             DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
@@ -435,6 +442,7 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public void markContentAsRendered(DocumentModel document) {
+        db.execute('update documents set rendered = true where type = ?', document.getUri())
     }
 
     @Override
@@ -442,9 +450,18 @@ public class ContentStoreSqlite implements ContentStore {
         db.execute('delete from documents where type = ?', docType)
     }
 
+    // TODO Review. it is actually to get tags from pubilshed posts. See also getAllTagsFromPublishedPosts
     @Override
     public Set<String> getTags() {
-        return null;
+        Set<String> tags = []
+        String sql = "select tags from Documents where status = 'published' and type = 'post' and tags <> ',' order by document_date desc"
+        getDb().rows(sql).each { row ->
+            def tagList = row.TAGS.split(/,/)
+            tagList.each {
+                tags.add(it)
+            }
+        }
+        return tags
     }
 
     @Override
@@ -479,12 +496,9 @@ public class ContentStoreSqlite implements ContentStore {
 
     public DocumentList<DocumentModel> getPublishedContentPaged(String docType, boolean applyPaging, Integer start=0, Integer limit=10, String sortOrder="desc") {
         DocumentList<DocumentModel> docs = []
-        String sql
+        String sql = "select * from Documents where status = 'published' and type= '${docType}' order by document_date ${sortOrder}"
         if (applyPaging) {
-            sql = "select * from Documents where status = 'published' and type = '${docType}' order by document_date ${sortOrder} LIMIT ${limit} OFFSET ${start}"
-        }
-        else {
-            sql = "select * from Documents where status = 'published' and type= '${docType}' order by document_date ${sortOrder}"
+            sql = sql + " LIMIT ${limit} OFFSET ${start}"
         }
         getDb().rows(sql).each { row ->
             DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
@@ -493,9 +507,18 @@ public class ContentStoreSqlite implements ContentStore {
         return docs
     }
 
+    // TODO Review. The return type does not reflect method name. See also getTags
     @Override
     public DocumentList<DocumentModel> getAllTagsFromPublishedPosts() {
-        return null;
+        Set<String> tags = []
+        String sql = "select tags from Documents where status = 'published' and type = 'post' and tags <> ',' order by document_date desc"
+        getDb().rows(sql).each { row ->
+            def tagList = row.TAGS.split(/,/)
+            tagList.each {
+                tags.add(it)
+            }
+        }
+        return tags
     }
 
     @Override
@@ -513,11 +536,13 @@ public class ContentStoreSqlite implements ContentStore {
 
     }
 
+    // Not needed handled by JDBC
     @Override
     void updateAndClearCacheIfNeeded(boolean needed, File templateFolder) {
         // Will not implement
     }
 
+    // Not needed
     @Override
     public void deleteAllDocumentTypes() {
 
