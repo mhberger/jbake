@@ -324,7 +324,23 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedPosts(boolean applyPaging) {
-        return null;
+        getPublishedContentPaged('post', applyPaging)
+    }
+
+    public DocumentList<DocumentModel> getPublishedPostsPaged(boolean applyPaging, Integer start=0, Integer limit=10, String sortOrder="desc") {
+        DocumentList<DocumentModel> docs = []
+        String sql
+        if (applyPaging) {
+            sql = "select * from Documents where status = 'published' and type = 'post' order by document_date ${sortOrder} LIMIT ${limit} OFFSET ${start}"
+        }
+        else {
+            sql = "select * from Documents where status = 'published' and type= 'post' order by document_date ${sortOrder}"
+        }
+        getDb().rows(sql).each { row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -352,7 +368,7 @@ public class ContentStoreSqlite implements ContentStore {
     @Override
     public DocumentList<DocumentModel> getPublishedPages() {
         DocumentList<DocumentModel> docs = []
-        String sql = "select * from Documents where status = 'published' and type = 'pages'"
+        String sql = "select * from Documents where status = 'published' and type = 'page'"
         getDb().rows(sql).each {row ->
             DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
@@ -383,7 +399,23 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getAllContent(String docType, boolean applyPaging) {
-        return null;
+        getAllContentPaged(doctype, applyPaging)
+    }
+
+    public DocumentList<DocumentModel> getAllContentPaged(String docType, boolean applyPaging, Integer start=0, Integer limit=10, String sortOrder="desc") {
+        DocumentList<DocumentModel> docs = []
+        String sql
+        if (applyPaging) {
+            sql = "select * from Documents where type = '${docType}' order by document_date ${sortOrder} LIMIT ${limit} OFFSET ${start}"
+        }
+        else {
+            sql = "select * from Documents where type= '${docType}' order by document_date ${sortOrder}"
+        }
+        getDb().rows(sql).each { row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override
@@ -442,7 +474,23 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getPublishedContent(String docType, boolean applyPaging) {
-        return null;
+        return getPublishedContentPaged(doctype, applyPaging)
+    }
+
+    public DocumentList<DocumentModel> getPublishedContentPaged(String docType, boolean applyPaging, Integer start=0, Integer limit=10, String sortOrder="desc") {
+        DocumentList<DocumentModel> docs = []
+        String sql
+        if (applyPaging) {
+            sql = "select * from Documents where status = 'published' and type = '${docType}' order by document_date ${sortOrder} LIMIT ${limit} OFFSET ${start}"
+        }
+        else {
+            sql = "select * from Documents where status = 'published' and type= '${docType}' order by document_date ${sortOrder}"
+        }
+        getDb().rows(sql).each { row ->
+            DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
+            docs.add(documentModel)
+        }
+        return docs
     }
 
     @Override

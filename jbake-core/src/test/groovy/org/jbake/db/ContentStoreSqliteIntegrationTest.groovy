@@ -41,7 +41,8 @@ public class ContentStoreSqliteIntegrationTest {
         return contentStoreSqlite.getDb();
     }
 
-    private Document makeTestDocument() {
+    // TODO Review whether this belongs here or not
+    static Document makeTestDocument() {
         Document document = new Document(
             name: 'name',
             title: 'title',
@@ -62,7 +63,8 @@ public class ContentStoreSqliteIntegrationTest {
         document
     }
 
-    private DocumentModel makeTestDocumentModel() {
+    // TODO Review whether this belongs here or not
+    static DocumentModel makeTestDocumentModel() {
         DocumentModel documentModel = new DocumentModel()
 
         documentModel.setName('documentModel name')
