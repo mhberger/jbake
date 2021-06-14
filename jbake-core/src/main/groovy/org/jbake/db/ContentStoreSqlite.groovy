@@ -304,7 +304,7 @@ public class ContentStoreSqlite implements ContentStore {
 
     @Override
     public DocumentList<DocumentModel> getDocumentStatus(String uri) {
-        List<DocumentModel> docs = []
+        DocumentList<DocumentModel> docs = []
         getDb().rows("select * from documents where uri = ?", uri).each {row ->
             DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
