@@ -3,6 +3,7 @@ package org.jbake.db
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import org.jbake.app.DocumentList
+import org.jbake.app.configuration.JBakeConfiguration
 import org.jbake.domain.DataFile
 import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
@@ -12,9 +13,11 @@ import org.sqlite.SQLiteDataSource
 public class ContentStoreSqlite implements ContentStore {
 
     Sql db
+    JBakeConfiguration config
 
-    ContentStoreSqlite() {
+    ContentStoreSqlite(JBakeConfiguration config) {
         this.db = new Sql(new SQLiteDataSource(url: "jdbc:sqlite:jbake_sample_sqlite.db"))
+        this.config = config
     }
 
     void createTables() {

@@ -4,7 +4,9 @@ import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.json.JsonSlurper
 import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
+import org.jbake.TestUtils
+import org.jbake.app.configuration.ConfigUtil
+import org.jbake.app.configuration.DefaultJBakeConfiguration
 import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
 import org.junit.After
@@ -14,14 +16,24 @@ import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.assertEquals
+import static org.junit.jupiter.api.Assertions.assertTrue
 
 public class ContentStoreSqliteIntegrationTest {
 
     protected static ContentStoreSqlite contentStoreSqlite;
+    protected static DefaultJBakeConfiguration config;
+    protected static File sourceFolder;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        contentStoreSqlite = new ContentStoreSqlite();
+
+        sourceFolder = TestUtils.getTestResourcesAsSourceFolder();
+        assertTrue(sourceFolder.exists(), "Cannot find sample data structure!");
+
+        config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(sourceFolder);
+        config.setSourceFolder(sourceFolder);
+
+        contentStoreSqlite = new ContentStoreSqlite(config);
         contentStoreSqlite.createTables();
     }
 
@@ -164,6 +176,8 @@ public class ContentStoreSqliteIntegrationTest {
         DocumentModel d = new DocumentModel()
         result.each {k, v ->
             if (k == "date") {
+                // TODO: Review whether we should be using this?
+                // configuration.getDateFormat()
                 d.setDate(Date.parse('yyyy-MM-dd', v))
             }
             else {
@@ -180,7 +194,9 @@ public class ContentStoreSqliteIntegrationTest {
         assertEquals(documentModel["uri"],                  d["uri"])
         assertEquals(documentModel["noExtensionUri"],       d["noExtensionUri"])
         assertEquals(documentModel["sourceUri"],            d["sourceUri"])
-//        assertEquals(documentModel["date"],                 d["date"])
+        // TODO: Review whether we should be using this?
+        // configuration.getDateFormat()
+        // assertEquals(documentModel["date"],                 d["date"])
         assertEquals(documentModel["sha1"],                 d["sha1"])
         assertEquals(documentModel["rendered"],             d["rendered"])
         assertEquals(documentModel["cached"],               d["cached"])

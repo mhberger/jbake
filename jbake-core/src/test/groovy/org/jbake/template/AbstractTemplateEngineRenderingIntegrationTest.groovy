@@ -49,9 +49,6 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
 
     @BeforeAll
     public static void setUpClass() throws Exception {
-        contentStoreSqlite = new ContentStoreSqlite()
-        contentStoreSqlite.createTables()
-
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder()
         assertTrue(sourceFolder.exists(),"Cannot find sample data structure!")
 
@@ -60,6 +57,8 @@ public abstract class AbstractTemplateEngineRenderingIntegrationTest {
 
         assertEquals(".html", config.getOutputExtension())
 
+        contentStoreSqlite = new ContentStoreSqlite(config)
+        contentStoreSqlite.createTables()
     }
 
     @BeforeEach

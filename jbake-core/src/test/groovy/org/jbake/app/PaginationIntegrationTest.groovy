@@ -1,6 +1,6 @@
 package org.jbake.app
 
-import org.jbake.FakeDocumentBuilder
+
 import org.jbake.TestUtils
 import org.jbake.app.configuration.ConfigUtil
 import org.jbake.app.configuration.DefaultJBakeConfiguration
@@ -11,7 +11,6 @@ import org.jbake.model.DocumentTypes
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 import static org.junit.jupiter.api.Assertions.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -25,9 +24,6 @@ class PaginationIntegrationTest {
     @BeforeEach
     public void setUpOwn() {
 
-        contentStoreSqlite = new ContentStoreSqlite();
-        contentStoreSqlite.createTables();
-
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder();
         assertTrue(sourceFolder.exists(), "Cannot find sample data structure!");
 
@@ -35,6 +31,9 @@ class PaginationIntegrationTest {
         config.setSourceFolder(sourceFolder);
 
         assertEquals(".html", config.getOutputExtension());
+
+        contentStoreSqlite = new ContentStoreSqlite(config);
+        contentStoreSqlite.createTables();
 
         for (String docType : DocumentTypes.getDocumentTypes()) {
             String fileBaseName = docType;

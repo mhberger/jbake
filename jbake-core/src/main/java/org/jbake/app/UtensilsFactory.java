@@ -29,7 +29,7 @@ public class UtensilsFactory {
             contentStore = DBUtil.createDataStore(config);
             utensils.setContentStore(contentStore);
         } else {
-            contentStore = new ContentStoreSqlite();
+            contentStore = new ContentStoreSqlite(config);
             contentStore.startup();
         }
         System.out.println("MHB ContentStore class: [" + contentStore.getClass().getName() + "]");

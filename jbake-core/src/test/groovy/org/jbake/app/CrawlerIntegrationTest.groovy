@@ -9,7 +9,6 @@ import org.jbake.app.configuration.ConfigUtil
 import org.jbake.app.configuration.DefaultJBakeConfiguration
 import org.jbake.db.ContentStoreSqlite
 import org.jbake.model.DocumentModel
-import org.jbake.model.DocumentTypes
 import org.jbake.model.ModelAttributes
 import org.jbake.util.DataFileUtil
 import org.junit.After
@@ -17,13 +16,9 @@ import org.junit.AfterClass
 import org.junit.Assert
 import org.junit.Before
 import org.junit.BeforeClass
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 
-import static org.assertj.core.api.Assertions.assertThat
-import static org.assertj.core.api.Assertions.assertThat
-import static org.assertj.core.api.Assertions.assertThat
 import static org.assertj.core.api.Assertions.assertThat
 import static org.hamcrest.CoreMatchers.is
 
@@ -36,9 +31,6 @@ class CrawlerIntegrationTest {
 
     @BeforeClass
     public static void setUpClass() throws Exception {
-        contentStoreSqlite = new ContentStoreSqlite();
-        contentStoreSqlite.createTables();
-
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder();
         Assert.assertTrue("Cannot find sample data structure!", sourceFolder.exists());
 
@@ -46,6 +38,9 @@ class CrawlerIntegrationTest {
         config.setSourceFolder(sourceFolder);
 
         Assert.assertEquals(".html", config.getOutputExtension());
+
+        contentStoreSqlite = new ContentStoreSqlite(config);
+        contentStoreSqlite.createTables();
 
     }
 
