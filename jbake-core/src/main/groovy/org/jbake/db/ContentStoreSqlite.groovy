@@ -197,7 +197,7 @@ public class ContentStoreSqlite implements ContentStore {
         document.root_path         = row.root_path
         document.file              = row.file
         document.uri               = row.uri
-        document.uri_no_extension = row.uri_no_extensions
+        document.uri_no_extension  = row.uri_no_extensions
         document.source_uri        = row.source_uri
         document.document_date     = row.document_date
         document.sha1              = row.sha1
