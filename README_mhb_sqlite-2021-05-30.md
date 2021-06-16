@@ -32,7 +32,8 @@ NOTE: This is still rough as guts and is a work in progress.
   ```
   The SQLite tests always run.
 * At runtime, which contentstore to use is controlled via jbake.properties by
-  setting `db.implementation=SQLite` or `db.implementation=OrientDB`
+  setting `jbake_db_implementation=SQLite` or `jbake_db_implementation=OrientDB`
+  The default is SQLite.
 
 
 ## Upgrading to JUnit5

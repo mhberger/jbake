@@ -71,7 +71,7 @@ public abstract class PropertyList {
     );
 
     public static final Property DB_IMPLEMENTATION = new Property(
-        "db.implementation",
+        "jbake_db_implementation",
         "database implementation (OrientDB, SQLite)"
     );
 
