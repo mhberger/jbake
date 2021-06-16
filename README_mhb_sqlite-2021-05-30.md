@@ -3,13 +3,13 @@ README for work specific to this branch
 
 NOTE: This is still rough as guts and is a work in progress.
 
-* The tests are failing using SQLite on M1 Silicon – need to fix selection of
-  db.
+* SQLite used as contentStore by default.
+* The tests are passing using SQLite on M1 Silicon.
 * Tests failing on Intel when running with SQLite or OrientDB..
 * At runtime, content is generated on M1 Silicon, but dates are
   out (Timezone related)
 * Currently working on how the DocumentModel is persisted via Document
-  and in Documents table.
+  and in Documents table and how it affects Date..
 
 
 ## GitHub Isuses
