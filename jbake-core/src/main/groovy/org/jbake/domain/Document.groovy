@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -67,13 +68,9 @@ class Document {
         def result = slurper.parseText(json_data)
         result.each {k, v ->
             if (k == "date") {
-                // Review whether we should be using this?
-                // configuration.getDateFormat()
-//                d.setDate(Date.parse('yyyy-MM-dd', v))
-//                d.setDate(v)
-
-                LocalDate parsedDate = LocalDate.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ssZ"));
-                Date documentDate = Date.from(parsedDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                // TODO Refactor into common method and write tests
+                LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
+                Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
                 d.setDate(documentDate)
 
                 LOGGER.info("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);

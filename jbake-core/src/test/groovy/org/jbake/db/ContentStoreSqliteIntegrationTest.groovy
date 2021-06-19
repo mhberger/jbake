@@ -15,6 +15,11 @@ import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
 
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 import static org.junit.Assert.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
 
@@ -92,7 +97,8 @@ public class ContentStoreSqliteIntegrationTest {
         documentModel.setUri('documentModel uri')
         documentModel.setNoExtensionUri('documentModel noExtensionsUri')
         documentModel.setSourceUri('documentModel sourceuri')
-        documentModel.setDate(Date.parse('yyyy-MM-dd', '2020-05-04'))
+        // TODO This should be based on what the config format is.
+        documentModel.setDate(Date.parse(config.getDateFormat() ,'2020-05-04'))
         documentModel.setSha1('documentModel sha1')
         documentModel.setRendered(false)
         documentModel.setCached(false)
@@ -168,7 +174,6 @@ public class ContentStoreSqliteIntegrationTest {
     public void testSerialisingDocumentModel() throws Exception {
         DocumentModel documentModel = makeTestDocumentModel()
         def json = new JsonBuilder(documentModel).toString()
-//        def json2 = new JsonBuilder(makeTestDocumentModel()).toString()
 
         def slurper = new JsonSlurper()
         def result = slurper.parseText(json)
@@ -176,9 +181,10 @@ public class ContentStoreSqliteIntegrationTest {
         DocumentModel d = new DocumentModel()
         result.each {k, v ->
             if (k == "date") {
-                // TODO: Review whether we should be using this?
-                // configuration.getDateFormat()
-                d.setDate(Date.parse('yyyy-MM-dd', v))
+                // TODO Refactor into common method and write tests
+                LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
+                Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
+                d.setDate(documentDate)
             }
             else {
                 d[k] = v
@@ -194,9 +200,7 @@ public class ContentStoreSqliteIntegrationTest {
         assertEquals(documentModel["uri"],                  d["uri"])
         assertEquals(documentModel["noExtensionUri"],       d["noExtensionUri"])
         assertEquals(documentModel["sourceUri"],            d["sourceUri"])
-        // TODO: Review whether we should be using this?
-        // configuration.getDateFormat()
-        // assertEquals(documentModel["date"],                 d["date"])
+        assertEquals(documentModel["date"],                 d["date"])
         assertEquals(documentModel["sha1"],                 d["sha1"])
         assertEquals(documentModel["rendered"],             d["rendered"])
         assertEquals(documentModel["cached"],               d["cached"])

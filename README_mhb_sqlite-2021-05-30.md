@@ -41,10 +41,10 @@ NOTE: This is still rough as guts and is a work in progress.
 * Stored in content as text with format pattern specified in config file
 * MarkupEngine reads this and converts to date using java.util.date, SimpleDateFormatter and format pattern specified in config file
 * Sets the DocumentModel date (java.util.date) with this.
-* DocumentModel -> Document
+* DocumentModel -> Json -> Document
 * Document to DB
 * DB to Document
-* Document to DocumentModel
+* Document -> Json -> DocumentModel
 * DocumentModel to templates
 
 
