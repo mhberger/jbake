@@ -55,7 +55,7 @@ class PaginationIntegrationTest {
 
         for (int i = 1; i <= TOTAL_POSTS; i++) {
             cal.add(Calendar.SECOND, 5);
-            DocumentModel documentModel = ContentStoreSqliteIntegrationTest.makeTestDocumentModel()
+            DocumentModel documentModel = ContentStoreSqliteIntegrationTest.makeTestDocumentModel(config)
             documentModel.setStatus("published")
             documentModel.setDate(cal.getTime())
             contentStoreSqlite.addDocument(documentModel)

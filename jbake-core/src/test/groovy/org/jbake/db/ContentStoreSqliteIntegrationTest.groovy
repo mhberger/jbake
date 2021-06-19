@@ -1,24 +1,20 @@
 package org.jbake.db
 
+import groovy.json.JsonBuilder
+import groovy.json.JsonSlurper
 import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
-import groovy.json.JsonSlurper
-import groovy.json.JsonBuilder
 import org.jbake.TestUtils
 import org.jbake.app.configuration.ConfigUtil
 import org.jbake.app.configuration.DefaultJBakeConfiguration
+import org.jbake.app.configuration.JBakeConfiguration
 import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
-import org.junit.After
-import org.junit.AfterClass
-import org.junit.Before
-import org.junit.BeforeClass
-import org.junit.Test
-
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 import static org.junit.Assert.assertEquals
 import static org.junit.jupiter.api.Assertions.assertTrue
@@ -29,7 +25,7 @@ public class ContentStoreSqliteIntegrationTest {
     protected static DefaultJBakeConfiguration config;
     protected static File sourceFolder;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() throws Exception {
 
         sourceFolder = TestUtils.getTestResourcesAsSourceFolder();
@@ -42,17 +38,17 @@ public class ContentStoreSqliteIntegrationTest {
         contentStoreSqlite.createTables();
     }
 
-    @AfterClass
+    @AfterAll
     public static void cleanUpClass() {
 //        db.close();
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         contentStoreSqlite.createTables();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
 //        db.dropTables();
     }
@@ -85,7 +81,7 @@ public class ContentStoreSqliteIntegrationTest {
     }
 
     // TODO Review whether this belongs here or not
-    static DocumentModel makeTestDocumentModel() {
+    static DocumentModel makeTestDocumentModel(JBakeConfiguration config = config) {
         DocumentModel documentModel = new DocumentModel()
 
         documentModel.setName('documentModel name')
@@ -97,7 +93,6 @@ public class ContentStoreSqliteIntegrationTest {
         documentModel.setUri('documentModel uri')
         documentModel.setNoExtensionUri('documentModel noExtensionsUri')
         documentModel.setSourceUri('documentModel sourceuri')
-        // TODO This should be based on what the config format is.
         documentModel.setDate(Date.parse(config.getDateFormat() ,'2020-05-04'))
         documentModel.setSha1('documentModel sha1')
         documentModel.setRendered(false)
