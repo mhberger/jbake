@@ -74,7 +74,7 @@ public class ContentStoreSqliteIntegrationTest {
             cached: 'cached',
             tag_string: 'tag3,tag1',
             body: 'body',
-            json_data: "{\"date\":\"2020-05-03\",\"summary\":\"This is a summary\",\"title\":\"documentModel title\",\"type\":\"documentModel type\",\"body\":\"documentModel body\",\"uri\":\"documentModel uri\",\"noExtensionUri\":\"documentModel noExtensionsUri\",\"tags\":[\"tag1\",\"tag2\"],\"sha1\":\"documentModel sha1\",\"file\":\"documentModel file\",\"rendered\":false,\"sourceuri\":\"documentModel sourceuri\",\"cached\":false,\"name\":\"documentModel name\",\"og\":\"{\\\"og:type\\\": \\\"article\\\"}\",\"id\":\"232\",\"rootpath\":\"documentModel rootPath\",\"status\":\"documentModel status\"}"
+            json_data: "{\"date\":\"2021-01-28T11:00:00+0000\",\"summary\":\"This is a summary\",\"title\":\"documentModel title\",\"type\":\"documentModel type\",\"body\":\"documentModel body\",\"uri\":\"documentModel uri\",\"noExtensionUri\":\"documentModel noExtensionsUri\",\"tags\":[\"tag1\",\"tag2\"],\"sha1\":\"documentModel sha1\",\"file\":\"documentModel file\",\"rendered\":false,\"sourceuri\":\"documentModel sourceuri\",\"cached\":false,\"name\":\"documentModel name\",\"og\":\"{\\\"og:type\\\": \\\"article\\\"}\",\"id\":\"232\",\"rootpath\":\"documentModel rootPath\",\"status\":\"documentModel status\"}"
         )
         document
     }

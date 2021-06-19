@@ -36,6 +36,18 @@ NOTE: This is still rough as guts and is a work in progress.
   The default is SQLite.
 
 
+## Date Mapping
+
+* Stored in content as text with format pattern specified in config file
+* MarkupEngine reads this and converts to date using java.util.date, SimpleDateFormatter and format pattern specified in config file
+* Sets the DocumentModel date (java.util.date) with this.
+* DocumentModel -> Document
+* Document to DB
+* DB to Document
+* Document to DocumentModel
+* DocumentModel to templates
+
+
 ## Upgrading to JUnit5
 
 * See [Migrating from JUnit 4 to JUnit 5](https://www.baeldung.com/junit-5-migration)

@@ -4,11 +4,20 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.transform.Canonical
 import org.jbake.model.DocumentModel
+import org.jbake.parser.MarkupEngine
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Canonical
 class Document {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Document.class);
+
     Long id
     String name
     String title
@@ -35,13 +44,17 @@ class Document {
     Date documentDate() {
         // Review whether we should be using this?
         // configuration.getDateFormat()
-        Date.parse('yyyy-MM-dd', document_date)
+        Date date = Date.parse('yyyy-MM-dd', document_date)
+        LOGGER.info("MHB documentDate document_date {}, date parsed {}", document_date, date);
+        date
     }
 
     static String formatDate(Date d) {
         // Review whether we should be using this?
         // configuration.getDateFormat()
-        new SimpleDateFormat('yyyy-MM-dd').format(d)
+        String formattedDate = new SimpleDateFormat('yyyy-MM-dd').format(d)
+        LOGGER.info("MHB formatDate date value {}, date formatted {}", d, formattedDate);
+        formattedDate
     }
 
     // Convert to ModelClass
@@ -56,7 +69,14 @@ class Document {
             if (k == "date") {
                 // Review whether we should be using this?
                 // configuration.getDateFormat()
-                d.setDate(Date.parse('yyyy-MM-dd', v))
+//                d.setDate(Date.parse('yyyy-MM-dd', v))
+//                d.setDate(v)
+
+                LocalDate parsedDate = LocalDate.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm:ssZ"));
+                Date documentDate = Date.from(parsedDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+                d.setDate(documentDate)
+
+                LOGGER.info("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);
             }
             else {
                 d[k] = v

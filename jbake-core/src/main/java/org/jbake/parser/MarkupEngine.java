@@ -282,6 +282,7 @@ public abstract class MarkupEngine implements ParserEngine {
             try {
                 Date date = df.parse(value);
                 content.setDate(date);
+                LOGGER.info("MHB date value {}, date parsed {}", value, date);
             } catch (ParseException e) {
                 LOGGER.error("unable to parse date {}", value);
             }

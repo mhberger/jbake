@@ -42,7 +42,7 @@ public class FileUtilTest {
 
         File source = TestUtils.getTestResourcesAsSourceFolder();
         ConfigUtil util = new ConfigUtil();
-        DefaultJBakeConfiguration config = (DefaultJBakeConfiguration) util.loadConfig(source);
+        DefaultJBakeConfiguration config = (DefaultJBakeConfiguration) util.loadConfig(source, null);
 
         String path = FileUtil.getUriPathToContentRoot(config, new File(config.getContentFolder(), "index.html"));
         assertThat(path).isEqualTo("");

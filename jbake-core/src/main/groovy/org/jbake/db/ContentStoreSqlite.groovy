@@ -9,8 +9,12 @@ import org.jbake.domain.Document
 import org.jbake.model.DocumentModel
 import org.jbake.model.DocumentTypes
 import org.sqlite.SQLiteDataSource
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ContentStoreSqlite implements ContentStore {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContentStoreSqlite.class);
 
     Sql db
     JBakeConfiguration config
