@@ -181,9 +181,7 @@ public class ContentStoreSqliteIntegrationTest {
         DocumentModel d = new DocumentModel()
         result.each {k, v ->
             if (k == "date") {
-                // TODO Refactor into common method and write tests
-                LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
-                Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
+                Date documentDate = Document.convertJsonDateToJavaUtilDate(v)
                 d.setDate(documentDate)
             }
             else {

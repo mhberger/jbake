@@ -4,14 +4,11 @@ import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.transform.Canonical
 import org.jbake.model.DocumentModel
-import org.jbake.parser.MarkupEngine
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Canonical
@@ -68,18 +65,22 @@ class Document {
         def result = slurper.parseText(json_data)
         result.each {k, v ->
             if (k == "date") {
-                // TODO Refactor into common method and write tests
-                LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
-                Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
+                Date documentDate = convertJsonDateToJavaUtilDate(v)
                 d.setDate(documentDate)
 
-                LOGGER.info("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);
             }
             else {
                 d[k] = v
             }
         }
         d
+    }
+
+    static Date convertJsonDateToJavaUtilDate(String v) {
+        LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
+        Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
+        LOGGER.info("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);
+        documentDate
     }
 
     // Convert from ModelClass
