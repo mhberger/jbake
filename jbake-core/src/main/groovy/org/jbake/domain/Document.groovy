@@ -3,6 +3,7 @@ package org.jbake.domain
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.transform.Canonical
+import org.jbake.app.configuration.JBakeConfiguration
 import org.jbake.model.DocumentModel
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,10 +40,8 @@ class Document {
       return tags
     }
 
-    Date documentDate() {
-        // Review whether we should be using this?
-        // configuration.getDateFormat()
-        Date date = Date.parse('yyyy-MM-dd', document_date)
+    Date documentDate(JBakeConfiguration config) {
+        Date date = Date.parse(config.getDateFormat(), document_date)
         LOGGER.info("MHB documentDate document_date {}, date parsed {}", document_date, date);
         date
     }
