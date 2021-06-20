@@ -159,7 +159,7 @@ public class ContentStoreSqliteIntegrationTest {
     @Test
     public void confirmDocumentConvertsFromDocumentModel() throws Exception {
         DocumentModel documentModel = makeTestDocumentModel(config)
-        Document document = Document.fromDocumentModel(documentModel)
+        Document document = Document.fromDocumentModel(documentModel, config)
 
         assertEquals(document.title, documentModel.getTitle())
         assertEquals(document.documentDate(config), documentModel.getDate())

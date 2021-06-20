@@ -46,10 +46,10 @@ class Document {
         date
     }
 
-    static String formatDate(Date d) {
+    static String formatDate(Date d, JBakeConfiguration config) {
         // Review whether we should be using this?
         // configuration.getDateFormat()
-        String formattedDate = new SimpleDateFormat('yyyy-MM-dd').format(d)
+        String formattedDate = new SimpleDateFormat(config.getDateFormat()).format(d)
         LOGGER.info("MHB formatDate date value {}, date formatted {}", d, formattedDate);
         formattedDate
     }
@@ -59,7 +59,7 @@ class Document {
         DocumentModel d = new DocumentModel()
 
         // Document Model is a HashMap<String, Object> so we can
-        // just extract from json_datah
+        // just extract from json_data
         def slurper = new JsonSlurper()
         def result = slurper.parseText(json_data)
         result.each {k, v ->
@@ -83,7 +83,7 @@ class Document {
     }
 
     // Convert from ModelClass
-    static Document fromDocumentModel(DocumentModel documentModel) {
+    static Document fromDocumentModel(DocumentModel documentModel, JBakeConfiguration config) {
         Document document = new Document()
 
         // Keep them as separate fields so that we can query them via SQL
@@ -96,7 +96,7 @@ class Document {
         document.uri                =  documentModel.uri
         document.uri_no_extension   =  documentModel.noExtensionUri
         document.source_uri         =  documentModel.sourceuri
-        document.document_date      =  formatDate(documentModel.getDate())
+        document.document_date      =  formatDate(documentModel.getDate(), config)
         document.sha1               =  documentModel.sha1
         document.rendered           =  documentModel.rendered
         document.cached             =  documentModel.cached
@@ -104,7 +104,7 @@ class Document {
         document.body               =  documentModel.body
 
         // Serialise the entire documentModel as a JSON string.
-        // This lets us catch any additiional fields used in DocumentModel.
+        // This lets us catch any additional fields used in DocumentModel.
         document.json_data          = new JsonBuilder(documentModel).toString()
 
         document

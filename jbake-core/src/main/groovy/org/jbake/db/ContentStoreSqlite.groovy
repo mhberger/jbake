@@ -498,7 +498,7 @@ public class ContentStoreSqlite implements ContentStore {
             addDataFileToDb(DataFile.fromDocumentModel(documentModel))
         }
         else {
-            addDocumentToDb(Document.fromDocumentModel(documentModel))
+            addDocumentToDb(Document.fromDocumentModel(documentModel, config))
         }
     }
 
