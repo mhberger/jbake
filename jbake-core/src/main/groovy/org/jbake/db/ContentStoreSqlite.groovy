@@ -402,7 +402,7 @@ public class ContentStoreSqlite implements ContentStore {
     @Override
     public DocumentList<DocumentModel> getPublishedContent(String docType) {
         DocumentList<DocumentModel> docs = []
-        String sql = "select * from Documents where status = 'published' and type = '${docType}'"
+        String sql = "select * from Documents where status = 'published' and type = '${docType}' order by document_date desc"
         getDb().rows(sql).each {row ->
             DocumentModel documentModel = mapDocumentFromDb(row).toDocumentModel()
             docs.add(documentModel)
