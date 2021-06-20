@@ -50,7 +50,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class AbstractTemplateEngineRenderingTest extends ContentStoreOrientDbIntegrationTest {
 
     protected final String templateDir;
-    protected static File sourceFolder;
     protected final String templateExtension;
     protected final Map<String, List<String>> outputStrings = new HashMap<>();
 
