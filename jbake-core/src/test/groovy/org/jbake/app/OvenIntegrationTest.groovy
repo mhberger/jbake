@@ -8,6 +8,7 @@ import org.jbake.app.configuration.PropertyList
 import org.jbake.model.DocumentTypes
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 
@@ -151,7 +152,7 @@ class OvenIntegrationTest {
         assertThat(oven.getUtensils().getConfiguration()).isEqualTo(configuration);
     }
 
-    @Test()
+    @Test
     public void shouldInspectConfigurationDuringInstantiationFromUtils() {
         configuration.setSourceFolder(root.resolve("none").toFile());
 
@@ -159,6 +160,25 @@ class OvenIntegrationTest {
         utensils.setConfiguration(configuration);
 
         assertThrows(JBakeException.class, () -> new Oven(utensils));
+    }
+
+    @Disabled("While implementing as IntegrationTest")
+    @Test
+    public void shouldCrawlRenderAndCopyAssets() throws Exception {
+        File template = TestUtils.newFolder(root.toFile(), "template");
+        File content = TestUtils.newFolder(root.toFile(), "content");
+        File assets = TestUtils.newFolder(root.toFile(), "assets");
+
+        configuration.setTemplateFolder(template);
+        configuration.setContentFolder(content);
+        configuration.setAssetFolder(assets);
+
+        final Oven oven = new Oven(configuration);
+        oven.bake();
+
+        assertThat(oven.getErrors()).isEmpty();
+        assertThat(configuration.getDestinationFolder()).isNotEmptyDirectory();
+        assertThat(assets).isNotEmptyDirectory();
     }
 
     @Test
