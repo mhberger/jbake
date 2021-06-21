@@ -34,9 +34,17 @@ public class CrawlerTest extends ContentStoreOrientDbIntegrationTest {
         assertThat(results.size()).isEqualTo(3);
 
         for (Map<String, Object> content : results) {
-            assertThat(content)
+
+            if (config.getUriWithoutExtension()) {
+                assertThat(content)
                     .containsKey(ModelAttributes.ROOTPATH)
                     .containsValue("../../../");
+            }
+            else {
+                assertThat(content)
+                    .containsKey(ModelAttributes.ROOTPATH)
+                    .containsValue("../../");
+            }
         }
 
         DocumentList<DocumentModel> allPosts = db.getAllContent("post");
