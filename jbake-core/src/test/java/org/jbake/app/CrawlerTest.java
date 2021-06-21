@@ -15,8 +15,9 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @EnabledIfEnvironmentVariable(named = "jbake_db_implementation", matches = "OrientDB*")
 public class CrawlerTest extends ContentStoreOrientDbIntegrationTest {
@@ -94,27 +95,22 @@ public class CrawlerTest extends ContentStoreOrientDbIntegrationTest {
         for (DocumentModel model : documents) {
             String noExtensionUri = "blog/\\d{4}/" + FilenameUtils.getBaseName(model.getFile()) + "/";
 
-            assertEquals(model.getNoExtensionUri(), RegexMatcher.matches(noExtensionUri));
-            assertEquals(model.getUri(), RegexMatcher.matches(noExtensionUri + "index\\.html"));
-            assertEquals(model.getRootPath(), is("../../../"));
+            Assertions.assertTrue(new RegexMatcher(noExtensionUri).matches(model.getNoExtensionUri()));
+            Assertions.assertTrue(new RegexMatcher(noExtensionUri + "index\\.html").matches(model.getUri()));
+            Assertions.assertEquals("../../../", model.getRootPath());
         }
     }
 
-    private static class RegexMatcher extends BaseMatcher<Object> {
+    private class RegexMatcher extends BaseMatcher<Object> {
         private final String regex;
 
         public RegexMatcher(String regex) {
             this.regex = regex;
         }
 
-        public static RegexMatcher matches(String regex) {
-            return new RegexMatcher(regex);
-        }
-
         @Override
         public boolean matches(Object o) {
             return ((String) o).matches(regex);
-
         }
 
         @Override
