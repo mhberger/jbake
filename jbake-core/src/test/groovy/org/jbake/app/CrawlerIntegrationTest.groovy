@@ -11,6 +11,7 @@ import org.jbake.db.ContentStoreSqlite
 import org.jbake.model.DocumentModel
 import org.jbake.model.ModelAttributes
 import org.jbake.util.DataFileUtil
+import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -68,15 +69,21 @@ class CrawlerIntegrationTest {
 
         Assertions.assertEquals(3, results.size());
 
-        // TODO Work out what this is used for
-//        results.each {
-//            assertThat(it.getRootPath() == "../../../")
-//        }
-//        for (Map<String, Object> content : results) {
-//            assertThat(content)
-//                .containsKey(ModelAttributes.ROOTPATH)
-//                .containsValue("../../../");
-//        }
+        results.each {
+            if (config.getUriWithoutExtension()) {
+                Assertions.assertEquals("../../../", it.getRootPath())
+            }
+            else {
+                Assertions.assertEquals("../../", it.getRootPath())
+            }
+        }
+        for (Map<String, Object> content : results) {
+            if (config.getUriWithoutExtension()) {
+                Assertions.assertEquals("../../../", content.get(ModelAttributes.ROOTPATH))
+            } else {
+                Assertions.assertEquals("../../", content.get(ModelAttributes.ROOTPATH))
+            }
+        }
 
         DocumentList<DocumentModel> allPosts = contentStoreSqlite.getAllContent("post");
 
