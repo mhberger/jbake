@@ -4,17 +4,16 @@ import org.jbake.TestUtils;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.model.DocumentModel;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 public class HtmlUtilTest {
 
     private DefaultJBakeConfiguration config;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         config = (DefaultJBakeConfiguration) new ConfigUtil().loadConfig(TestUtils.getTestResourcesAsSourceFolder());
     }
@@ -32,7 +31,6 @@ public class HtmlUtilTest {
 
         assertThat(body).doesNotContain("<body>");
         assertThat(body).doesNotContain("</body>");
-
     }
 
     @Test
@@ -48,7 +46,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"blog/2017/05/first.jpg\"");
-
     }
 
     @Test
@@ -79,7 +76,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"http://www.jbake.org/blog/2017/05/first.jpg\"");
-
     }
 
     @Test
@@ -95,7 +91,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"http://www.jbake.org/blog/2017/05/first.jpg\"");
-
     }
 
     @Test
@@ -110,7 +105,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"http://www.jbake.org/blog/2017/05/first.jpg\"");
-
     }
 
     @Test
@@ -126,7 +120,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"http://www.jbake.org/blog/2017/05/first.jpg\"");
-
     }
 
     @Test
@@ -157,7 +150,6 @@ public class HtmlUtilTest {
         String body = fileContent.getBody();
 
         assertThat(body).contains("src=\"http://example.com/first.jpg\"");
-
     }
 
     @Test

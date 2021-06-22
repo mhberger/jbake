@@ -1,7 +1,7 @@
 package org.jbake.template;
 
 import org.jbake.model.DocumentTypes;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,7 @@ public class ModelExtractorsDocumentTypeListenerTest {
 
     @Test
     public void shouldRegisterExtractorsForCustomType() {
+
         // given: "A document type is known"
         String newDocumentType = "project";
         DocumentTypes.addDocumentType(newDocumentType);
