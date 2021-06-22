@@ -1,6 +1,5 @@
 package org.jbake.app
 
-import groovy.sql.Sql
 import org.apache.commons.io.FilenameUtils
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -11,7 +10,6 @@ import org.jbake.db.ContentStoreSqlite
 import org.jbake.model.DocumentModel
 import org.jbake.model.ModelAttributes
 import org.jbake.util.DataFileUtil
-import org.junit.Assert
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
@@ -51,10 +49,6 @@ class CrawlerIntegrationTest {
 
     @AfterEach
     public void tearDown() {
-    }
-
-    private Sql getDb() {
-        return contentStoreSqlite.getDb();
     }
 
     @Test
@@ -103,9 +97,6 @@ class CrawlerIntegrationTest {
     public void crawlDataFiles() {
         Crawler crawler = new Crawler(contentStoreSqlite, config);
 
-        // manually register data doctype
-//        DocumentTypes.addDocumentType(config.getDataFileDocType());
-//        db.updateSchema();
         crawler.crawlDataFiles();
         Assertions.assertEquals(1, contentStoreSqlite.getDocumentCount("data"));
 
