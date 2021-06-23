@@ -1,16 +1,16 @@
 README for work specific to this branch
 =======================================
 
-NOTE: This is still rough as guts and is a work in progress.
+NOTE: This is still a work in progress.
 
 * SQLite used as contentStore by default.
-* The tests are passing using SQLite on M1 Silicon.
-* Tests failing on Intel when running with SQLite or OrientDB..
-* At runtime, content is generated on M1 Silicon, but dates are
-  out (Timezone related)
-* Currently working on how the DocumentModel is persisted via Document
-  and in Documents table and how it affects Date..
-
+  [SQLite JDBC Driver](https://github.com/xerial/sqlite-jdbc)
+  [About SQLite](https://sqlite.org/about.html)
+* The tests are passing using SQLite on Apple M1 Silicon,  Apple Intel and Linux (TeamCity Cloud).
+* The tests are passing using OrientDB on Intel and Linux (TeamCity Cloud).
+* Two tests are being skipped
+  * OvenTest.shouldCrawlRenderAndCopyAssetsorg – Unit test – have not figured how to get Mocks to work with junit5.
+  * OvenIntegrationTest.shouldCrawlRenderAndCopyAssetsorg.jbake.app – have not figured out how to drive full build using oven etc.
 
 ## GitHub Isuses
 
@@ -20,9 +20,10 @@ NOTE: This is still rough as guts and is a work in progress.
 ## Notes
 
 * Targetting current LTS versions of Java e.g. using JDK11
-  * updating everything to use JUnit5 – allows conditional testing using java
-    properties or environment etc
-* This branch is geared to test SQLIte implementation.
+  * updating everything to use JUnit5
+    – Allows conditional testing using java properties or environment etc.
+    - There was already partial usage throughout the project.
+* This branch is geared to test SQLIte implementation, but will build with OrientDB.
 * If one checks out on an Apple M1 computer, then anything using OrientDB will fail
 * There is an environment variable `jbake_db_implementation` that can be used
   to enable/disable the OrientDB related tests from being run. By default it is
@@ -34,6 +35,12 @@ NOTE: This is still rough as guts and is a work in progress.
 * At runtime, which contentstore to use is controlled via jbake.properties by
   setting `jbake_db_implementation=SQLite` or `jbake_db_implementation=OrientDB`
   The default is SQLite.
+* Have introduced ContentStore as an interface to allow changing implementations.
+* Have also used JDBC and Groovy SQL and DataSource. This provides a bit more
+  independence.
+* The DocumentModel is still the main interface between parsers/templates etc
+  and ContentStore.  It is translated to a Document which maps to the
+  underlying DB table structure.
 
 
 ## Date Mapping
@@ -117,6 +124,7 @@ to
 * category
 * summary
 * json
+
 
 ### Sample commands
 
