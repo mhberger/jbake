@@ -43,7 +43,7 @@ class Document {
 
     Date documentDate(JBakeConfiguration config) {
         Date date = Date.parse(config.getDateFormat(), document_date)
-        LOGGER.info("MHB documentDate document_date {}, date parsed {}", document_date, date);
+        LOGGER.debug("MHB documentDate document_date {}, date parsed {}", document_date, date);
         date
     }
 
@@ -51,7 +51,7 @@ class Document {
         // Review whether we should be using this?
         // configuration.getDateFormat()
         String formattedDate = new SimpleDateFormat(config.getDateFormat()).format(d)
-        LOGGER.info("MHB formatDate date value {}, date formatted {}", d, formattedDate);
+        LOGGER.debug("MHB formatDate date value {}, date formatted {}", d, formattedDate);
         formattedDate
     }
 
@@ -79,7 +79,7 @@ class Document {
     static Date convertJsonDateToJavaUtilDate(String v) {
         LocalDateTime parsedDate = LocalDateTime.parse(v, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+0000"));
         Date documentDate = Date.from(parsedDate.atZone(TimeZone.getTimeZone("Universal").toZoneId()).toInstant())
-        LOGGER.info("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);
+        LOGGER.debug("MHB toDocumentModel date value {}, date parsed {}, documentDate {}", v, parsedDate, documentDate);
         documentDate
     }
 

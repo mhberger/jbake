@@ -102,7 +102,21 @@ from
 to
     String dbPath = folder.resolve("documents" + System.currentTimeMillis()).toAbsolutePath().toString();
 
+
+or
+from
+    validMdFileBasic = folder.newFile("validBasic.md");
+to
+    validMdFileBasic = folder.resolve("validBasic.md").toFile();
+
 ```
+
+### Custom types
+
+* id
+* category
+* summary
+* json
 
 ### Sample commands
 
