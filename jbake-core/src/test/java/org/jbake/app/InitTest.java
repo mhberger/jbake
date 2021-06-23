@@ -4,26 +4,26 @@ import org.jbake.TestUtils;
 import org.jbake.app.configuration.ConfigUtil;
 import org.jbake.app.configuration.DefaultJBakeConfiguration;
 import org.jbake.launcher.Init;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
 public class InitTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public static Path folder;
 
     public DefaultJBakeConfiguration config;
     private File rootPath;
 
-    @Before
+    @BeforeEach
     public void setup() throws Exception {
 
         rootPath = TestUtils.getTestResourcesAsSourceFolder();
@@ -38,7 +38,7 @@ public class InitTest {
     @Test
     public void initOK() throws Exception {
         Init init = new Init(config);
-        File initPath = folder.newFolder("init");
+        File initPath = folder.resolve("").toFile();
         init.run(initPath, rootPath, "freemarker");
         File testFile = new File(initPath, "testfile.txt");
         assertThat(testFile).exists();
@@ -47,7 +47,7 @@ public class InitTest {
     @Test
     public void initFailDestinationContainsContent() throws IOException {
         Init init = new Init(config);
-        File initPath = folder.newFolder("init");
+        File initPath = folder.resolve("init").toFile();
         File contentFolder = new File(initPath.getPath(), config.getContentFolderName());
         contentFolder.mkdir();
         try {
@@ -63,7 +63,7 @@ public class InitTest {
     @Test
     public void initFailInvalidTemplateType() throws IOException {
         Init init = new Init(config);
-        File initPath = folder.newFolder("init");
+        File initPath = folder.resolve("init").toFile();
         try {
             init.run(initPath, rootPath, "invalid");
             fail("Shouldn't be able to initialise folder with invalid template type");
