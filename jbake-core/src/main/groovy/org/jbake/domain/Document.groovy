@@ -31,6 +31,7 @@ class Document {
     String sha1
     Boolean rendered
     Boolean cached
+    String category
     String tag_string
     String body
     String json_data
@@ -100,6 +101,7 @@ class Document {
         document.sha1               =  documentModel.sha1
         document.rendered           =  documentModel.rendered
         document.cached             =  documentModel.cached
+        document.category           =  documentModel.category
         document.tag_string         =  documentModel.getTags().join(/,/).toString()+","
         document.body               =  documentModel.body
 

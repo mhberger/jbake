@@ -28,7 +28,7 @@ public class DocumentTypes {
 
     public static void resetDocumentTypes() {
         DEFAULT_DOC_TYPES.clear();
-        DEFAULT_DOC_TYPES.addAll(Arrays.asList("page", "post", "masterindex", "archive", "feed"));
+        DEFAULT_DOC_TYPES.addAll(Arrays.asList("page", "post", "masterindex", "archive", "feed", "news"));
     }
 
 

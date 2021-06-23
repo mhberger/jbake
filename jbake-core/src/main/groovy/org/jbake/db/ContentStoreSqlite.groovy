@@ -50,6 +50,7 @@ public class ContentStoreSqlite implements ContentStore {
               sha1                    VARHCAR(40)                 NOT NULL,
               rendered                BOOLEAN                     NOT NULL,
               cached                  BOOLEAN                     NOT NULL,
+              category                TEXT,
               tags                    TEXT,
               body                    TEXT                        NOT NULL,
               created_timestamp       TIMESTAMP WITH TIME ZONE    NOT NULL DEFAULT (CURRENT_TIMESTAMP),
@@ -148,6 +149,7 @@ public class ContentStoreSqlite implements ContentStore {
             sha1,
             rendered,
             cached,
+            category,
             tags,
             body,
             json_data
@@ -166,6 +168,7 @@ public class ContentStoreSqlite implements ContentStore {
             ${document.sha1},
             ${document.rendered},
             ${document.cached},
+            ${document.category},
             ${document.tag_string},
             ${document.body},
             ${document.json_data}
@@ -210,6 +213,7 @@ public class ContentStoreSqlite implements ContentStore {
         document.sha1              = row.sha1
         document.rendered          = row.rendered
         document.cached            = row.cached
+        document.category          = row.category
         document.tag_string        = row.tags
         document.body              = row.body
 

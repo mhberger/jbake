@@ -52,6 +52,17 @@ public class DocumentModel extends BaseModel {
         put(ModelAttributes.TYPE, type);
     }
 
+    public String getCategory() {
+        if (containsKey(ModelAttributes.CATEGORY)) {
+            return (String) get(ModelAttributes.CATEGORY);
+        }
+        return "";
+    }
+
+    public void setCategory(String category) {
+        put(ModelAttributes.CATEGORY, category);
+    }
+
     public String[] getTags() {
         return DBUtil.toStringArray(get(ModelAttributes.TAGS));
     }

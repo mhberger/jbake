@@ -9,6 +9,7 @@ public abstract class ModelAttributes {
     public static final String NAME = "name";
     public static final String BODY = "body";
     public static final String DATE = "date";
+    public static final String CATEGORY = "category";
     public static final String TYPE = "type";
     public static final String TAGS = "tags";
     public static final String URI = "uri";
