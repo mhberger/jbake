@@ -1,7 +1,8 @@
 package org.jbake.launcher;
 
 import org.jbake.app.configuration.ConfigUtil;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 import picocli.CommandLine;
 import picocli.CommandLine.MissingParameterException;
 
