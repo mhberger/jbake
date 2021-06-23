@@ -11,7 +11,7 @@ public class DocumentTypesTest {
     @Test
     public void shouldReturnDefaultDocumentTypes() throws Exception {
         String[] knownDocumentTypes = DocumentTypes.getDocumentTypes();
-        String[] expectedDocumentType = new String[] {"page", "post", "masterindex", "archive", "feed" };
+        String[] expectedDocumentType = new String[] {"page", "post", "masterindex", "archive", "feed", "news" };
 
         assertThat(knownDocumentTypes).contains(expectedDocumentType);
     }
