@@ -1,16 +1,38 @@
 README for work specific to this branch
 =======================================
 
+## State of the play
+
 NOTE: This is still a work in progress.
 
 * SQLite used as contentStore by default.
   [SQLite JDBC Driver](https://github.com/xerial/sqlite-jdbc)
   [About SQLite](https://sqlite.org/about.html)
-* The tests are passing using SQLite on Apple M1 Silicon,  Apple Intel and Linux (TeamCity Cloud).
+* The tests are passing using SQLite on Apple M1 Silicon,  Apple Intel, Linux (TeamCity Cloud) and Raspberry Pi
 * The tests are passing using OrientDB on Intel and Linux (TeamCity Cloud).
 * Two tests are being skipped
-  * OvenTest.shouldCrawlRenderAndCopyAssetsorg – Unit test – have not figured how to get Mocks to work with junit5.
-  * OvenIntegrationTest.shouldCrawlRenderAndCopyAssetsorg.jbake.app – have not figured out how to drive full build using oven etc.
+    * OvenTest.shouldCrawlRenderAndCopyAssetsorg – Unit test – have not figured how to get Mocks to work with junit5.
+    * OvenIntegrationTest.shouldCrawlRenderAndCopyAssetsorg.jbake.app – have not figured out how to drive full build using oven etc.
+* Two tests fail on Windows (TeamCity Cloud) for both master and this branch (SQLite and OrientDB)
+    * ConfigUtilTest.shouldUseUtf8EncodingAsDefault()
+    * ConfigUtilTest.shouldBePossibleToSetCustomEncoding()
+
+### Tests being run
+* The tests are run using
+  ```
+    ./gradlew clean test smoketest assemble
+  ```
+
+### Systems being used to run build and tests
+
+System Name              | Operating System                                                                    | Java Version
+-------------------------|-------------------------------------------------------------------------------------|------------------------------
+Apple M1 Silicon         | macOS 11.4 20F71 Darwin 20.5.0  root:xnu-7195.121.3~9/RELEASE_ARM64_T8101 arm64     | openjdk 11.0.11 2021-04-20 LTS
+Apple Intel              | macOS 11.5 20G5042c Darwin 20.6.0root:xnu-7195.140.29.131.1~1/RELEASE_X86_64 x86_64 | openjdk 11.0.11 2021-04-20 LTS
+Windows (TeamCity Cloud) | Windows Server 2019, version 10.0                                                   | jdk11.0.11_9
+Linux (TeamCity Cloud)   | Linux, version 5.8.0-1035-aws                                                       | java-11-amazon-corretto
+Raspberry Pi             | Linux 4.19.118-v7l+ #1311 SMP  armv7l GNU/Linux                                     | openjdk version "1.8.0_212"
+
 
 ## GitHub Isuses
 
@@ -23,7 +45,8 @@ NOTE: This is still a work in progress.
   * updating everything to use JUnit5
     – Allows conditional testing using java properties or environment etc.
     - There was already partial usage throughout the project.
-* This branch is geared to test SQLIte implementation, but will build with OrientDB.
+* This branch is geared to test SQLIte implementation, but will build and run
+  with OrientDB.
 * If one checks out on an Apple M1 computer, then anything using OrientDB will fail
 * There is an environment variable `jbake_db_implementation` that can be used
   to enable/disable the OrientDB related tests from being run. By default it is
