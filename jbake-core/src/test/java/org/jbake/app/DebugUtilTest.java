@@ -1,8 +1,8 @@
 package org.jbake.app;
 
 import org.jbake.util.DebugUtil;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -28,10 +28,10 @@ public class DebugUtilTest {
         String printed = new String(baos.toByteArray(), StandardCharsets.UTF_8);
         System.out.println(printed);
 
-        Assert.assertTrue(printed.contains("stringKey :: stringVal"));
-        Assert.assertTrue(printed.contains("null :: forNullKey"));
-        Assert.assertTrue(printed.contains("forNullVal :: null"));
-        Assert.assertTrue(printed.contains("forCharset :: UTF-8"));
-        Assert.assertTrue(printed.contains("forNonSerializableVal :: java.lang.Exception: nonSerializableVal"));
+        Assertions.assertTrue(printed.contains("stringKey :: stringVal"));
+        Assertions.assertTrue(printed.contains("null :: forNullKey"));
+        Assertions.assertTrue(printed.contains("forNullVal :: null"));
+        Assertions.assertTrue(printed.contains("forCharset :: UTF-8"));
+        Assertions.assertTrue(printed.contains("forNonSerializableVal :: java.lang.Exception: nonSerializableVal"));
     }
 }
