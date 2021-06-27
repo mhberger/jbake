@@ -337,9 +337,12 @@ public class ConfigUtilTest extends LoggingTest {
     @Test
     public void shouldBePossibleToSetCustomEncoding() throws Exception {
         String expected = "Latin1 encoded file äöü";
-        JBakeConfiguration config = util.setEncoding("ISO-8859-1").loadConfig(TestUtils.getTestResourcesAsSourceFolder("/fixtureLatin1"));
 
+        util.setEncoding("ISO-8859-1");
+        JBakeConfiguration config = util.loadConfig(TestUtils.getTestResourcesAsSourceFolder("/fixtureLatin1"), null);
         String siteAbout = (String) config.get("site.about");
+
+        assertThat(util.getEncoding()).isEqualTo("ISO-8859-1");
         assertThat(siteAbout).contains(expected);
     }
 
