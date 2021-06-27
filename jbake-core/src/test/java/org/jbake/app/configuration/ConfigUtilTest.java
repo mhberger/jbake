@@ -14,16 +14,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
-import java.nio.file.OpenOption;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 import static ch.qos.logback.classic.Level.WARN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.jbake.TestUtils.getTestResourcesAsSourceFolder;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -342,7 +337,7 @@ public class ConfigUtilTest extends LoggingTest {
     @Test
     public void shouldBePossibleToSetCustomEncoding() throws Exception {
         String expected = "Latin1 encoded file äöü";
-        JBakeConfiguration config = util.setEncoding("ISO8859_1").loadConfig(TestUtils.getTestResourcesAsSourceFolder("/fixtureLatin1"));
+        JBakeConfiguration config = util.setEncoding("ISO-8859-1").loadConfig(TestUtils.getTestResourcesAsSourceFolder("/fixtureLatin1"));
 
         String siteAbout = (String) config.get("site.about");
         assertThat(siteAbout).contains(expected);
