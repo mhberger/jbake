@@ -135,6 +135,10 @@ subprojects {
         }
     }
 
+    tasks.withType(Copy) {
+      duplicatesStrategy = DuplicatesStrategy.WARN
+    }
+
     //set jvm for all Test tasks (like test and smokeTest)
     tasks.withType(Test) {
 
